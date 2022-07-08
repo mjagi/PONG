@@ -22,17 +22,17 @@ module vga_timing (
   );
 
 
-localparam HOR_TOTAL_TIME = 1056;
-localparam HOR_BLANK_START = 800;
-localparam HOR_BLANK_STOP = 1056;
-localparam HOR_SYNC = 840;
-localparam HOR_SYNC_TIME = 128;
+localparam HOR_TOTAL_TIME = 1344;
+localparam HOR_BLANK_START = 1024;
+localparam HOR_BLANK_STOP = 1344;
+localparam HOR_SYNC = 1048;
+localparam HOR_SYNC_TIME = 136;
 
-localparam VER_TOTAL_TIME = 628;
-localparam VER_BLANK_START = 600;
-localparam VER_BLANK_STOP = 628;
-localparam VER_SYNC = 601;
-localparam VER_SYNC_TIME = 4;
+localparam VER_TOTAL_TIME = 806;
+localparam VER_BLANK_START = 768;
+localparam VER_BLANK_STOP = 806;
+localparam VER_SYNC = 771;
+localparam VER_SYNC_TIME = 6;
 
 reg [10:0] vcount_next;
 reg [10:0] hcount_next;
