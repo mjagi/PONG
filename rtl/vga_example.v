@@ -11,8 +11,8 @@
 // using Verilog-2001 syntax.
 
 module vga_example (
-  inout wire ps2_clk,
-  inout wire ps2_data,
+//  inout wire ps2_clk,
+//  inout wire ps2_data,
   input wire clk,
   input wire rst,
   output wire vs,
@@ -78,7 +78,7 @@ module vga_example (
     .hsync(hsync),
     .hblnk(hblnk),
     .pclk(pclk),
-	.rst(rst_out)
+	  .rst(rst)
   );
   
   draw_background my_background (
@@ -89,15 +89,15 @@ module vga_example (
     .hsync_in(hsync),
     .hblnk_in(hblnk),
     .pclk(pclk),
-	.rst(rst_out),
+	  .rst(rst),
 	
-	.vcount_out(vcount_out_bg),
-    .vsync_out(vsync_out_bg),
+	  .vcount_out(vcount_out_bg),
+    .vsync_out(vs),
     .vblnk_out(vblnk_out_bg),
     .hcount_out(hcount_out_bg),
-    .hsync_out(hsync_out_bg),
+    .hsync_out(hs),
     .hblnk_out(hblnk_out_bg),
-	.rgb_out(rgb_out_bg)
+	  .rgb_out({r,g,b})
   );
  /* 
   draw_rect my_rect(
