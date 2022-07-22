@@ -35,18 +35,18 @@ module draw_background (
   
   always @*
   begin
-    // During blanking, make it it black.
-    if (vblnk_in || hblnk_in) rgb_nxt <= 12'h0_0_0; 
+    // During blanking, make it it grey.
+    if (vblnk_in || hblnk_in) rgb_nxt <= 12'h3_3_3; 
     else
     begin
-      // Active display, top edge, make a white line.
-      if (vcount_in == 0) rgb_nxt <= 12'hf_f_f;
-      // Active display, bottom edge, make a white line.
-      else if (vcount_in == 768) rgb_nxt <= 12'hf_f_f;
+      // Active display, top edge, make a blue line.
+      if (vcount_in == 0) rgb_nxt <= 12'h0_0_f;
+      // Active display, bottom edge, make a purple line.
+      else if (vcount_in == 768) rgb_nxt <= 12'hf_0_f;
       // Active display, left edge, make a green line.
       else if (hcount_in == 0) rgb_nxt <= 12'h0_f_0;
       // Active display, right edge, make a red line.
-      else if (hcount_in == 1024) rgb_nxt <= 12'hf_0_0;
+      else if (hcount_in == 1023) rgb_nxt <= 12'hf_0_0;
       // Active display, interior, fill with black.
       else rgb_nxt <= 12'h0_0_0;    
     end

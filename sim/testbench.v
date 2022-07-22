@@ -69,11 +69,11 @@ module testbench;
 
   initial
   begin
-  rst = 0;
-  #800 rst = 1;
-  #40 rst = 0;
-  #2000 rst = 1;
-  #40 rst = 0;
+  rst = 1;
+  #30 rst = 0;
+  //#40 rst = 0;
+  //#2000 rst = 1;
+  //#40 rst = 0;
     $display("If simulation ends before the testbench");
     $display("completes, use the menu option to run all.");
     $display("Prepare to wait a long time...");
