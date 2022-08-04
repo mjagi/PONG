@@ -35,14 +35,14 @@ module vga_example (
     .clk(clk),
     .reset(rst),
     .locked(locked),
-    .clk_65(pclk),
-    .clk_100(mclk)
+    .clk65Mhz(pclk),
+    .clk100MHz(mclk)
   );
 
   // Mirrors pclk on a pin for use by the testbench;
   // not functionally required for this design to work.
-
-/*  ODDR pclk_oddr (
+/*
+  ODDR pclk_oddr (
     .Q(pclk_mirror),
     .C(pclk),
     .CE(1'b1),
@@ -50,10 +50,9 @@ module vga_example (
     .D2(1'b0),
     .R(1'b0),
     .S(1'b0)
-  );*/
-
+  );
+*/
 assign pclk_mirror = pclk;
-
   // Instantiate the vga_timing module, which is
   // the module you are designing for this lab.
 

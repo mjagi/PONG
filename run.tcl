@@ -40,10 +40,10 @@ proc create_new_project {project target top_module} {
 		rtl/vga_timing.v
 		rtl/draw_background.v
 		rtl/draw_rect.v
-		rtl/clk_wiz_0_clk_wiz.v
-		rtl/clk_wiz_0.v
 		rtl/rst_d.v
 		rtl/delay.v
+		rtl/clk_wiz_0.v
+		rtl/clk_wiz_0_clk_wiz.v
     }
     
     # Specify vhdl design files location      -- EDIT
