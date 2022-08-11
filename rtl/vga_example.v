@@ -64,13 +64,13 @@ assign pclk_mirror = pclk;
   wire [7:0] char_line_pixel, xy_char;
   wire [3:0] char_line;
   wire [6:0] char_code;
-  /*
+  
   rst_d my_rst_d(
 	.rst_out(rst_out),
 	.locked(locked),
 	.clk(pclk)
   );
-*/
+
   vga_timing my_timing (
     .vcount(vcount),
     .vsync(vsync),
@@ -79,7 +79,7 @@ assign pclk_mirror = pclk;
     .hsync(hsync),
     .hblnk(hblnk),
     .pclk(pclk),
-	  .rst(rst)
+	.rst(rst_out)
   );
   
   draw_background my_background (
@@ -90,15 +90,15 @@ assign pclk_mirror = pclk;
     .hsync_in(hsync),
     .hblnk_in(hblnk),
     .pclk(pclk),
-	  .rst(rst),
+	.rst(rst_out),
 	
-	  .vcount_out(vcount_out_bg),
+	.vcount_out(vcount_out_bg),
     .vsync_out(vs),
     .vblnk_out(vblnk_out_bg),
     .hcount_out(hcount_out_bg),
     .hsync_out(hs),
     .hblnk_out(hblnk_out_bg),
-	  .rgb_out({r,g,b})
+	.rgb_out({r,g,b})
   );
  /* 
   draw_rect my_rect(
