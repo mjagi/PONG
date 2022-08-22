@@ -44,14 +44,15 @@ proc create_new_project {project target top_module} {
 		rtl/delay.v
 		rtl/clk_wiz_0.v
 		rtl/clk_wiz_0_clk_wiz.v
+		rtl/Mouse_delay.v
     }
     
     # Specify vhdl design files location      -- EDIT
-    # read_vhdl {
-        # rtl/MouseCtl.vhd    
-		# rtl/Ps2Interface.vhd
-        # rtl/MouseDisplay.vhd
-    # }
+     read_vhdl {
+         rtl/MouseCtl.vhd    
+		 rtl/Ps2Interface.vhd
+         rtl/MouseDisplay.vhd
+     }
     
     # Specify files for memory initialization -- EDIT
     # read_mem {

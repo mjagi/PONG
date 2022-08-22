@@ -11,8 +11,8 @@
 // using Verilog-2001 syntax.
 
 module vga_example (
-//  inout wire ps2_clk,
-//  inout wire ps2_data,
+  inout wire ps2_clk,
+  inout wire ps2_data,
   input wire clk,
   input wire rst,
   output wire vs,
@@ -60,7 +60,7 @@ assign pclk_mirror = pclk;
   wire vsync, hsync, vsync_out_bg, hsync_out_bg, hsync_out_rt, vsync_out_rt, hsync_out_ch, vsync_out_ch;
   wire vblnk, hblnk, hblnk_out_bg, vblnk_out_bg, hblnk_out_rt, vblnk_out_rt, hblnk_out_ch, vblnk_out_ch;
   wire [11:0] rgb_out_bg, rgb_out_rt,rgb_out_ch ,rgb_im, xpos_wire, ypos_wire, xpos_wire2, ypos_wire2,ypos_wire_d, xpos_wire_d, addr_im;
-  wire rst_out, mouse_left;
+  wire rst_out, mouse_left, mouse_left_d;
   wire [7:0] char_line_pixel, xy_char;
   wire [3:0] char_line;
   wire [6:0] char_code;
@@ -79,7 +79,7 @@ assign pclk_mirror = pclk;
     .hsync(hsync),
     .hblnk(hblnk),
     .pclk(pclk),
-	.rst(rst_out)
+	  .rst(rst_out)
   );
   
   draw_background my_background (
@@ -90,43 +90,40 @@ assign pclk_mirror = pclk;
     .hsync_in(hsync),
     .hblnk_in(hblnk),
     .pclk(pclk),
-	.rst(rst_out),
+	  .rst(rst_out),
 	
-	.vcount_out(vcount_out_bg),
-    .vsync_out(vs),
+	  .vcount_out(vcount_out_bg),
+    .vsync_out(vsync_out_bg),
     .vblnk_out(vblnk_out_bg),
     .hcount_out(hcount_out_bg),
-    .hsync_out(hs),
+    .hsync_out(hsync_out_bg),
     .hblnk_out(hblnk_out_bg),
-	.rgb_out({r,g,b})
-  );
- /* 
-  draw_rect my_rect(
-    .vcount_in(vcount_out_ch),
-    .vsync_in(vsync_out_ch),
-    .vblnk_in(vblnk_out_ch),
-    .hcount_in(hcount_out_ch),
-    .hsync_in(hsync_out_ch),
-    .hblnk_in(hblnk_out_ch),
-    .pclk(pclk),
-	.rst(rst_out),
-	.rgb_in(rgb_out_ch),
-	.x_pos(xpos_wire2),
-	.y_pos(ypos_wire2),
-	.rgb_pixel(rgb_im),
-	
-	.vcount_out(vcount_out_rt),
-    .vsync_out(vsync_out_rt),
-    .vblnk_out(vblnk_out_rt),
-    .hcount_out(hcount_out_rt),
-    .hsync_out(hsync_out_rt),
-    .hblnk_out(hblnk_out_rt),
-	.rgb_out(rgb_out_rt),
-	.pixel_addr(addr_im)
+	  .rgb_out(rgb_out_bg)
   );
   
+  draw_rect my_rect(
+    .vcount_in(vcount_out_bg),
+    .vsync_in(vsync_out_bg),
+    .vblnk_in(vblnk_out_bg),
+    .hcount_in(hcount_out_bg),
+    .hsync_in(hsync_out_bg),
+    .hblnk_in(hblnk_out_bg),
+    .pclk(pclk),
+	.rst(rst_out),
+	.rgb_in(rgb_out_bg),
+	.y_pos(ypos_wire_d),
+	
+	.vcount_out(vcount_out_rt),
+    .vsync_out(vs),
+    .vblnk_out(vblnk_out_rt),
+    .hcount_out(hcount_out_rt),
+    .hsync_out(hs),
+    .hblnk_out(hblnk_out_rt),
+	.rgb_out({r,g,b})
+  );
+/*  
   draw_rect_ctl my_draw_ctl(
-    .clk(pclk),
+    .pclk(pclk),
     .rst(rst_out),
     .mouse_left(mouse_left),
     .mouse_xpos(xpos_wire_d),
@@ -135,7 +132,7 @@ assign pclk_mirror = pclk;
     .xpos(xpos_wire2),
     .ypos(ypos_wire2)
   );
-  
+  */
   MouseCtl My_MouseCtl(
 	.clk(mclk),
 	.rst(rst_out),
@@ -154,16 +151,18 @@ assign pclk_mirror = pclk;
 	.right(),
 	.new_event()
   );
-  
+
   Mouse_delay My_mouse_deley(
 	.clk(pclk),
 	.rst(rst_out),
 	.xpos_in(xpos_wire),
 	.ypos_in(ypos_wire),
+	.mouse_left_in(mouse_left),
 	.xpos_out(xpos_wire_d),
-	.ypos_out(ypos_wire_d)
+	.ypos_out(ypos_wire_d),
+	.mouse_left_out(mouse_left_d)
   );
-  
+ /* 
   image_rom My_image(
 	.clk(pclk),
 	.address(addr_im),
