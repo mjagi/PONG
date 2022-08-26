@@ -26,9 +26,9 @@ module game_ctl (
   output reg [11:0] rgb_out
   );
 
-  wire [10:0] vcount, hcount, hcount_out_bg, vcount_out_bg, hcount_out_rt, vcount_out_rt, hcount_out_ch, vcount_out_ch;
-  wire vsync, hsync, vsync_out_bg, hsync_out_bg, hsync_out_rt, vsync_out_rt, hsync_out_ch, vsync_out_ch;
-  wire vblnk, hblnk, hblnk_out_bg, vblnk_out_bg, hblnk_out_rt, vblnk_out_rt, hblnk_out_ch, vblnk_out_ch;
+  wire [10:0] hcount_out_bg, vcount_out_bg, hcount_out_rt, vcount_out_rt, hcount_out_ch, vcount_out_ch;
+  wire vsync_out_bg, hsync_out_bg, hsync_out_rt, vsync_out_rt, hsync_out_ch, vsync_out_ch;
+  wire hblnk_out_bg, vblnk_out_bg, hblnk_out_rt, vblnk_out_rt, hblnk_out_ch, vblnk_out_ch;
   wire [11:0] rgb_out_bg, rgb_out_rt,rgb_out_ch ,rgb_im, xpos_wire, ypos_wire, xpos_wire2, ypos_wire2,ypos_wire_d, xpos_wire_d, addr_im;
   wire rst_out, mouse_left, mouse_left_d;
   wire [7:0] char_line_pixel, xy_char;
@@ -37,13 +37,13 @@ module game_ctl (
 
   
   draw_background my_background (
-    .vcount_in(vcount),
-    .vsync_in(vsync),
-    .vblnk_in(vblnk),
-    .hcount_in(hcount),
-    .hsync_in(hsync),
-    .hblnk_in(hblnk),
-    .pclk(pclk),
+    .vcount_in(vcount_in),
+    .vsync_in(vsync_in),
+    .vblnk_in(vblnk_in),
+    .hcount_in(hcount_in),
+    .hsync_in(hsync_in),
+    .hblnk_in(hblnk_in),
+    .pclk(clk),
 	  .rst(rst_out),
 	
 	  .vcount_out(vcount_out_bg),
@@ -62,18 +62,18 @@ module game_ctl (
     .hcount_in(hcount_out_bg),
     .hsync_in(hsync_out_bg),
     .hblnk_in(hblnk_out_bg),
-    .pclk(pclk),
+    .pclk(clk),
 	.rst(rst_out),
 	.rgb_in(rgb_out_bg),
-	.y_pos(ypos_wire_d),
+	.y_pos(ypos),
 	
 	.vcount_out(vcount_out_rt),
-    .vsync_out(vs),
+    .vsync_out(vsync_out_rt),
     .vblnk_out(vblnk_out_rt),
     .hcount_out(hcount_out_rt),
-    .hsync_out(hs),
+    .hsync_out(hsync_out_rt),
     .hblnk_out(hblnk_out_rt),
-	.rgb_out({r,g,b})
+	.rgb_out(rgb_out)
   );
 /*  
   draw_rect_ctl my_draw_ctl(
