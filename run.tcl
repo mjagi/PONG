@@ -52,7 +52,14 @@ proc create_new_project {project target top_module} {
 		rtl/if_menu.v
 		rtl/draw_ball.v
 		rtl/draw_ball_ctl.v
-		rtl/image_rom.v
+        rtl/image_rom.v
+        rtl/image_rom.data
+		rtl/char_rom_16x1_blueplayer.v
+		rtl/char_rom_16x1_redplayer.v
+		rtl/char_rom_16x2_BB.v
+		rtl/char_rom_16x2_MJ.v
+		rtl/font_rom.v
+		rtl/draw_rect_char.v
     }
     
     # Specify vhdl design files location      -- EDIT
