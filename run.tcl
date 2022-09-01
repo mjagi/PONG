@@ -53,7 +53,6 @@ proc create_new_project {project target top_module} {
 		rtl/draw_ball.v
 		rtl/draw_ball_ctl.v
         rtl/image_rom.v
-        rtl/image_rom.data
 		rtl/char_rom_16x1_blueplayer.v
 		rtl/char_rom_16x1_redplayer.v
 		rtl/char_rom_16x2_BB.v
