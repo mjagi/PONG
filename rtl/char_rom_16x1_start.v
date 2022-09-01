@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module char_rom_16x1_blueplayer
+module char_rom_16x1_start
     (
         input  wire [7:0] char_xy,
         output reg  [6:0] char_code
