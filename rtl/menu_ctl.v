@@ -82,7 +82,7 @@ module menu_ctl (
   );
 
   font_rom font_rom_start(
-	.clk(pclk),
+	.clk(clk),
 	.addr({char_code_start [6:0], char_line_start [3:0]}),
 	.char_line_pixels(char_line_pixel_start)
   );
