@@ -15,6 +15,10 @@ set_property PULLUP true [get_ports ps2_data]
 set_property PACKAGE_PIN U18 [get_ports {rst}]
 set_property IOSTANDARD LVCMOS33 [get_ports {rst}]
 
+# Constraints for BUTTON
+set_property PACKAGE_PIN T17 [get_ports {button}]
+set_property IOSTANDARD LVCMOS33 [get_ports {button}]
+
 # Constraints for VS and HS
 set_property PACKAGE_PIN R19 [get_ports {vs}]
 set_property IOSTANDARD LVCMOS33 [get_ports {vs}]

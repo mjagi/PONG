@@ -24,9 +24,7 @@ module control (
   input wire vsync_in,
   output reg hs_out,
   output reg vs_out,
-  output reg [3:0] r,	
-  output reg [3:0] g,
-  output reg [3:0] b
+  output reg [11:0] rgb_out
   );
 
 reg vs_temp, hs_temp;
@@ -58,16 +56,12 @@ always @(posedge pclk) begin
 	if (rst) begin
 		hs_out <= 0;
 		vs_out <= 0;
-		r <= 0;
-		g <= 0;
-		b <= 0;
+		rgb_out <= 0;
 	end
 	else begin
 		hs_out <= hs_temp;
 		vs_out <= vs_temp;
-		r <= r_nxt;
-		g <= g_nxt;
-		b <= b_nxt;
+		rgb_out <= {r_nxt, g_nxt, b_nxt};
 	end
 end
 

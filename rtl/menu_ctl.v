@@ -5,7 +5,7 @@
 // Declare the module and its ports. This is
 // using Verilog-2001 syntax.
 
-module game_ctl (
+module menu_ctl (
   input wire clk,
   input wire rst,
   input wire [10:0] vcount_in,
@@ -18,12 +18,8 @@ module game_ctl (
   input wire [11:0] xpos,
   input wire [11:0] rgb_in,
   
-  output reg [10:0] vcount_out,
-  output reg [10:0] hcount_out,
   output reg vsync_out,
   output reg hsync_out,
-  output reg hblnk_out,
-  output reg vblnk_out,
   output reg [11:0] rgb_out
   );
 
@@ -110,11 +106,9 @@ char_rom_16x16 mychar_rom(
 	.rgb_in(rgb_out_rt),
 	.vsync_in(vsync_out_rt),
 	.hsync_in(hsync_out_rt),
-	.hs_out(hs),
-	.vs_out(vs),
-	.r(r),
-	.g(g),
-	.b(b)
+	.hs_out(hsync_out),
+	.vs_out(vsync_out),
+	.rgb_out(rgb_out)
  );
 
 endmodule

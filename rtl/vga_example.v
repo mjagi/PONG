@@ -13,6 +13,7 @@
 module vga_example (
 	inout wire ps2_clk,
 	inout wire ps2_data,
+	input wire button,
 	input wire clk,
 	input wire rst,
 	output wire vs,
@@ -51,14 +52,11 @@ module vga_example (
 	assign pclk_mirror = pclk;
 	
 	//wires connecting modules
-	wire [10:0] vcount, hcount, hcount_out_bg, vcount_out_bg, hcount_out_rt, vcount_out_rt, hcount_out_ch, vcount_out_ch;
-	wire vsync, hsync, vsync_out_bg, hsync_out_bg, hsync_out_rt, vsync_out_rt, hsync_out_ch, vsync_out_ch;
-	wire vblnk, hblnk, hblnk_out_bg, vblnk_out_bg, hblnk_out_rt, vblnk_out_rt, hblnk_out_ch, vblnk_out_ch;
-	wire [11:0] rgb_out_bg, rgb_out_rt,rgb_out_ch ,rgb_im, xpos_wire, ypos_wire, xpos_wire2, ypos_wire2,ypos_wire_d, xpos_wire_d, addr_im;
+	wire [10:0] vcount, hcount;
+	wire vsync, hsync;
+	wire vblnk, hblnk;
+	wire [11:0] xpos_wire, ypos_wire, ypos_wire_d, xpos_wire_d;
 	wire rst_out, mouse_left, mouse_left_d;
-	wire [7:0] char_line_pixel, xy_char;
-	wire [3:0] char_line;
-	wire [6:0] char_code;
   
 	rst_d my_rst_d(
 		.rst_out(rst_out),
@@ -80,22 +78,19 @@ module vga_example (
 	top_ctl My_top_ctl(
 		.clk(pclk),
 		.rst(rst_out),
-		.vcount_in(vcount_in),
-		.hcount_in(hcount_in),
-		.vsync_in(vsync_in),
-		.vblnk_in(vblnk_in),
-		.hsync_in(hsync_in),
-		.hblnk_in(hblnk_in),
+		.vcount_in(vcount),
+		.hcount_in(hcount),
+		.vsync_in(vsync),
+		.vblnk_in(vblnk),
+		.hsync_in(hsync),
+		.hblnk_in(hblnk),
 		.ypos(ypos_wire_d),
 		.xpos(xpos_wire_d),
 		.mouse_left(mouse_left_d),
+		.button(button),
 			
-		.vcount_out(vcount_ctl),
-		.hcount_out(hcount_ctl),
-		.vsync_out(vsync_ctl),
-		.hsync_out(hsync_ctl),
-		.hblnk_out(hblnk_ctl),
-		.vblnk_out(vblnk_ctl),
+		.vsync_out(vs),
+		.hsync_out(hs),
 		.rgb_out({r,g,b})
 	);	
 

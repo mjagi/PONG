@@ -43,7 +43,7 @@ module if_menu (
 	  vcount_in == 238 || vcount_in == 338 || vcount_in == 430 || vcount_in == 530 ||
 	  vcount_in == 622 || vcount_in == 722)) rgb_nxt = 12'h3_3_3;
 	  
-	  else if ((hcount_in = 362 || hcount_in = 674) && ((vcount_in >= 46 && vcount_in <= 146) || 
+	  else if ((hcount_in == 362 || hcount_in == 674) && ((vcount_in >= 46 && vcount_in <= 146) || 
 	  (vcount_in >= 238 || vcount_in <= 338) || (vcount_in >= 430 || vcount_in <= 530) ||
 	  (vcount_in >= 622 || vcount_in <= 722))) rgb_nxt = 12'h3_3_3;
 	  

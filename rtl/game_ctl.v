@@ -17,12 +17,8 @@ module game_ctl (
   input wire [11:0] ypos,
   input wire [11:0] rgb_in,
   
-  output reg [10:0] vcount_out,
-  output reg [10:0] hcount_out,
   output reg vsync_out,
   output reg hsync_out,
-  output reg hblnk_out,
-  output reg vblnk_out,
   output reg [11:0] rgb_out
   );
 
