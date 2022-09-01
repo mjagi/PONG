@@ -31,7 +31,7 @@ localparam CREDITS = 2'b10;
 
 always@* begin
     case(state)
-    IDLE:     state_nxt = (mouse_left && (ypos >= 46 && ypos <= 146) && (xpos >= 362 && xpos <= 674)) ? GAME : (IDLE : CREDITS);
+    IDLE:     state_nxt = (mouse_left && (ypos >= 46 && ypos <= 146) && (xpos >= 362 && xpos <= 674)) ? GAME : (mouse_left && (ypos >= 622 && ypos <= 722) && (xpos >= 362 && xpos <= 674)) ? IDLE : CREDITS;
     GAME:     state_nxt = button1  ? IDLE : GAME;
     CREDITS:   state_nxt = button1 ? IDLE : CREDITS;
     default: state_nxt = IDLE;

@@ -45,6 +45,14 @@ proc create_new_project {project target top_module} {
 		rtl/clk_wiz_0.v
 		rtl/clk_wiz_0_clk_wiz.v
 		rtl/Mouse_delay.v
+		rtl/top_ctl.v
+		rtl/control.v
+		rtl/game_ctl.v
+		rtl/menu_ctl.v
+		rtl/if_menu.v
+		rtl/draw_ball.v
+		rtl/draw_ball_ctl.v
+		rtl/image_rom.v
     }
     
     # Specify vhdl design files location      -- EDIT
@@ -55,9 +63,9 @@ proc create_new_project {project target top_module} {
      }
     
     # Specify files for memory initialization -- EDIT
-    # read_mem {
-        # rtl/image_rom.data
-    # }
+     read_mem {
+         rtl/image_rom.data
+     }
 
     # Specify simulation files location       -- EDIT
     add_files -fileset sim_1 {
