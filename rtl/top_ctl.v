@@ -18,8 +18,8 @@ module top_ctl(
 	output reg hsync_out,
 	output reg [11:0] rgb_out
 );
-reg [11:0] rgb_menu, rgb_game, rgb_cred;
-reg vsync_menu, hsync_menu, vsync_game, hsync_game, vsync_cred, hsync_cred;
+reg [11:0] rgb_menu, rgb_game, rgb_cred, rgb_nxt;
+reg vsync_menu, hsync_menu, vsync_game, hsync_game, vsync_cred, hsync_cred, vsync_nxt, hsync_nxt;
 reg [1:0] state, state_nxt;
 
 localparam IDLE = 2'b00;
@@ -38,16 +38,24 @@ end
 always@* begin
     case(state_nxt)
     IDLE: begin		
-		
+		vsync_nxt = vsync_menu;
+		hsync_nxt = hsync_menu;
+		rgb_nxt = rgb_menu;
     end
     GAME: begin
-        
+		vsync_nxt = vsync_game;
+    	hsync_nxt = hsync_game;
+    	rgb_nxt = rgb_game;
     end
     CREDITS: begin
-        
+        vsync_nxt = vsync_cred;
+    	hsync_nxt = hsync_cred;
+    	rgb_nxt = rgb_cred;
     end
     default: begin
-
+		vsync_nxt = vsync_menu;
+    	hsync_nxt = hsync_menu;
+    	rgb_nxt = rgb_menu;
     end
     endcase
 end
@@ -88,27 +96,15 @@ end
 
  always @(posedge clk) begin
 	if (rst) begin
-		
 		hsync_out <= 0;
 		vsync_out <= 0;	
-
 		rgb_out <= 0;
 	end
-	else if(state == 2'b10) begin	
-		hsync_out <= hsync_cred;
-		vsync_out <= vsync_cred;	
-		rgb_out <= rgb_cred;
+	else begin	
+		hsync_out <= hsync_nxt;
+		vsync_out <= vsync_nxt;	
+		rgb_out <= rgb_nxt;
 	end
-	else if (state == 2'b01) begin	
-        hsync_out <= hsync_game;
-        vsync_out <= vsync_game;    
-        rgb_out <= rgb_game;
-    end
-    else begin
-        hsync_out <= hsync_menu;
-        vsync_out <= vsync_menu;    
-        rgb_out <= rgb_menu;
-    end
 end
 
 endmodule

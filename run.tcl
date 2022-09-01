@@ -57,6 +57,7 @@ proc create_new_project {project target top_module} {
 		rtl/char_rom_16x1_redplayer.v
 		rtl/char_rom_16x2_BB.v
 		rtl/char_rom_16x2_MJ.v
+        rtl/char_rom_16x1_start.v
 		rtl/font_rom.v
 		rtl/draw_rect_char.v
     }

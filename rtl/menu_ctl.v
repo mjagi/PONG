@@ -23,14 +23,14 @@ module menu_ctl (
   output reg [11:0] rgb_out
   );
 
-  wire [10:0] hcount_out_bg, vcount_out_bg, hcount_out_rt, vcount_out_rt, hcount_out_ch, vcount_out_ch;
-  wire vsync_out_bg, hsync_out_bg, hsync_out_rt, vsync_out_rt, hsync_out_ch, vsync_out_ch;
-  wire hblnk_out_bg, vblnk_out_bg, hblnk_out_rt, vblnk_out_rt, hblnk_out_ch, vblnk_out_ch;
-  wire [11:0] rgb_out_bg, rgb_out_rt,rgb_out_ch ,rgb_im, xpos_wire, ypos_wire, xpos_wire2, ypos_wire2,ypos_wire_d, xpos_wire_d, addr_im;
+  wire [10:0] hcount_out_if, vcount_out_if, hcount_out_rt, vcount_out_rt, hcount_out_start, vcount_out_start;
+  wire vsync_out_if, hsync_out_if, hsync_out_rt, vsync_out_rt, hsync_out_start, vsync_out_start;
+  wire hblnk_out_if, vblnk_out_if, hblnk_out_rt, vblnk_out_rt, hblnk_out_start, vblnk_out_start;
+  wire [11:0] rgb_out_if, rgb_out_rt,rgb_out_start ,rgb_im, xpos_wire, ypos_wire, xpos_wire2, ypos_wire2,ypos_wire_d, xpos_wire_d, addr_im;
   wire rst_out, mouse_left, mouse_left_d;
-  wire [7:0] char_line_pixel, xy_char;
-  wire [3:0] char_line;
-  wire [6:0] char_code;
+  wire [7:0] char_line_pixel_start, xy_char_start;
+  wire [3:0] char_line_start;
+  wire [6:0] char_code_start;
 
   
   if_menu my_if_menu (
@@ -43,69 +43,64 @@ module menu_ctl (
     .pclk(clk),
 	.rst(rst),
 	
-	.vcount_out(vcount_out_bg),
-    .vsync_out(vsync_out_bg),
-    .vblnk_out(vblnk_out_bg),
-    .hcount_out(hcount_out_bg),
-    .hsync_out(hsync_out_bg),
-    .hblnk_out(hblnk_out_bg),
-	.rgb_out(rgb_out_bg)
+	.vcount_out(vcount_out_if),
+    .vsync_out(vsync_out_if),
+    .vblnk_out(vblnk_out_if),
+    .hcount_out(hcount_out_if),
+    .hsync_out(hsync_out_if),
+    .hblnk_out(hblnk_out_if),
+	.rgb_out(rgb_out_if)
   );
   
- /* 
-  image_rom My_image(
+  
+  draw_rect_char draw_char_start(
+    .vcount_in(vcount_out_if),
+    .vsync_in(vsync_out_if),
+    .vblnk_in(vblnk_out_if),
+    .hcount_in(hcount_out_if),
+    .hsync_in(hsync_out_if),
+    .hblnk_in(hblnk_out_if),
+  	.rgb_in(rgb_out_if),
+    .pclk(clk),
+  	.rst(rst),
+  	.char_pixels(char_line_pixel_start),
+  	
+  	.vcount_out(vcount_out_start),
+    .vsync_out(vsync_out_start),
+    .vblnk_out(vblnk_out_start),
+    .hcount_out(hcount_out_start),
+    .hsync_out(hsync_out_start),
+    .hblnk_out(hblnk_out_start),
+  	.rgb_out(rgb_out_start),
+  	.char_xy(xy_char_start),
+  	.char_line(char_line_start)
+  );
+
+  char_rom_16x1_start char_rom_start(
+	.char_xy(xy_char_start),
+	.char_code(char_code_start)	
+  );
+
+  font_rom font_rom_start(
 	.clk(pclk),
-	.address(addr_im),
-	.rgb(rgb_im)
-);
+	.addr({char_code_start [6:0], char_line_start [3:0]}),
+	.char_line_pixels(char_line_pixel_start)
+  );
 
-font_rom myfont_rom(
-	.clk(pclk),
-	.addr({char_code [6:0], char_line [3:0]}),
-	.char_line_pixels(char_line_pixel)
-);
 
-draw_rect_char mydraw_char(
-    .vcount_in(vcount_out_bg),
-    .vsync_in(vsync_out_bg),
-    .vblnk_in(vblnk_out_bg),
-    .hcount_in(hcount_out_bg),
-    .hsync_in(hsync_out_bg),
-    .hblnk_in(hblnk_out_bg),
-	.rgb_in(rgb_out_bg),
-    .pclk(pclk),
-	.rst(rst_out),
-	.char_pixels(char_line_pixel),
-	
-	.vcount_out(vcount_out_ch),
-    .vsync_out(vsync_out_ch),
-    .vblnk_out(vblnk_out_ch),
-    .hcount_out(hcount_out_ch),
-    .hsync_out(hsync_out_ch),
-    .hblnk_out(hblnk_out_ch),
-	.rgb_out(rgb_out_ch),
-	.char_xy(xy_char),
-	.char_line(char_line)
-);
-
-char_rom_16x16 mychar_rom(
-	.char_xy(xy_char),
-	.char_code(char_code)	
-);
-
-*/ 
   control My_control (
 	.pclk(clk),
 	.rst(rst),
 	.xpos(xpos),
 	.ypos(ypos),
-	.hcount_in(hcount_out_rt),
-	.vcount_in(vcount_out_rt),
-	.vblnk_in(vblnk_out_rt),
-	.hblnk_in(hblnk_out_rt),
-	.rgb_in(rgb_out_rt),
-	.vsync_in(vsync_out_rt),
-	.hsync_in(hsync_out_rt),
+	.hcount_in(hcount_out_start),
+	.vcount_in(vcount_out_start),
+	.vblnk_in(vblnk_out_start),
+	.hblnk_in(hblnk_out_start),
+	.rgb_in(rgb_out_start),
+	.vsync_in(vsync_out_start),
+	.hsync_in(hsync_out_start),
+	
 	.hs_out(hsync_out),
 	.vs_out(vsync_out),
 	.rgb_out(rgb_out)
