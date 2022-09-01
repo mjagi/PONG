@@ -13,7 +13,7 @@
 module draw_ball_ctl (
   input wire pclk,
   input wire rst,
-  input wire [11:0] mouse_xpos,
+  //input wire [11:0] mouse_xpos,
   input wire [11:0] mouse_ypos,
   input wire mouse_left,
 

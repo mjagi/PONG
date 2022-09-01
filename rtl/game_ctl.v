@@ -25,7 +25,7 @@ module game_ctl (
   wire [10:0] hcount_out_bg, vcount_out_bg, hcount_out_rt, vcount_out_rt, hcount_out_ch, vcount_out_ch;
   wire vsync_out_bg, hsync_out_bg, hsync_out_rt, vsync_out_rt, hsync_out_ch, vsync_out_ch;
   wire hblnk_out_bg, vblnk_out_bg, hblnk_out_rt, vblnk_out_rt, hblnk_out_ch, vblnk_out_ch;
-  wire [11:0] rgb_out_bg, rgb_out_rt,rgb_out_ch ,rgb_im, xpos_wire, ypos_wire, xpos_wire2, ypos_wire2,ypos_wire_d, xpos_wire_d, addr_im;
+  wire [11:0] rgb_out_bg, rgb_out_rt,rgb_out_ch ,rgb_im, xpos_ctl, ypos_ctl, addr_im;
   wire rst_out, mouse_left, mouse_left_d;
   wire [7:0] char_line_pixel, xy_char;
   wire [3:0] char_line;
@@ -69,55 +69,53 @@ module game_ctl (
     .hcount_out(hcount_out_rt),
     .hsync_out(hsync_out_rt),
     .hblnk_out(hblnk_out_rt),
-	.rgb_out(rgb_out)
+	.rgb_out(rgb_out_rt)
   );
-/*  
-  draw_rect_ctl my_draw_ctl(
-    .pclk(pclk),
+  
+  draw_ball_ctl my_ball_ctl(
+    .pclk(clk),
     .rst(rst_out),
     .mouse_left(mouse_left),
-    .mouse_xpos(xpos_wire_d),
-    .mouse_ypos(ypos_wire_d),
+    .mouse_ypos(ypos),
     
-    .xpos(xpos_wire2),
-    .ypos(ypos_wire2)
+    .xpos(xpos_ctl),
+    .ypos(ypos_ctl)
   );
-  */
   
- /* 
+  vga_draw_ball my_draw_ball(
+      .vcount_in(vcount_out_rt),
+      .vsync_in(vsync_out_rt),
+      .vblnk_in(vblnk_out_rt),
+      .hcount_in(hcount_out_rt),
+      .hsync_in(hsync_out_rt),
+      .hblnk_in(hblnk_out_rt),
+      .rgb_in(rgb_out_rt),
+      .pclk(clk),
+      .rst(rst_out),
+      .xpos(xpos_ctl),
+      .ypos(xpos_ctl),
+      .rgb_pixel(rgb_im),
+      
+      .vcount_out(vcount_out_ch),
+      .vsync_out(vsync_out),
+      .vblnk_out(vblnk_out_ch),
+      .hcount_out(hcount_out_ch),
+      .hsync_out(hsync_out),
+      .hblnk_out(hblnk_out_ch),
+      .rgb_out(rgb_out),
+      .pixel_addr(addr_im)
+  );
+  
   image_rom My_image(
-	.clk(pclk),
+	.clk(clk),
 	.address(addr_im),
 	.rgb(rgb_im)
 );
-
+/*
 font_rom myfont_rom(
 	.clk(pclk),
 	.addr({char_code [6:0], char_line [3:0]}),
 	.char_line_pixels(char_line_pixel)
-);
-
-draw_rect_char mydraw_char(
-    .vcount_in(vcount_out_bg),
-    .vsync_in(vsync_out_bg),
-    .vblnk_in(vblnk_out_bg),
-    .hcount_in(hcount_out_bg),
-    .hsync_in(hsync_out_bg),
-    .hblnk_in(hblnk_out_bg),
-	.rgb_in(rgb_out_bg),
-    .pclk(pclk),
-	.rst(rst_out),
-	.char_pixels(char_line_pixel),
-	
-	.vcount_out(vcount_out_ch),
-    .vsync_out(vsync_out_ch),
-    .vblnk_out(vblnk_out_ch),
-    .hcount_out(hcount_out_ch),
-    .hsync_out(hsync_out_ch),
-    .hblnk_out(hblnk_out_ch),
-	.rgb_out(rgb_out_ch),
-	.char_xy(xy_char),
-	.char_line(char_line)
 );
 
 char_rom_16x16 mychar_rom(
@@ -125,24 +123,5 @@ char_rom_16x16 mychar_rom(
 	.char_code(char_code)	
 );
 
- 
-  control My_control (
-	.pclk(pclk),
-	.rst(rst_out),
-	.xpos(xpos_wire_d),
-	.ypos(ypos_wire_d),
-	.hcount_in(hcount_out_rt),
-	.vcount_in(vcount_out_rt),
-	.vblnk_in(vblnk_out_rt),
-	.hblnk_in(hblnk_out_rt),
-	.rgb_in(rgb_out_rt),
-	.vsync_in(vsync_out_rt),
-	.hsync_in(hsync_out_rt),
-	.hs_out(hs),
-	.vs_out(vs),
-	.r(r),
-	.g(g),
-	.b(b)
- );
 */
 endmodule
