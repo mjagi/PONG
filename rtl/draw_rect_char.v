@@ -37,12 +37,12 @@ reg [11:0] rgb_nxt, rgb_temp;
 reg [10:0] addr_y, addr_x;
 
 
-parameter RECT_LENGTH = 256;
+parameter RECT_LENGTH = 16;
 parameter RECT_WIDTH = 128;
-parameter RECT_X = 300;
-parameter RECT_Y = 200;
-parameter RECT_COLOR = 12'h0_f_c;
-parameter CHAR_COLOR = 12'hf_f_f;
+parameter RECT_X = 454;
+parameter RECT_Y = 96;
+parameter RECT_COLOR = 12'h0_0_0;
+parameter CHAR_COLOR = 12'h0_6_f;
 
 
   always @(posedge pclk)
@@ -67,7 +67,7 @@ parameter CHAR_COLOR = 12'hf_f_f;
       vcount_out <= vcount_in;
       vsync_out <= vsync_in;
       vblnk_out <= vblnk_in;
-	    rgb_temp <= rgb_in;
+	  rgb_temp <= rgb_in;
       rgb_out <= rgb_nxt;
 	end
   end
