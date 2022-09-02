@@ -104,11 +104,11 @@ port (
 
    hcount   : in std_logic_vector(11 downto 0);
    vcount   : in std_logic_vector(11 downto 0);
-   --blank    : in std_logic; -- if VGA blank is used
+   blank    : in std_logic; -- if VGA blank is used
 
-   --red_in   : in std_logic_vector(3 downto 0); -- if VGA signal pass-through is used
-   --green_in : in std_logic_vector(3 downto 0);
-   --blue_in  : in std_logic_vector(3 downto 0);
+   red_in   : in std_logic_vector(3 downto 0); -- if VGA signal pass-through is used
+   green_in : in std_logic_vector(3 downto 0);
+   blue_in  : in std_logic_vector(3 downto 0);
    
    enable_mouse_display_out : out std_logic;
 

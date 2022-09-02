@@ -16,18 +16,17 @@ module menu_ctl (
   input wire hblnk_in,
   input wire [11:0] ypos,
   input wire [11:0] xpos,
-  input wire [11:0] rgb_in,
   
-  output reg vsync_out,
-  output reg hsync_out,
-  output reg [11:0] rgb_out
+  output wire vsync_out,
+  output wire hsync_out,
+  output wire [11:0] rgb_out
   );
 
-  wire [10:0] hcount_out_if, vcount_out_if, hcount_out_rt, vcount_out_rt, hcount_out_start, vcount_out_start;
-  wire vsync_out_if, hsync_out_if, hsync_out_rt, vsync_out_rt, hsync_out_start, vsync_out_start;
-  wire hblnk_out_if, vblnk_out_if, hblnk_out_rt, vblnk_out_rt, hblnk_out_start, vblnk_out_start;
-  wire [11:0] rgb_out_if, rgb_out_rt,rgb_out_start ,rgb_im, xpos_wire, ypos_wire, xpos_wire2, ypos_wire2,ypos_wire_d, xpos_wire_d, addr_im;
-  wire rst_out, mouse_left, mouse_left_d;
+  wire [10:0] hcount_out_if, vcount_out_if, hcount_out_start, vcount_out_start;
+  wire vsync_out_if, hsync_out_if, hsync_out_start, vsync_out_start, vsync_ctl, hsync_ctl;
+  wire hblnk_out_if, vblnk_out_if,hblnk_out_start, vblnk_out_start;
+  wire [11:0] rgb_out_if, rgb_out_start,rgb_ctl, rgb_im, addr_im;
+  wire rst_out;
   wire [7:0] char_line_pixel_start, xy_char_start;
   wire [3:0] char_line_start;
   wire [6:0] char_code_start;
@@ -105,5 +104,18 @@ module menu_ctl (
 	.vs_out(vsync_out),
 	.rgb_out(rgb_out)
  );
-
+/* 
+  always @(posedge clk) begin
+    if (rst) begin
+        hsync_out <= 0;
+        vsync_out <= 0;    
+        rgb_out <= 0;
+    end
+    else begin    
+        hsync_out <= hsync_ctl;
+        vsync_out <= vsync_ctl;    
+        rgb_out <= rgb_ctl;
+    end
+end
+*/
 endmodule

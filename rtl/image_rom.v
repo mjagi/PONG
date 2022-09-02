@@ -13,7 +13,7 @@ module image_rom (
 
 reg [7:0] rom [0:255];
 
-initial $readmemh("D:/Vivado/MateuszJagielski/PROJECT/rtl/image_rom.data", rom); 
+initial $readmemh("F:/Vivado/BartoszBialkowski/PROJECT/rtl/image_rom.data", rom); 
 
 always @(posedge clk)
     rgb <= rom[address];

@@ -18,8 +18,10 @@ module top_ctl(
 	output reg hsync_out,
 	output reg [11:0] rgb_out
 );
-reg [11:0] rgb_menu, rgb_game, rgb_cred, rgb_nxt;
-reg vsync_menu, hsync_menu, vsync_game, hsync_game, vsync_cred, hsync_cred, vsync_nxt, hsync_nxt;
+wire [11:0] rgb_menu, rgb_game, rgb_cred;
+reg [11:0] rgb_nxt;
+wire vsync_menu, hsync_menu, vsync_game, hsync_game, vsync_cred, hsync_cred;
+reg vsync_nxt, hsync_nxt;
 reg [1:0] state, state_nxt;
 
 localparam IDLE = 2'b00;

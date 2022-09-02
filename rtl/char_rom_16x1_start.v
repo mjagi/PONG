@@ -97,5 +97,6 @@ module char_rom_16x1_start
 		8'h0d: char_code = CAP_A;
 		8'h0e: char_code = CAP_M;
 		8'h0f: char_code = CAP_E;
+		default: char_code = BLANK;
 	  endcase
 endmodule
