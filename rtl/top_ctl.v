@@ -89,6 +89,7 @@ end
         .hsync_in(hsync_in),
         .hblnk_in(hblnk_in),
         .ypos(ypos),
+        .mouse_left(mouse_left),
       
         .vsync_out(vsync_game),
         .hsync_out(hsync_game),

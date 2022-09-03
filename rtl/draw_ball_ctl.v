@@ -104,7 +104,6 @@ module draw_ball_ctl (
         xpos_nxt = CENTRAL_LINE;
         ypos_nxt = mouse_ypos;
         direction_nxt = UPLEFT;
-
       end
       
       MOVING: begin
@@ -134,6 +133,11 @@ module draw_ball_ctl (
 
             UPLEFT: begin
               xpos_nxt = xpos - 1;
+              ypos_nxt = ypos - 1;
+            end
+            
+            default: begin
+              xpos_nxt = xpos + 1;
               ypos_nxt = ypos - 1;
             end
           endcase
@@ -174,6 +178,13 @@ module draw_ball_ctl (
               else if (xpos < (LEFT_WALL + 1))
                 direction_nxt = UPRIGHT;
             end
+
+            default: begin 
+              if (ypos < (UP_WALL + 1))
+                direction_nxt = DOWNRIGHT;
+              else if (xpos > (RIGHT_WALL - BALL_DIAMETER - 1))
+                direction_nxt = UPLEFT;
+            end
             endcase
             
             if(speed_count < 9)
@@ -193,24 +204,33 @@ module draw_ball_ctl (
               end
             else
               pxl_interval_nxt = pxl_interval;
+            end
           end
-          
-          
-        end
         
-        else
-        begin
-          xpos_nxt = xpos;
-          ypos_nxt = ypos;
-          interval_count_nxt = interval_count + 1;
-          interval_change_nxt = interval_change;
-          pxl_interval_nxt = pxl_interval;
-          speed_count_nxt = speed_count;
-          speed_change_count_nxt = speed_change_count;
-          direction_nxt = direction;
+          else
+			begin
+			  xpos_nxt = xpos;
+			  ypos_nxt = ypos;
+			  interval_count_nxt = interval_count + 1;
+			  interval_change_nxt = interval_change;
+			  pxl_interval_nxt = pxl_interval;
+			  speed_count_nxt = speed_count;
+			  speed_change_count_nxt = speed_change_count;
+			  direction_nxt = direction;
+  			end
   		end
+  		
+  		default: begin
+  		  speed_count_nxt = 0;
+  		  speed_change_count_nxt = 0;
+  		  interval_count_nxt = 0;
+  		  pxl_interval_nxt = INTERVAL_START;
+  		  interval_change_nxt = INTERVAL_CHANGE_START;
+  		  xpos_nxt = CENTRAL_LINE;
+  		  ypos_nxt = mouse_ypos;
+  		  direction_nxt = UPLEFT;
   		end
-  		endcase
+  	    endcase
   	  end
 
 

@@ -15,6 +15,7 @@ module game_ctl (
   input wire hsync_in,
   input wire hblnk_in,
   input wire [11:0] ypos,
+  input wire mouse_left,
   
   output wire vsync_out,
   output wire hsync_out,
@@ -24,9 +25,8 @@ module game_ctl (
   wire [10:0] hcount_out_bg, vcount_out_bg, hcount_out_rt, vcount_out_rt, hcount_out_ch, vcount_out_ch;
   wire vsync_out_bg, hsync_out_bg, hsync_out_rt, vsync_out_rt, hsync_out_ch, vsync_out_ch;
   wire hblnk_out_bg, vblnk_out_bg, hblnk_out_rt, vblnk_out_rt, hblnk_out_ch, vblnk_out_ch;
-  wire [11:0] rgb_out_bg, rgb_out_rt,rgb_out_ch ,rgb_im, xpos_ctl, ypos_ctl, addr_im;
-  wire rst_out, mouse_left, mouse_left_d;
-  wire [7:0] char_line_pixel, xy_char;
+  wire [11:0] rgb_out_bg, rgb_out_rt,rgb_out_ch ,rgb_im, xpos_ctl, ypos_ctl;
+  wire [7:0] char_line_pixel, xy_char, addr_im;
   wire [3:0] char_line;
   wire [6:0] char_code;
 
@@ -39,7 +39,7 @@ module game_ctl (
     .hsync_in(hsync_in),
     .hblnk_in(hblnk_in),
     .pclk(clk),
-	  .rst(rst_out),
+	  .rst(rst),
 	
 	  .vcount_out(vcount_out_bg),
     .vsync_out(vsync_out_bg),
@@ -58,7 +58,7 @@ module game_ctl (
     .hsync_in(hsync_out_bg),
     .hblnk_in(hblnk_out_bg),
     .pclk(clk),
-	.rst(rst_out),
+	.rst(rst),
 	.rgb_in(rgb_out_bg),
 	.y_pos(ypos),
 	
@@ -73,7 +73,7 @@ module game_ctl (
   
   draw_ball_ctl my_ball_ctl(
     .pclk(clk),
-    .rst(rst_out),
+    .rst(rst),
     .mouse_left(mouse_left),
     .mouse_ypos(ypos),
     
@@ -90,7 +90,7 @@ module game_ctl (
       .hblnk_in(hblnk_out_rt),
       .rgb_in(rgb_out_rt),
       .pclk(clk),
-      .rst(rst_out),
+      .rst(rst),
       .xpos(xpos_ctl),
       .ypos(xpos_ctl),
       .rgb_pixel(rgb_im),
