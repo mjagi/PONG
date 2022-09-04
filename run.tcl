@@ -61,6 +61,7 @@ proc create_new_project {project target top_module} {
         rtl/char_rom_16x1_credits.v
         rtl/char_rom_16x1_mode_select.v
         rtl/char_rom_16x2_easy.v
+		rtl/char_rom_16x2_hard.v
 		rtl/font_rom.v
 		rtl/draw_rect_char.v
     }

@@ -74,7 +74,7 @@ module vga_example (
 		.pclk(pclk),
 		.rst(rst_out)
 	);
-  
+	
 	top_ctl My_top_ctl(
 		.clk(pclk),
 		.rst(rst_out),

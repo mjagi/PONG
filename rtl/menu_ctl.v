@@ -16,20 +16,21 @@ module menu_ctl (
   input wire hblnk_in,
   input wire [11:0] ypos,
   input wire [11:0] xpos,
+  input wire difficulty,
   
   output wire vsync_out,
   output wire hsync_out,
   output wire [11:0] rgb_out
   );
 
-  wire [10:0] hcount_out_if, vcount_out_if, hcount_out_start, vcount_out_start;
-  wire vsync_out_if, hsync_out_if, hsync_out_start, vsync_out_start, vsync_ctl, hsync_ctl;
-  wire hblnk_out_if, vblnk_out_if,hblnk_out_start, vblnk_out_start;
-  wire [11:0] rgb_out_if, rgb_out_start,rgb_ctl, rgb_im, addr_im;
+  wire [10:0] hcount_out_if, vcount_out_if, hcount_out_start, vcount_out_start,hcount_out_credits, vcount_out_credits;
+  wire vsync_out_if, hsync_out_if, hsync_out_start, vsync_out_start, vsync_out_credits, hsync_out_credits;
+  wire hblnk_out_if, vblnk_out_if,hblnk_out_start, vblnk_out_start,hblnk_out_credits, vblnk_out_credits;
+  wire [11:0] rgb_out_if, rgb_out_start,rgb_out_credits, rgb_im, addr_im;
   wire rst_out;
-  wire [7:0] char_line_pixel_start, xy_char_start;
-  wire [3:0] char_line_start;
-  wire [6:0] char_code_start;
+  wire [7:0] char_line_pixel_start, xy_char_start,char_line_pixel_credits, xy_char_credits;
+  wire [3:0] char_line_start,char_line_credits;
+  wire [6:0] char_code_start,char_code_credits;
 
   
   if_menu my_if_menu (
@@ -51,7 +52,7 @@ module menu_ctl (
 	.rgb_out(rgb_out_if)
   );
   
-  
+//---------- Start game  
   draw_rect_char draw_char_start(
     .vcount_in(vcount_out_if),
     .vsync_in(vsync_out_if),
@@ -86,19 +87,57 @@ module menu_ctl (
 	.char_line_pixels(char_line_pixel_start)
   );
 
+//---------- credits
+  draw_rect_char 
+  #(
+        .RECT_Y(672)          
+    )
+  draw_char_credits(
+    .vcount_in(vcount_out_start),
+    .vsync_in(vsync_out_start),
+    .vblnk_in(vblnk_out_start),
+    .hcount_in(hcount_out_start),
+    .hsync_in(hsync_out_start),
+    .hblnk_in(hblnk_out_start),
+  	.rgb_in(rgb_out_start),
+    .pclk(clk),
+  	.rst(rst),
+  	.char_pixels(char_line_pixel_credits),
+  	
+  	.vcount_out(vcount_out_credits),
+    .vsync_out(vsync_out_credits),
+    .vblnk_out(vblnk_out_credits),
+    .hcount_out(hcount_out_credits),
+    .hsync_out(hsync_out_credits),
+    .hblnk_out(hblnk_out_credits),
+  	.rgb_out(rgb_out_credits),
+  	.char_xy(xy_char_credits),
+  	.char_line(char_line_credits)
+  );
 
+  char_rom_16x1_credits char_rom_credits(
+	.char_xy(xy_char_credits),
+	.char_code(char_code_credits)	
+  );
+
+  font_rom font_rom_credits(
+	.clk(clk),
+	.addr({char_code_credits [6:0], char_line_credits [3:0]}),
+	.char_line_pixels(char_line_pixel_credits)
+  );
+//--------
   control My_control (
 	.pclk(clk),
 	.rst(rst),
 	.xpos(xpos),
 	.ypos(ypos),
-	.hcount_in(hcount_out_start),
-	.vcount_in(vcount_out_start),
-	.vblnk_in(vblnk_out_start),
-	.hblnk_in(hblnk_out_start),
-	.rgb_in(rgb_out_start),
-	.vsync_in(vsync_out_start),
-	.hsync_in(hsync_out_start),
+	.hcount_in(hcount_out_credits),
+	.vcount_in(vcount_out_credits),
+	.vblnk_in(vblnk_out_credits),
+	.hblnk_in(hblnk_out_credits),
+	.rgb_in(rgb_out_credits),
+	.vsync_in(vsync_out_credits),
+	.hsync_in(hsync_out_credits),
 	
 	.hs_out(hsync_out),
 	.vs_out(vsync_out),

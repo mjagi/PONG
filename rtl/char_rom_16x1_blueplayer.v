@@ -182,6 +182,6 @@ module char_rom_16x1_blueplayer
 		// 8'h5d: char_code = BLANK;   
 		// 8'h5e: char_code = BLANK;   
 		// 8'h5f: char_code = BLANK;   
-		   
+		default: char_code = BLANK;   
 	  endcase
 endmodule

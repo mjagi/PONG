@@ -97,7 +97,7 @@ module char_rom_16x1_redplayer
 		8'h0d: char_code = BLANK;
 		8'h0e: char_code = BLANK;
 		8'h0f: char_code = COLON;
-		
+		default: char_code = BLANK;
 		// 8'h10: char_code = BLANK;         
 		// 8'h11: char_code = BLANK; 
 		// 8'h12: char_code = BLANK; 

@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module char_rom_16x2_easy
+module char_rom_16x1_start
     (
         input  wire [7:0] char_xy,
         output reg  [6:0] char_code
@@ -104,10 +104,10 @@ module char_rom_16x2_easy
 		8'h13: char_code = BLANK; 
 		8'h14: char_code = BLANK;
 		8'h15: char_code = BLANK; 
-		8'h16: char_code = CAP_E;  
+		8'h16: char_code = CAP_H;  
 		8'h17: char_code = CAP_A; 
-		8'h18: char_code = CAP_S; 
-		8'h19: char_code = CAP_Y;
+		8'h18: char_code = CAP_R; 
+		8'h19: char_code = CAP_D;
 		8'h1a: char_code = BLANK; 
 		8'h1b: char_code = BLANK; 
 		8'h1c: char_code = BLANK;

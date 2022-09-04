@@ -114,7 +114,7 @@ module char_rom_16x2_MJ
 		8'h1d: char_code = BLANK; 
 		8'h1e: char_code = BLANK;
 		8'h1f: char_code = BLANK; 
-		
+		default: char_code = BLANK;
 		// 8'h20: char_code = BLANK; 
 		// 8'h21: char_code = BLANK; 
 		// 8'h22: char_code = BLANK;   

@@ -97,5 +97,6 @@ module char_rom_16x1_mode_select
 		8'h0d: char_code = CAP_E;
 		8'h0e: char_code = CAP_C;
 		8'h0f: char_code = CAP_T;
+		default: char_code = BLANK;
 	  endcase
 endmodule

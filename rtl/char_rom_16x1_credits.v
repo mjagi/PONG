@@ -97,5 +97,6 @@ module char_rom_16x1_credits
 		8'h0d: char_code = BLANK;
 		8'h0e: char_code = BLANK;
 		8'h0f: char_code = BLANK;
+		default: char_code = BLANK;
 	  endcase
 endmodule

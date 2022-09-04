@@ -37,15 +37,15 @@ module if_menu (
       // Active display, left edge, make a green line.
       else if (hcount_in == 0) rgb_nxt = 12'hf_f_f;
       // Active display, right edge, make a red line.
-      else if (hcount_in == 1023) rgb_nxt = 12'hf_f_f;
+      else if (hcount_in == 1021) rgb_nxt = 12'hf_f_f;
 	  // Active display, boxes gray
 	  else if (hcount_in >= 362 && hcount_in <= 674 &&(vcount_in == 46 || vcount_in ==  146 || 
 	  vcount_in == 238 || vcount_in == 338 || vcount_in == 430 || vcount_in == 530 ||
-	  vcount_in == 622 || vcount_in == 722)) rgb_nxt = 12'h3_3_3;
+	  vcount_in == 622 || vcount_in == 722)) rgb_nxt = 12'h6_6_6;
 	  
 	  else if ((hcount_in == 362 || hcount_in == 674) && ((vcount_in >= 46 && vcount_in <= 146) || 
-	  (vcount_in >= 238 || vcount_in <= 338) || (vcount_in >= 430 || vcount_in <= 530) ||
-	  (vcount_in >= 622 || vcount_in <= 722))) rgb_nxt = 12'h3_3_3;
+	  (vcount_in >= 238 && vcount_in <= 338) || (vcount_in >= 430 && vcount_in <= 530) ||
+	  (vcount_in >= 622 && vcount_in <= 722))) rgb_nxt = 12'h9_9_9;
 	  
       // Active display, interior, fill with black.
       else rgb_nxt = 12'h0_0_0;    
