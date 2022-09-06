@@ -45,11 +45,11 @@ reg [11:0] rgb_nxt, rgb_temp;
   always @*
   begin
     //if(vcount_in == y_pos && hcount_in == x_pos) rgb_nxt <= 12'h000;
-    if ((y_pos >= (768 - WYSOKOSC)) && (vcount_in >= (768 - WYSOKOSC)) && (hcount_in >= (ODLEGLOSC - SZEROKOSC)) && (hcount_in < ODLEGLOSC)) rgb_nxt <= KOLOR;
+    if ((y_pos >= (768 - WYSOKOSC)) && (vcount_in >= (768 - WYSOKOSC)) && (hcount_in >= (ODLEGLOSC - SZEROKOSC)) && (hcount_in < ODLEGLOSC)) rgb_nxt = KOLOR;
     
     else if ((vcount_in >= y_pos) && (vcount_in < (y_pos + WYSOKOSC)) && (hcount_in >= (ODLEGLOSC - SZEROKOSC)) && 
-        (hcount_in < ODLEGLOSC)) rgb_nxt <= KOLOR;
-	else rgb_nxt <= rgb_in;
+        (hcount_in < ODLEGLOSC)) rgb_nxt = KOLOR;
+	else rgb_nxt = rgb_in;
   end
  /* 
     always @(posedge pclk) begin

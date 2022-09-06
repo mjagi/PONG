@@ -43,6 +43,9 @@ module draw_ball_ctl (
   
   parameter CENTRAL_LINE = 511;
 
+  parameter SZEROKOSC = 10;
+  parameter WYSOKOSC = 80;
+  parameter ODLEGLOSC = 60;
   
   reg [1:0] state, state_nxt, direction, direction_nxt;
   reg [11:0] speed_count, speed_count_nxt, speed_change_count, speed_change_count_nxt;
@@ -142,14 +145,9 @@ module draw_ball_ctl (
             end
           endcase
           
-          if((ypos < (DOWN_WALL - BALL_DIAMETER)) && (ypos > UP_WALL) && (xpos < RIGHT_WALL - BALL_DIAMETER) && (xpos > LEFT_WALL)) 
+          
+          if((ypos >= (DOWN_WALL - BALL_DIAMETER)) || (ypos <= UP_WALL) || (xpos >= RIGHT_WALL - BALL_DIAMETER) || (xpos <= LEFT_WALL)) 
             begin 
-            pxl_interval_nxt = pxl_interval;
-            direction_nxt = direction;
-            end
-            
-          else begin
-//            pxl_interval_nxt = pxl_interval - interval_change;
   	        case (direction)
             UPRIGHT: begin 
               if (ypos < (UP_WALL + 1))
@@ -204,6 +202,36 @@ module draw_ball_ctl (
               end
             else
               pxl_interval_nxt = pxl_interval;
+            end
+          
+          else if(((mouse_ypos >= (768 - WYSOKOSC)) && (ypos >= (768 - WYSOKOSC)) && (xpos >= (ODLEGLOSC - SZEROKOSC)) && (xpos < ODLEGLOSC)) || ((ypos >= mouse_ypos) && (ypos < (mouse_ypos + WYSOKOSC)) && (xpos >= (ODLEGLOSC - SZEROKOSC)) && (xpos < ODLEGLOSC))) begin
+          		case (direction)
+                      UPRIGHT: begin 
+                          direction_nxt = UPLEFT;
+                      end
+                      
+                      DOWNRIGHT: begin
+                          direction_nxt = DOWNLEFT;
+                      end
+          
+                      DOWNLEFT: begin
+                          direction_nxt = DOWNRIGHT;
+                      end
+          
+                      UPLEFT: begin
+                          direction_nxt = UPRIGHT;
+                      end
+          
+                      default: begin 
+                          direction_nxt = direction;
+                      end
+                      endcase
+                end
+          
+          else begin
+//            pxl_interval_nxt = pxl_interval - interval_change;
+            pxl_interval_nxt = pxl_interval;
+            direction_nxt = direction;
             end
           end
         

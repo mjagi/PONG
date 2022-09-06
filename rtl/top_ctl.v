@@ -23,7 +23,7 @@ reg [11:0] rgb_nxt;
 wire vsync_menu, hsync_menu, vsync_game, hsync_game, vsync_cred, hsync_cred;
 reg vsync_nxt, hsync_nxt;
 reg [1:0] state, state_nxt;
-reg difficulty; 
+reg difficulty, difficulty_nxt = 0; 
 
 localparam IDLE = 2'b00;
 localparam GAME = 2'b01;
@@ -45,8 +45,8 @@ always@* begin
 		hsync_nxt = hsync_menu;
 		rgb_nxt = rgb_menu;
 		if(mouse_left && (ypos >= 238 && ypos <= 338) && (xpos >= 362 && xpos <= 674)) begin
-		  if (difficulty) difficulty = 0;
-		  else difficulty = 1;
+		  if (difficulty == 1) difficulty_nxt = 0;
+		  else difficulty_nxt = 1;
 		end  
     end
     GAME: begin
@@ -63,6 +63,7 @@ always@* begin
 		vsync_nxt = vsync_menu;
     	hsync_nxt = hsync_menu;
     	rgb_nxt = rgb_menu;
+    	difficulty_nxt = 0;
     end
     endcase
 end
@@ -109,12 +110,14 @@ end
 		hsync_out <= 0;
 		vsync_out <= 0;	
 		rgb_out <= 0;
+		difficulty <= 0;
 	end
 	else begin	
 	    state <= state_nxt;
 		hsync_out <= hsync_nxt;
 		vsync_out <= vsync_nxt;	
 		rgb_out <= rgb_nxt;
+		difficulty <= difficulty_nxt;
 	end
 end
 

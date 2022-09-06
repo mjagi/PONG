@@ -90,7 +90,7 @@ module menu_ctl (
 //---------- credits
   draw_rect_char 
   #(
-        .RECT_Y(672)          
+        .RECT_Y(672)
     )
   draw_char_credits(
     .vcount_in(vcount_out_start),
