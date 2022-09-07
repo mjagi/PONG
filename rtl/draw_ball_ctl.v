@@ -210,6 +210,7 @@ module draw_ball_ctl (
             end
           
           else if(((mouse_ypos >= (768 - WYSOKOSC)) && (ypos >= (768 - WYSOKOSC)) && (xpos == ODLEGLOSC)) || ((ypos >= mouse_ypos) && (ypos < (mouse_ypos + WYSOKOSC)) && (xpos == ODLEGLOSC))) begin
+            pxl_interval_nxt = pxl_interval;
           		case (direction)
                       UPRIGHT: begin 
                           direction_nxt = UPLEFT;
@@ -230,8 +231,8 @@ module draw_ball_ctl (
                       default: begin 
                           direction_nxt = direction;
                       end
-                      endcase
-                end
+              endcase
+          end
           
           else begin
 //            pxl_interval_nxt = pxl_interval - interval_change;
@@ -240,8 +241,8 @@ module draw_ball_ctl (
             end
           end
         
-          else
-			begin
+        else
+			  begin
 			  xpos_nxt = xpos;
 			  ypos_nxt = ypos;
 			  interval_count_nxt = interval_count + 1;

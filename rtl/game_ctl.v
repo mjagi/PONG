@@ -14,6 +14,7 @@ module game_ctl (
   input wire vblnk_in,
   input wire hsync_in,
   input wire hblnk_in,
+  input wire [11:0] xpos,
   input wire [11:0] ypos,
   input wire mouse_left,
   input wire difficulty,
@@ -23,10 +24,10 @@ module game_ctl (
   output wire [11:0] rgb_out
   );
 
-  wire [10:0] hcount_out_bg, vcount_out_bg, hcount_out_rt, vcount_out_rt, hcount_out_ch, vcount_out_ch;
-  wire vsync_out_bg, hsync_out_bg, hsync_out_rt, vsync_out_rt, hsync_out_ch, vsync_out_ch;
-  wire hblnk_out_bg, vblnk_out_bg, hblnk_out_rt, vblnk_out_rt, hblnk_out_ch, vblnk_out_ch;
-  wire [11:0] rgb_out_bg, rgb_out_rt,rgb_out_ch ,rgb_im, xpos_ctl, ypos_ctl;
+  wire [10:0] hcount_out_bg, vcount_out_bg, hcount_out_rt, vcount_out_rt, hcount_out_ball, vcount_out_ball;
+  wire vsync_out_bg, hsync_out_bg, hsync_out_rt, vsync_out_rt, hsync_out_ball, vsync_out_ball;
+  wire hblnk_out_bg, vblnk_out_bg, hblnk_out_rt, vblnk_out_rt, hblnk_out_ball, vblnk_out_ball;
+  wire [11:0] rgb_out_bg, rgb_out_rt, rgb_out_ball, rgb_im, xpos_ctl, ypos_ctl;
   wire [7:0] char_line_pixel, xy_char, addr_im;
   wire [3:0] char_line;
   wire [6:0] char_code;
@@ -97,13 +98,13 @@ module game_ctl (
       .ypos(xpos_ctl),
       .rgb_pixel(rgb_im),
       
-      .vcount_out(vcount_out_ch),
-      .vsync_out(vsync_out),
-      .vblnk_out(vblnk_out_ch),
-      .hcount_out(hcount_out_ch),
-      .hsync_out(hsync_out),
-      .hblnk_out(hblnk_out_ch),
-      .rgb_out(rgb_out),
+      .vcount_out(vcount_out_ball),
+      .vsync_out(vsync_out_ball),
+      .vblnk_out(vblnk_out_ball),
+      .hcount_out(hcount_out_ball),
+      .hsync_out(hsync_out_ball),
+      .hblnk_out(hblnk_out_ball),
+      .rgb_out(rgb_out_ball),
       .pixel_addr(addr_im)
   );
   
@@ -112,6 +113,25 @@ module game_ctl (
 	.address(addr_im),
 	.rgb(rgb_im)
 );
+
+  control My_game_control (
+	.pclk(clk),
+	.rst(rst),
+	.xpos(xpos),
+	.ypos(ypos),
+	.hcount_in(hcount_out_ball),
+	.vcount_in(vcount_out_ball),
+	.vblnk_in(vblnk_out_ball),
+	.hblnk_in(hblnk_out_ball),
+	.rgb_in(rgb_out_ball),
+	.vsync_in(vsync_out_ball),
+	.hsync_in(hsync_out_ball),
+	
+	.hs_out(hsync_out),
+	.vs_out(vsync_out),
+	.rgb_out(rgb_out)
+ );
+
 /*
 font_rom myfont_rom(
 	.clk(pclk),

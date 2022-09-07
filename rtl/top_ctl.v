@@ -47,17 +47,20 @@ always@* begin
 		if(mouse_left && (ypos >= 238 && ypos <= 338) && (xpos >= 362 && xpos <= 674)) begin
 		  if (difficulty == 1) difficulty_nxt = 0;
 		  else difficulty_nxt = 1;
-		end  
+		end
+		else difficulty_nxt = difficulty;
     end
     GAME: begin
 		vsync_nxt = vsync_game;
     	hsync_nxt = hsync_game;
     	rgb_nxt = rgb_game;
+    	difficulty_nxt = difficulty;
     end
     CREDITS: begin
         vsync_nxt = vsync_game;
     	hsync_nxt = hsync_game;
     	rgb_nxt = rgb_game;
+    	difficulty_nxt = difficulty;
     end
     default: begin
 		vsync_nxt = vsync_menu;
@@ -96,6 +99,7 @@ end
         .hsync_in(hsync_in),
         .hblnk_in(hblnk_in),
         .ypos(ypos),
+		.xpos(xpos),
         .mouse_left(mouse_left),
         .difficulty(difficulty),
       
