@@ -44,9 +44,9 @@ module draw_background (
       // Active display, bottom edge, make a white line.
       else if (vcount_in == 767) rgb_nxt = 12'hf_f_f;
       // Active display, left edge, make a white line.
-      else if (hcount_in == 0) rgb_nxt = 12'hf_f_f;
+      else if (hcount_in == 1) rgb_nxt = 12'hf_f_f;
       // Active display, right edge, make a white line.
-      else if (hcount_in == 1022) rgb_nxt = 12'hf_f_f;
+      else if (hcount_in == 1023) rgb_nxt = 12'hf_f_f;
       // Active display, interior, fill with black.
       else rgb_nxt = 12'h0_0_0;    
     end

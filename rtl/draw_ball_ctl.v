@@ -22,32 +22,32 @@ module draw_ball_ctl (
   output reg [11:0] ypos
   );
   
-  parameter IDLE = 2'b00;
-  parameter MOVING = 2'b01;
-  parameter WALL = 2'b10;
-  parameter SPEED_UP = 2'b11;
+  localparam IDLE = 2'b00;
+  localparam MOVING = 2'b01;
+  localparam WALL = 2'b10;
+  localparam SPEED_UP = 2'b11;
   
-  parameter UPRIGHT = 2'b00;
-  parameter DOWNRIGHT = 2'b01;
-  parameter DOWNLEFT = 2'b10;
-  parameter UPLEFT = 2'b11;
+  localparam UPRIGHT = 2'b00;
+  localparam DOWNRIGHT = 2'b01;
+  localparam DOWNLEFT = 2'b10;
+  localparam UPLEFT = 2'b11;
   
-  parameter INTERVAL_START = 20'b1000_0000_0000_0000_0000;
-  parameter INTERVAL_CHANGE_HARD = 20'b0000_1000_0000_0000_0000;
-  parameter INTERVAL_CHANGE_EASY = 20'b0000_0000_0000_1000_0000;
-//  parameter INTERVAL_MIN = 20'b0000_0000_1000_0000_0000;
-  parameter BALL_DIAMETER = 16;
+  localparam INTERVAL_START = 20'b1000_0000_0000_0000_0000;
+  localparam INTERVAL_CHANGE_HARD = 20'b0000_1000_0000_0000_0000;
+  localparam INTERVAL_CHANGE_EASY = 20'b0000_0000_0000_1000_0000;
+//  localparam INTERVAL_MIN = 20'b0000_0000_1000_0000_0000;
+  localparam BALL_DIAMETER = 16;
   
-  parameter LEFT_WALL = 1;
-  parameter RIGHT_WALL = 1022;
-  parameter UP_WALL = 1;
-  parameter DOWN_WALL = 766;
+  localparam LEFT_WALL = 1;
+  localparam RIGHT_WALL = 1022;
+  localparam UP_WALL = 1;
+  localparam DOWN_WALL = 766;
   
-  parameter CENTRAL_LINE = 511;
+  localparam CENTRAL_LINE = 211;
 
-  parameter SZEROKOSC = 10;
-  parameter WYSOKOSC = 80;
-  parameter ODLEGLOSC = 60;
+  localparam SZEROKOSC = 10;
+  localparam WYSOKOSC = 80;
+  localparam ODLEGLOSC = 60;
   
   reg [1:0] state, state_nxt, direction, direction_nxt;
   reg [11:0] speed_count, speed_count_nxt, speed_change_count, speed_change_count_nxt;
@@ -101,174 +101,174 @@ module draw_ball_ctl (
     
     case (state_nxt)
       IDLE: begin
-        speed_count_nxt = 0;
-        speed_change_count_nxt = 0;
-        interval_count_nxt = 0;
-        pxl_interval_nxt = INTERVAL_START;
+            speed_count_nxt = 0;
+            speed_change_count_nxt = 0;
+            interval_count_nxt = 0;
+            pxl_interval_nxt = INTERVAL_START;
         
-        if(difficulty == 0) interval_change_nxt = INTERVAL_CHANGE_EASY;
-        else interval_change_nxt = INTERVAL_CHANGE_HARD;
+            if(difficulty == 0) interval_change_nxt = INTERVAL_CHANGE_EASY;
+            else interval_change_nxt = INTERVAL_CHANGE_HARD;
         
-        xpos_nxt = CENTRAL_LINE;
-        ypos_nxt = 43;
-        direction_nxt = UPLEFT;
+            xpos_nxt = CENTRAL_LINE;
+            ypos_nxt = 40;
+            direction_nxt = UPLEFT;
       end
       
       MOVING: begin
-        if(interval_count == pxl_interval)
-        begin
-          interval_count_nxt = 0;
-          interval_change_nxt = interval_change;
-          speed_count_nxt = speed_count;
-          speed_change_count_nxt = speed_change_count;
-          direction_nxt = direction;
+            if(interval_count == pxl_interval)
+            begin
+                interval_count_nxt = 0;
+                interval_change_nxt = interval_change;
+                speed_count_nxt = speed_count;
+                speed_change_count_nxt = speed_change_count;
+                direction_nxt = direction;
           
-          case (direction)
-            UPRIGHT: begin
-              xpos_nxt = xpos + 1;
-              ypos_nxt = ypos - 1;
-            end
+                case (direction)
+                    UPRIGHT: begin
+                        xpos_nxt = xpos + 1;
+                        ypos_nxt = ypos - 1;
+                    end
             
-            DOWNRIGHT: begin
-              xpos_nxt = xpos + 1;
-              ypos_nxt = ypos + 1;
-            end
+                    DOWNRIGHT: begin
+                        xpos_nxt = xpos + 1;
+                        ypos_nxt = ypos + 1;
+                    end
 
-            DOWNLEFT: begin
-              xpos_nxt = xpos - 1;
-              ypos_nxt = ypos + 1;
-            end
+                    DOWNLEFT: begin
+                        xpos_nxt = xpos - 1;
+                        ypos_nxt = ypos + 1;
+                    end
 
-            UPLEFT: begin
-              xpos_nxt = xpos - 1;
-              ypos_nxt = ypos - 1;
-            end
+                    UPLEFT: begin
+                        xpos_nxt = xpos - 1;
+                        ypos_nxt = ypos - 1;
+                    end
             
-            default: begin
-              xpos_nxt = xpos + 1;
-              ypos_nxt = ypos - 1;
-            end
-          endcase
+                    default: begin
+                        xpos_nxt = xpos + 1;
+                        ypos_nxt = ypos - 1;
+                    end
+                endcase
           
           
-          if((ypos >= (DOWN_WALL - BALL_DIAMETER)) || (ypos <= UP_WALL) || (xpos >= RIGHT_WALL - BALL_DIAMETER) || (xpos <= LEFT_WALL)) 
-            begin 
-  	        case (direction)
-            UPRIGHT: begin 
-              if (ypos < (UP_WALL + 1))
-                direction_nxt = DOWNRIGHT;
-              else if (xpos > (RIGHT_WALL - BALL_DIAMETER - 1))
-                direction_nxt = UPLEFT;
-            end
+                if((ypos >= (DOWN_WALL - BALL_DIAMETER)) || (ypos <= UP_WALL) || (xpos >= RIGHT_WALL - BALL_DIAMETER) || (xpos <= LEFT_WALL)) 
+                begin 
+  	                case (direction)
+                        UPRIGHT: begin                       
+                            if (ypos < (UP_WALL + 1))
+                                direction_nxt = DOWNRIGHT;
+                            else if (xpos > (RIGHT_WALL - BALL_DIAMETER - 1))
+                                direction_nxt = UPLEFT;
+                        end
             
-            DOWNRIGHT: begin
-              if (ypos > (DOWN_WALL - BALL_DIAMETER - 1))
-                direction_nxt = UPRIGHT;
-              else if (xpos > (RIGHT_WALL - BALL_DIAMETER - 1))
-                direction_nxt = DOWNLEFT;
-            end
+                        DOWNRIGHT: begin
+                            if (ypos > (DOWN_WALL - BALL_DIAMETER - 1))
+                                direction_nxt = UPRIGHT;
+                            else if (xpos > (RIGHT_WALL - BALL_DIAMETER - 1))
+                                direction_nxt = DOWNLEFT;
+                        end
 
-            DOWNLEFT: begin
-              if (ypos > (DOWN_WALL - BALL_DIAMETER - 1))
-                direction_nxt = UPLEFT;
-              else if (xpos < (LEFT_WALL + 1))
-                direction_nxt = DOWNRIGHT;
-            end
+                        DOWNLEFT: begin
+                            if (ypos > (DOWN_WALL - BALL_DIAMETER - 1))
+                                direction_nxt = UPLEFT;
+                            else if (xpos < (LEFT_WALL + 1))
+                                direction_nxt = DOWNRIGHT;
+                        end
 
-            UPLEFT: begin
-              if (ypos < (UP_WALL + 1))
-                direction_nxt = DOWNLEFT;
-              else if (xpos < (LEFT_WALL + 1))
-                direction_nxt = UPRIGHT;
-            end
+                        UPLEFT: begin
+                            if (ypos < (UP_WALL + 1))
+                                direction_nxt = DOWNLEFT;
+                            else if (xpos < (LEFT_WALL + 1))
+                                direction_nxt = UPRIGHT;
+                        end
 
-            default: begin 
-              if (ypos < (UP_WALL + 1))
-                direction_nxt = DOWNRIGHT;
-              else if (xpos > (RIGHT_WALL - BALL_DIAMETER - 1))
-                direction_nxt = UPLEFT;
-            end
-            endcase
+                        default: begin 
+                            if (ypos < (UP_WALL + 1))
+                                direction_nxt = DOWNRIGHT;
+                            else if (xpos > (RIGHT_WALL - BALL_DIAMETER - 1))
+                                direction_nxt = UPLEFT;
+                        end
+                    endcase
             
-            if(speed_count < 9)
-              begin
-                if(speed_change_count > 4)
-                  begin
-                    interval_change_nxt = interval_change>>1;
-                    pxl_interval_nxt = pxl_interval - interval_change;
-                    speed_change_count_nxt = 0;
-                    speed_count_nxt = speed_count + 1;
-                  end
-                else
-                  begin
-                    pxl_interval_nxt = pxl_interval - interval_change;
-                    speed_change_count_nxt = speed_change_count + 1;
-                  end
-              end
-            else
-              pxl_interval_nxt = pxl_interval;
-            end
+                    if(speed_count < 9)
+                    begin
+                        if(speed_change_count > 4)
+                        begin
+                            interval_change_nxt = interval_change>>1;
+                            pxl_interval_nxt = pxl_interval - interval_change;
+                            speed_change_count_nxt = 0;
+                            speed_count_nxt = speed_count + 1;
+                        end
+                        else 
+                        begin
+                            pxl_interval_nxt = pxl_interval - interval_change;
+                            speed_change_count_nxt = speed_change_count + 1;
+                        end
+                    end
+                    else
+                        pxl_interval_nxt = pxl_interval;
+                    end
           
-          else if(((mouse_ypos >= (768 - WYSOKOSC)) && (ypos >= (768 - WYSOKOSC)) && (xpos == ODLEGLOSC)) || ((ypos >= mouse_ypos) && (ypos < (mouse_ypos + WYSOKOSC)) && (xpos == ODLEGLOSC))) begin
-            pxl_interval_nxt = pxl_interval;
-          		case (direction)
-                      UPRIGHT: begin 
-                          direction_nxt = UPLEFT;
-                      end
+                else if(((mouse_ypos >= (768 - WYSOKOSC)) && (ypos >= (768 - WYSOKOSC)) && (xpos == ODLEGLOSC)) || ((ypos >= mouse_ypos) && (ypos < (mouse_ypos + WYSOKOSC)) && (xpos == ODLEGLOSC))) begin
+                    pxl_interval_nxt = pxl_interval;
+          		    case (direction)
+                        //UPRIGHT: begin 
+                          //  direction_nxt = UPLEFT;
+                      //  end
                       
-                      DOWNRIGHT: begin
-                          direction_nxt = DOWNLEFT;
-                      end
+                       // DOWNRIGHT: begin
+                         //   direction_nxt = DOWNLEFT;
+                      //  end
           
-                      DOWNLEFT: begin
-                          direction_nxt = DOWNRIGHT;
-                      end
+                        DOWNLEFT: begin
+                            direction_nxt = DOWNRIGHT;
+                        end
           
-                      UPLEFT: begin
-                          direction_nxt = UPRIGHT;
-                      end
+                        UPLEFT: begin
+                            direction_nxt = UPRIGHT;
+                        end
           
-                      default: begin 
-                          direction_nxt = direction;
-                      end
-              endcase
-          end
+                        default: begin 
+                            direction_nxt = direction;
+                        end
+                    endcase
+                end
           
-          else begin
-//            pxl_interval_nxt = pxl_interval - interval_change;
-            pxl_interval_nxt = pxl_interval;
-            direction_nxt = direction;
+                else begin
+//                  pxl_interval_nxt = pxl_interval - interval_change;
+                    pxl_interval_nxt = pxl_interval;
+                    direction_nxt = direction;
+                end
             end
-          end
         
-        else
-			  begin
-			  xpos_nxt = xpos;
-			  ypos_nxt = ypos;
-			  interval_count_nxt = interval_count + 1;
-			  interval_change_nxt = interval_change;
-			  pxl_interval_nxt = pxl_interval;
-			  speed_count_nxt = speed_count;
-			  speed_change_count_nxt = speed_change_count;
-			  direction_nxt = direction;
-  			end
+            else
+			begin
+			     xpos_nxt = xpos;
+			     ypos_nxt = ypos;
+			     interval_count_nxt = interval_count + 1;
+			     interval_change_nxt = interval_change;
+			     pxl_interval_nxt = pxl_interval;
+			     speed_count_nxt = speed_count;
+			     speed_change_count_nxt = speed_change_count;
+			     direction_nxt = direction;
+  		    end
   		end
   		
   		default: begin
-  		  speed_count_nxt = 0;
-  		  speed_change_count_nxt = 0;
-  		  interval_count_nxt = 0;
-  		  pxl_interval_nxt = INTERVAL_START;
+  		    speed_count_nxt = 0;
+  		    speed_change_count_nxt = 0;
+  		    interval_count_nxt = 0;
+  		    pxl_interval_nxt = INTERVAL_START;
   		  
-          if(difficulty == 0) interval_change_nxt = INTERVAL_CHANGE_EASY;
-  		  else interval_change_nxt = INTERVAL_CHANGE_HARD;
+            if(difficulty == 0) interval_change_nxt = INTERVAL_CHANGE_EASY;
+  		    else interval_change_nxt = INTERVAL_CHANGE_HARD;
   		  
-  		  xpos_nxt = CENTRAL_LINE;
-  		  ypos_nxt = 21;
-  		  direction_nxt = UPLEFT;
+  		    xpos_nxt = CENTRAL_LINE;
+  		    ypos_nxt = 21;
+  		    direction_nxt = UPLEFT;
   		end
   	    endcase
-  	  end
+  	end
 
 
   	  

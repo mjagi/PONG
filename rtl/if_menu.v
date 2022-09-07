@@ -35,9 +35,9 @@ module if_menu (
       // Active display, bottom edge, make a white line.
       else if (vcount_in == 767) rgb_nxt = 12'hf_f_f;
       // Active display, left edge, make a green line.
-      else if (hcount_in == 0) rgb_nxt = 12'hf_f_f;
+      else if (hcount_in == 1) rgb_nxt = 12'hf_f_f;
       // Active display, right edge, make a red line.
-      else if (hcount_in == 1021) rgb_nxt = 12'hf_f_f;
+      else if (hcount_in == 1023) rgb_nxt = 12'hf_f_f;
 	  // Active display, boxes gray
 	  else if (hcount_in >= 362 && hcount_in <= 674 &&(vcount_in == 46 || vcount_in ==  146 || 
 	  vcount_in == 238 || vcount_in == 338 || vcount_in == 430 || vcount_in == 530 ||
