@@ -16,6 +16,7 @@ module game_ctl (
   input wire hblnk_in,
   input wire [11:0] ypos,
   input wire mouse_left,
+  input wire difficulty,
   
   output wire vsync_out,
   output wire hsync_out,
@@ -76,6 +77,7 @@ module game_ctl (
     .rst(rst),
     .mouse_left(mouse_left),
     .mouse_ypos(ypos),
+    .difficulty(difficulty),
     
     .xpos(xpos_ctl),
     .ypos(ypos_ctl)

@@ -36,15 +36,15 @@ module vga_draw_ball (
 
 reg [11:0] rgb_nxt, rgb_temp;
 wire [3:0] pixel_addr_y, pixel_addr_x;
-reg [10:0] vcount_nxt, vcount_nxt2, hcount_nxt, hcount_nxt2;
-
+wire [10:0] hcount_del, vcount_del; 
+wire hsync_del, hblnk_del, vsync_del, vblnk_del;
 
 
 parameter RECT_LENGTH = 16;
 parameter RECT_WIDTH = 16;
 //parameter RECT_X = 317;
 //parameter RECT_Y = 40;
-//parameter RECT_COLOR = 12'h0_f_c;
+//parameter RECT_COLOR = 12'hf_f_f;
 
   assign pixel_addr_y = vcount_in - ypos;
   assign pixel_addr_x = hcount_in - xpos;
@@ -67,16 +67,27 @@ parameter RECT_WIDTH = 16;
     
     else 
     begin
-      hcount_out <= hcount_in;
-      hsync_out <= hsync_in;
-      hblnk_out <= hblnk_in;
-      vcount_out <= vcount_in;
-      vsync_out <= vsync_in;
-      vblnk_out <= vblnk_in;
-	  rgb_temp <= rgb_in;
-      rgb_out <= rgb_nxt;
+      hcount_out <= hcount_del;
+    hsync_out <= hsync_del;
+    hblnk_out <= hblnk_del;
+    vcount_out <= vcount_del;
+    vsync_out <= vsync_del;
+    vblnk_out <= vblnk_del;
+	rgb_temp <= rgb_in;
+    rgb_out <= rgb_nxt;
 	end
   end
+  
+      delay #(
+    .WIDTH (26),
+    .CLK_DEL(1)
+  ) u_delay (
+    .clk (pclk),
+    .rst (rst),
+    .din ({hcount_in, hsync_in, vcount_in, vsync_in, hblnk_in, vblnk_in}),
+    .dout ({hcount_del, hsync_del, vcount_del, vsync_del, hblnk_del, vblnk_del})
+  );
+
   
   always @*
  	begin

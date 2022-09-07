@@ -16,6 +16,7 @@ module draw_ball_ctl (
   //input wire [11:0] mouse_xpos,
   input wire [11:0] mouse_ypos,
   input wire mouse_left,
+  input wire difficulty,
 
   output reg [11:0] xpos,
   output reg [11:0] ypos
@@ -32,7 +33,8 @@ module draw_ball_ctl (
   parameter UPLEFT = 2'b11;
   
   parameter INTERVAL_START = 20'b1000_0000_0000_0000_0000;
-  parameter INTERVAL_CHANGE_START = 20'b0000_1000_0000_0000_0000;
+  parameter INTERVAL_CHANGE_HARD = 20'b0000_1000_0000_0000_0000;
+  parameter INTERVAL_CHANGE_EASY = 20'b0000_0000_0000_1000_0000;
 //  parameter INTERVAL_MIN = 20'b0000_0000_1000_0000_0000;
   parameter BALL_DIAMETER = 16;
   
@@ -95,7 +97,7 @@ module draw_ball_ctl (
     default:
       state_nxt = IDLE;
     endcase
-    
+
     
     case (state_nxt)
       IDLE: begin
@@ -103,9 +105,12 @@ module draw_ball_ctl (
         speed_change_count_nxt = 0;
         interval_count_nxt = 0;
         pxl_interval_nxt = INTERVAL_START;
-        interval_change_nxt = INTERVAL_CHANGE_START;
+        
+        if(difficulty == 0) interval_change_nxt = INTERVAL_CHANGE_EASY;
+        else interval_change_nxt = INTERVAL_CHANGE_HARD;
+        
         xpos_nxt = CENTRAL_LINE;
-        ypos_nxt = mouse_ypos;
+        ypos_nxt = 43;
         direction_nxt = UPLEFT;
       end
       
@@ -204,7 +209,7 @@ module draw_ball_ctl (
               pxl_interval_nxt = pxl_interval;
             end
           
-          else if(((mouse_ypos >= (768 - WYSOKOSC)) && (ypos >= (768 - WYSOKOSC)) && (xpos >= (ODLEGLOSC - SZEROKOSC)) && (xpos < ODLEGLOSC)) || ((ypos >= mouse_ypos) && (ypos < (mouse_ypos + WYSOKOSC)) && (xpos >= (ODLEGLOSC - SZEROKOSC)) && (xpos < ODLEGLOSC))) begin
+          else if(((mouse_ypos >= (768 - WYSOKOSC)) && (ypos >= (768 - WYSOKOSC)) && (xpos == ODLEGLOSC)) || ((ypos >= mouse_ypos) && (ypos < (mouse_ypos + WYSOKOSC)) && (xpos == ODLEGLOSC))) begin
           		case (direction)
                       UPRIGHT: begin 
                           direction_nxt = UPLEFT;
@@ -253,9 +258,12 @@ module draw_ball_ctl (
   		  speed_change_count_nxt = 0;
   		  interval_count_nxt = 0;
   		  pxl_interval_nxt = INTERVAL_START;
-  		  interval_change_nxt = INTERVAL_CHANGE_START;
+  		  
+          if(difficulty == 0) interval_change_nxt = INTERVAL_CHANGE_EASY;
+  		  else interval_change_nxt = INTERVAL_CHANGE_HARD;
+  		  
   		  xpos_nxt = CENTRAL_LINE;
-  		  ypos_nxt = mouse_ypos;
+  		  ypos_nxt = 21;
   		  direction_nxt = UPLEFT;
   		end
   	    endcase

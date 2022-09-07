@@ -34,15 +34,18 @@ module draw_rect_char (
   );
 
 reg [11:0] rgb_nxt, rgb_temp;
-reg [10:0] addr_y, addr_x;
+reg [7:0] addr_y;
+reg [6:0] addr_x;
 
+wire [10:0] hcount_del, vcount_del; 
+wire hsync_del, hblnk_del, vsync_del, vblnk_del;
 
 parameter RECT_LENGTH = 16;
 parameter RECT_WIDTH = 128;
 parameter RECT_X = 454;
-parameter RECT_Y = 96;
+parameter RECT_Y = 88;
 parameter RECT_COLOR = 12'h0_0_0;
-parameter CHAR_COLOR = 12'h0_6_f;
+parameter CHAR_COLOR = 12'hf_f_f;
 
 
   always @(posedge pclk)
@@ -61,16 +64,29 @@ parameter CHAR_COLOR = 12'h0_6_f;
     
     else 
     begin
-      hcount_out <= hcount_in;
-      hsync_out <= hsync_in;
-      hblnk_out <= hblnk_in;
-      vcount_out <= vcount_in;
-      vsync_out <= vsync_in;
-      vblnk_out <= vblnk_in;
+      hcount_out <= hcount_del;
+      hsync_out <= hsync_del;
+      hblnk_out <= hblnk_del;
+      vcount_out <= vcount_del;
+      vsync_out <= vsync_del;
+      vblnk_out <= vblnk_del;
 	  rgb_temp <= rgb_in;
       rgb_out <= rgb_nxt;
 	end
   end
+  
+      delay #(
+      .WIDTH (26),
+      .CLK_DEL(1)
+  ) u_delay (
+      .clk (pclk),
+      .rst (rst),
+      .din ({hcount_in, hsync_in, vcount_in, vsync_in, hblnk_in, vblnk_in}),
+      .dout ({hcount_del, hsync_del, vcount_del, vsync_del, hblnk_del, vblnk_del})
+  );
+
+  
+  
   
   always @*
   	begin
