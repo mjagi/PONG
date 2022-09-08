@@ -70,9 +70,9 @@ always@* begin
     end
 
     CREDITS: begin
-        vsync_nxt = vsync_game;
-    	hsync_nxt = hsync_game;
-    	rgb_nxt = rgb_game;
+        vsync_nxt = vsync_cred;
+    	hsync_nxt = hsync_cred;
+    	rgb_nxt = rgb_cred;
     	difficulty_nxt = difficulty;
      	color_state_nxt = color_state;
     end
@@ -170,6 +170,24 @@ end
         .hsync_out(hsync_game),
         .rgb_out(rgb_game)
     );
+	
+	cred_ctl My_cred_ctl(
+		.clk(clk),
+		.rst(rst),
+		.vcount_in(vcount_in),
+		.hcount_in(hcount_in),
+		.vsync_in(vsync_in),
+		.vblnk_in(vblnk_in),
+		.hsync_in(hsync_in),
+		.hblnk_in(hblnk_in),
+		.mouse_left(mouse_left),
+		.color1(color1),
+		.color2(color2),
+  
+		.vsync_out(vsync_cred),
+		.hsync_out(hsync_cred),
+		.rgb_out(rgb_cred)
+  );
 
 
  always @(posedge clk) begin
