@@ -58,7 +58,7 @@ proc create_new_project {project target top_module} {
         rtl/image_rom.v
 		rtl/char_rom_16x1_blueplayer.v
 		rtl/char_rom_16x1_redplayer.v
-		rtl/char_rom_16x2_cred.v
+		rtl/char_rom_16x6_cred.v
 		rtl/char_rom_16x2_MJ.v
         rtl/char_rom_16x1_start.v
         rtl/char_rom_16x1_credits.v

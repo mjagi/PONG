@@ -89,7 +89,7 @@ module cred_ctl (
   	.char_line(char_line_cred)
   );
 
-  char_rom_16x2_cred char_rom_cred(
+  char_rom_16x6_cred char_rom_cred(
 	.char_xy(xy_char_cred),
 	.char_code(char_code_cred)
   );

@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module char_rom_16x2_cred
+module char_rom_16x6_cred
     (
         input  wire [7:0] char_xy,
         output reg  [6:0] char_code

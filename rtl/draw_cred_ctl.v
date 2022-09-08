@@ -31,15 +31,14 @@ module draw_cred_ctl (
   
   localparam INTERVAL_START = 20'b1000_0000_0000_0000_0000;
   localparam INTERVAL_CHANGE_EASY = 20'b0000_0000_0000_1000_0000;
-  localparam BALL_DIAMETER = 64;
-  localparam BALL_RADIUS = 32;
+  localparam BALL_DIAMETER = 128;
 
   localparam LEFT_WALL = 1;
   localparam RIGHT_WALL = 1022;
   localparam UP_WALL = 1;
   localparam DOWN_WALL = 766;
   
-  localparam CENTRAL_LINE = 611;
+  localparam CENTRAL_LINE = 511;
   
   reg [1:0] state, state_nxt, direction, direction_nxt;
   reg [11:0] speed_count, speed_count_nxt, speed_change_count, speed_change_count_nxt;
@@ -98,7 +97,7 @@ module draw_cred_ctl (
 			interval_change_nxt = INTERVAL_CHANGE_EASY;        
             xpos_nxt = CENTRAL_LINE;
             ypos_nxt = 40;
-            direction_nxt = UPLEFT;
+            direction_nxt = UPRIGHT;
       end
       
       MOVING: begin
@@ -223,7 +222,7 @@ module draw_cred_ctl (
 			interval_change_nxt = INTERVAL_CHANGE_EASY;	  
   		    xpos_nxt = CENTRAL_LINE;
   		    ypos_nxt = 40;
-  		    direction_nxt = UPLEFT;
+  		    direction_nxt = UPRIGHT;
   		end
   	    endcase
   	end

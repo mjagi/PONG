@@ -44,7 +44,7 @@ module draw_ball_ctl (
   localparam UP_WALL = 1;
   localparam DOWN_WALL = 766;
   
-  localparam CENTRAL_LINE = 611;
+  localparam CENTRAL_LINE = 511;
 
   localparam RACKET_WIDTH = 10;
   localparam RACKET_LENGTH = 80;

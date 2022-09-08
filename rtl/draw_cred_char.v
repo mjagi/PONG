@@ -44,8 +44,8 @@ reg [6:0] addr_x;
 wire [10:0] hcount_del, vcount_del; 
 wire hsync_del, hblnk_del, vsync_del, vblnk_del;
 
-localparam RECT_LENGTH = 32;
-localparam RECT_WIDTH = 256;
+localparam RECT_LENGTH = 96;
+localparam RECT_WIDTH = 128;
 
   always @(posedge pclk)
   begin
