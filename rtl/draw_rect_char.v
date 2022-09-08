@@ -21,6 +21,8 @@ module draw_rect_char (
   input wire rst,
   input wire [11:0] rgb_in,
   input wire [7:0] char_pixels,
+  input wire [11:0] color1,
+  input wire [11:0] color2,
 
   output reg [10:0] hcount_out,
   output reg hsync_out,
@@ -44,8 +46,6 @@ parameter RECT_LENGTH = 16;
 parameter RECT_WIDTH = 128;
 parameter RECT_X = 454;
 parameter RECT_Y = 88;
-parameter RECT_COLOR = 12'h0_0_0;
-parameter CHAR_COLOR = 12'hf_f_f;
 
 
   always @(posedge pclk)
@@ -95,8 +95,8 @@ parameter CHAR_COLOR = 12'hf_f_f;
   	  begin
   	  	if ((hcount_in > RECT_X) && (vcount_in >= RECT_Y) && (hcount_in <= RECT_X + RECT_WIDTH) && (vcount_in < RECT_Y + RECT_LENGTH))
 		begin
-		  if (char_pixels[4'b1000-addr_x[2:0]]) rgb_nxt = CHAR_COLOR;
-		  else rgb_nxt = RECT_COLOR;
+		  if (char_pixels[4'b1000-addr_x[2:0]]) rgb_nxt = color2;
+		  else rgb_nxt = color1;
 		end
 		else rgb_nxt = rgb_temp;
 	  end

@@ -19,6 +19,9 @@ module draw_background (
   input wire hblnk_in,
   input wire pclk,
   input wire rst,
+  input wire [11:0] color1,
+  input wire [11:0] color2,
+    
   output reg [10:0] vcount_out,
   output reg [10:0] hcount_out,
   output reg vsync_out,
@@ -40,15 +43,15 @@ module draw_background (
     else
     begin
       // Active display, top edge, make a white line.
-      if (vcount_in == 0) rgb_nxt = 12'hf_f_f;
+      if (vcount_in == 0) rgb_nxt = color2;
       // Active display, bottom edge, make a white line.
-      else if (vcount_in == 767) rgb_nxt = 12'hf_f_f;
+      else if (vcount_in == 767) rgb_nxt = color2;
       // Active display, left edge, make a white line.
-      else if (hcount_in == 1) rgb_nxt = 12'hf_f_f;
+      else if (hcount_in == 1) rgb_nxt = color2;
       // Active display, right edge, make a white line.
-      else if (hcount_in == 1023) rgb_nxt = 12'hf_f_f;
+      else if (hcount_in == 1023) rgb_nxt = color2;
       // Active display, interior, fill with black.
-      else rgb_nxt = 12'h0_0_0;    
+      else rgb_nxt = color1;    
     end
   end
   

@@ -17,17 +17,19 @@ module top_ctl(
 	output reg vsync_out,
 	output reg hsync_out,
 	output reg [11:0] rgb_out
-);
+	);
 wire [11:0] rgb_menu, rgb_game, rgb_cred;
-reg [11:0] rgb_nxt;
+reg [11:0] rgb_nxt, color1, color2;
 wire vsync_menu, hsync_menu, vsync_game, hsync_game, vsync_cred, hsync_cred;
 reg vsync_nxt, hsync_nxt;
 reg [1:0] state, state_nxt;
+reg [2:0] color_state, color_state_nxt;
 reg difficulty, difficulty_nxt = 0; 
 
 localparam IDLE = 2'b00;
 localparam GAME = 2'b01;
 localparam CREDITS = 2'b10;
+
 
 always@* begin
     case(state)
@@ -44,30 +46,87 @@ always@* begin
 		vsync_nxt = vsync_menu;
 		hsync_nxt = hsync_menu;
 		rgb_nxt = rgb_menu;
+		color_state_nxt = 0;
+
 		if(mouse_left && (ypos >= 238 && ypos <= 338) && (xpos >= 362 && xpos <= 674)) begin
 		  if (difficulty == 1) difficulty_nxt = 0;
 		  else difficulty_nxt = 1;
 		end
 		else difficulty_nxt = difficulty;
+		
+		if(mouse_left && (ypos >= 430 && ypos <= 530) && (xpos >= 362 && xpos <= 674)) begin
+			if(color_state >= 6) color_state_nxt = 0;
+			else color_state_nxt = color_state + 1;
+		end
+		else color_state_nxt = color_state;
     end
+
     GAME: begin
 		vsync_nxt = vsync_game;
     	hsync_nxt = hsync_game;
     	rgb_nxt = rgb_game;
     	difficulty_nxt = difficulty;
+    	color_state_nxt = color_state;
     end
+
     CREDITS: begin
         vsync_nxt = vsync_game;
     	hsync_nxt = hsync_game;
     	rgb_nxt = rgb_game;
     	difficulty_nxt = difficulty;
+     	color_state_nxt = color_state;
     end
+
     default: begin
 		vsync_nxt = vsync_menu;
     	hsync_nxt = hsync_menu;
     	rgb_nxt = rgb_menu;
     	difficulty_nxt = 0;
+    	color_state_nxt = color_state;
     end
+    endcase
+    
+    
+    case(color_state_nxt)
+    0: begin
+    	color1 = 12'h0_0_0;
+    	color2 = 12'hf_f_f;
+    end
+    
+    1: begin
+    	color1 = 12'h0_9_9;
+    	color2 = 12'hf_6_6;
+    end
+
+	2: begin
+    	color1 = 12'h9_0_9;
+    	color2 = 12'h6_f_6;
+    end
+    
+	3: begin
+    	color1 = 12'h9_9_0;
+    	color2 = 12'h6_6_f;
+    end
+    
+	4: begin
+    	color1 = 12'h0_0_9;
+    	color2 = 12'hf_f_6;
+    end
+    
+	5: begin
+    	color1 = 12'h9_0_0;
+    	color2 = 12'h6_f_f;
+    end
+
+	6: begin
+    	color1 = 12'h0_9_0;
+    	color2 = 12'hf_6_f;
+    end
+
+	default: begin
+    	color1 = 12'h0_0_0;
+    	color2 = 12'hf_f_f;
+    end    
     endcase
 end
 
@@ -83,6 +142,8 @@ end
 		.ypos(ypos),
 		.xpos(xpos),
 		.difficulty(difficulty),
+		.color1(color1),
+		.color2(color2),
 			
 		.vsync_out(vsync_menu),
 		.hsync_out(hsync_menu),
@@ -99,10 +160,12 @@ end
         .hsync_in(hsync_in),
         .hblnk_in(hblnk_in),
         .ypos(ypos),
-		.xpos(xpos),
+//		.xpos(xpos),
         .mouse_left(mouse_left),
         .difficulty(difficulty),
-      
+        .color1(color1),
+        .color2(color2),
+        
         .vsync_out(vsync_game),
         .hsync_out(hsync_game),
         .rgb_out(rgb_game)
@@ -116,6 +179,7 @@ end
 		vsync_out <= 0;	
 		rgb_out <= 0;
 		difficulty <= 0;
+		color_state <= 0;
 	end
 	else begin	
 	    state <= state_nxt;
@@ -123,6 +187,7 @@ end
 		vsync_out <= vsync_nxt;	
 		rgb_out <= rgb_nxt;
 		difficulty <= difficulty_nxt;
+		color_state <= color_state_nxt;
 	end
 end
 

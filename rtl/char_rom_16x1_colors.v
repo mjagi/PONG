@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module char_rom_16x1_mode_select
+module char_rom_16x1_colors
     (
         input  wire [7:0] char_xy,
         output reg  [6:0] char_code
@@ -81,22 +81,22 @@ module char_rom_16x1_mode_select
 
     always@*   
 	  case(char_xy)
-		8'h00: char_code = CAP_M;
-		8'h01: char_code = CAP_O;
-		8'h02: char_code = CAP_D;
-		8'h03: char_code = CAP_E;
-		8'h04: char_code = BLANK;
-		8'h05: char_code = BLANK;
+		8'h00: char_code = CAP_C;
+		8'h01: char_code = CAP_H;
+		8'h02: char_code = CAP_A;
+		8'h03: char_code = CAP_N;
+		8'h04: char_code = CAP_G;
+		8'h05: char_code = CAP_E;
 		8'h06: char_code = BLANK;
 		8'h07: char_code = BLANK;
 		8'h08: char_code = BLANK;
 		8'h09: char_code = BLANK;
-		8'h0a: char_code = CAP_S;
-		8'h0b: char_code = CAP_E;
+		8'h0a: char_code = CAP_C;
+		8'h0b: char_code = CAP_O;
 		8'h0c: char_code = CAP_L;
-		8'h0d: char_code = CAP_E;
-		8'h0e: char_code = CAP_C;
-		8'h0f: char_code = CAP_T;
+		8'h0d: char_code = CAP_O;
+		8'h0e: char_code = CAP_R;
+		8'h0f: char_code = CAP_S;
 		default: char_code = BLANK;
 	  endcase
 endmodule

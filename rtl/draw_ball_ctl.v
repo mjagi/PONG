@@ -37,17 +37,18 @@ module draw_ball_ctl (
   localparam INTERVAL_CHANGE_EASY = 20'b0000_0000_0000_1000_0000;
 //  localparam INTERVAL_MIN = 20'b0000_0000_1000_0000_0000;
   localparam BALL_DIAMETER = 16;
-  
+  localparam BALL_RADIUS = 8;
+
   localparam LEFT_WALL = 1;
   localparam RIGHT_WALL = 1022;
   localparam UP_WALL = 1;
   localparam DOWN_WALL = 766;
   
-  localparam CENTRAL_LINE = 211;
+  localparam CENTRAL_LINE = 611;
 
-  localparam SZEROKOSC = 10;
-  localparam WYSOKOSC = 80;
-  localparam ODLEGLOSC = 60;
+  localparam RACKET_WIDTH = 10;
+  localparam RACKET_LENGTH = 80;
+  localparam RACKET_XPOS = 60;
   
   reg [1:0] state, state_nxt, direction, direction_nxt;
   reg [11:0] speed_count, speed_count_nxt, speed_change_count, speed_change_count_nxt;
@@ -110,7 +111,7 @@ module draw_ball_ctl (
             else interval_change_nxt = INTERVAL_CHANGE_HARD;
         
             xpos_nxt = CENTRAL_LINE;
-            ypos_nxt = 40;
+            ypos_nxt = mouse_ypos;
             direction_nxt = UPLEFT;
       end
       
@@ -209,7 +210,7 @@ module draw_ball_ctl (
                         pxl_interval_nxt = pxl_interval;
                     end
           
-                else if(((mouse_ypos >= (768 - WYSOKOSC)) && (ypos >= (768 - WYSOKOSC)) && (xpos == ODLEGLOSC)) || ((ypos >= mouse_ypos) && (ypos < (mouse_ypos + WYSOKOSC)) && (xpos == ODLEGLOSC))) begin
+                else if((ypos >= (mouse_ypos - BALL_DIAMETER)) && (ypos <= (mouse_ypos + RACKET_LENGTH)) && (xpos == RACKET_XPOS)) begin
                     pxl_interval_nxt = pxl_interval;
           		    case (direction)
                         //UPRIGHT: begin 
@@ -264,7 +265,7 @@ module draw_ball_ctl (
   		    else interval_change_nxt = INTERVAL_CHANGE_HARD;
   		  
   		    xpos_nxt = CENTRAL_LINE;
-  		    ypos_nxt = 21;
+  		    ypos_nxt = mouse_ypos;
   		    direction_nxt = UPLEFT;
   		end
   	    endcase

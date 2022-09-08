@@ -17,6 +17,8 @@ module menu_ctl (
   input wire [11:0] ypos,
   input wire [11:0] xpos,
   input wire difficulty,
+  input wire [11:0] color1,
+  input wire [11:0] color2,
   
   output wire vsync_out,
   output wire hsync_out,
@@ -44,6 +46,8 @@ module menu_ctl (
     .hcount_in(hcount_in),
     .hsync_in(hsync_in),
     .hblnk_in(hblnk_in),
+  	.color1(color1),
+    .color2(color2),
     .pclk(clk),
 	.rst(rst),
 	
@@ -65,6 +69,8 @@ module menu_ctl (
     .hsync_in(hsync_out_if),
     .hblnk_in(hblnk_out_if),
   	.rgb_in(rgb_out_if),
+  	.color1(color1),
+  	.color2(color2),
     .pclk(clk),
   	.rst(rst),
   	
@@ -105,6 +111,8 @@ module menu_ctl (
     .hsync_in(hsync_out_start),
     .hblnk_in(hblnk_out_start),
   	.rgb_in(rgb_out_start),
+  	.color1(color1),
+  	.color2(color2),
     .pclk(clk),
   	.rst(rst),
   	
@@ -137,7 +145,7 @@ module menu_ctl (
   #(
         .RECT_Y(472)
     )
-  draw_char_mode(
+  draw_char_colors(
     .vcount_in(vcount_out_diff),
     .vsync_in(vsync_out_diff),
     .vblnk_in(vblnk_out_diff),
@@ -145,6 +153,8 @@ module menu_ctl (
     .hsync_in(hsync_out_diff),
     .hblnk_in(hblnk_out_diff),
   	.rgb_in(rgb_out_diff),
+  	.color1(color1),
+  	.color2(color2),
     .pclk(clk),
   	.rst(rst),
   	
@@ -160,7 +170,7 @@ module menu_ctl (
   	.char_line(char_line_mode)
   );
 
-  char_rom_16x1_mode_select char_rom_mode(
+  char_rom_16x1_colors char_rom_colors(
 	.char_xy(xy_char_mode),
 	.char_code(char_code_mode)	
   );
@@ -185,6 +195,8 @@ module menu_ctl (
     .hsync_in(hsync_out_mode),
     .hblnk_in(hblnk_out_mode),
   	.rgb_in(rgb_out_mode),
+  	.color1(color1),
+  	.color2(color2),
     .pclk(clk),
   	.rst(rst),
   	

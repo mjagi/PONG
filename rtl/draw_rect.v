@@ -21,6 +21,7 @@ module draw_rect (
   input wire rst,
   input wire [11:0] y_pos,
   input wire [11:0] rgb_in,
+  input wire [11:0] color2,
   
   output reg [10:0] vcount_out,
   output reg [10:0] hcount_out,
@@ -31,10 +32,10 @@ module draw_rect (
   output reg [11:0] rgb_out
   );
 
-localparam SZEROKOSC = 10;
-localparam WYSOKOSC = 80;
-localparam ODLEGLOSC = 60;
-localparam KOLOR = 12'hf_f_f;
+localparam WIDTH = 10;
+localparam LENGTH = 80;
+localparam XPOS = 60;
+//localparam COLOR = 12'hf_f_f;
 
 reg [11:0] rgb_nxt, rgb_temp;
 //reg [10:0] vcount_temp, hcount_temp;
@@ -44,11 +45,9 @@ reg [11:0] rgb_nxt, rgb_temp;
   
   always @*
   begin
-    //if(vcount_in == y_pos && hcount_in == x_pos) rgb_nxt <= 12'h000;
-    if ((y_pos >= (768 - WYSOKOSC)) && (vcount_in >= (768 - WYSOKOSC)) && (hcount_in >= (ODLEGLOSC - SZEROKOSC)) && (hcount_in < ODLEGLOSC)) rgb_nxt = KOLOR;
-    
-    else if ((vcount_in >= y_pos) && (vcount_in < (y_pos + WYSOKOSC)) && (hcount_in >= (ODLEGLOSC - SZEROKOSC)) && 
-        (hcount_in < ODLEGLOSC)) rgb_nxt = KOLOR;
+    //if(vcount_in == y_pos && hcount_in == x_pos) rgb_nxt <= 12'h000;    
+    if ((vcount_in >= y_pos) && (vcount_in < (y_pos + LENGTH)) && (hcount_in >= (XPOS - WIDTH)) && 
+        (hcount_in < XPOS)) rgb_nxt = color2;
 	else rgb_nxt = rgb_in;
   end
  /* 
