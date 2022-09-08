@@ -1,16 +1,7 @@
-// File: vga_example.v
-// This is the top level design for EE178 Lab #4.
-
-// The `timescale directive specifies what the
-// simulation time units are (1 ns here) and what
-// the simulator time step should be (1 ps here).
-
 `timescale 1 ns / 1 ps
 
-// Declare the module and its ports. This is
-// using Verilog-2001 syntax.
 
-module draw_background (
+module if_menu (
   input wire [10:0] vcount_in,
   input wire [10:0] hcount_in,
   input wire vsync_in,
@@ -21,7 +12,7 @@ module draw_background (
   input wire rst,
   input wire [11:0] color1,
   input wire [11:0] color2,
-    
+  
   output reg [10:0] vcount_out,
   output reg [10:0] hcount_out,
   output reg vsync_out,
@@ -34,7 +25,7 @@ module draw_background (
 
 	reg [11:0] rgb_nxt;
 
-  // This is a simple test pattern generator.
+  // This is a simple menu pattern generator.
   
   always @*
   begin
@@ -46,10 +37,19 @@ module draw_background (
       if (vcount_in == 0) rgb_nxt = color2;
       // Active display, bottom edge, make a white line.
       else if (vcount_in == 767) rgb_nxt = color2;
-      // Active display, left edge, make a white line.
+      // Active display, left edge, make a green line.
       else if (hcount_in == 1) rgb_nxt = color2;
-      // Active display, right edge, make a white line.
+      // Active display, right edge, make a red line.
       else if (hcount_in == 1023) rgb_nxt = color2;
+	  // Active display, boxes gray
+	  else if (hcount_in >= 362 && hcount_in <= 674 &&(vcount_in == 46 || vcount_in ==  146 || 
+	  vcount_in == 238 || vcount_in == 338 || vcount_in == 430 || vcount_in == 530 ||
+	  vcount_in == 622 || vcount_in == 722)) rgb_nxt = color2; //12'h6_6_6;
+	  
+	  else if ((hcount_in == 362 || hcount_in == 674) && ((vcount_in >= 46 && vcount_in <= 146) || 
+	  (vcount_in >= 238 && vcount_in <= 338) || (vcount_in >= 430 && vcount_in <= 530) ||
+	  (vcount_in >= 622 && vcount_in <= 722))) rgb_nxt = color2; //12'h9_9_9;
+	  
       // Active display, interior, fill with black.
       else rgb_nxt = color1;    
     end

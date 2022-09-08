@@ -4,16 +4,20 @@ set_property IOSTANDARD LVCMOS33 [get_ports clk]
 # create_clock -name external_clock -period 10.00 [get_ports clk]
 
 # Constraints for MOUSE
-#set_property PACKAGE_PIN C17 [get_ports {ps2_clk}]
-#set_property IOSTANDARD LVCMOS33 [get_ports {ps2_clk}]
-#set_property PULLUP true [get_ports ps2_clk]
-#set_property PACKAGE_PIN B17 [get_ports {ps2_data}]
-#set_property IOSTANDARD LVCMOS33 [get_ports {ps2_data}]
-#set_property PULLUP true [get_ports ps2_data]
+set_property PACKAGE_PIN C17 [get_ports {ps2_clk}]
+set_property IOSTANDARD LVCMOS33 [get_ports {ps2_clk}]
+set_property PULLUP true [get_ports ps2_clk]
+set_property PACKAGE_PIN B17 [get_ports {ps2_data}]
+set_property IOSTANDARD LVCMOS33 [get_ports {ps2_data}]
+set_property PULLUP true [get_ports ps2_data]
 
 # Constraints for RESET
 set_property PACKAGE_PIN U18 [get_ports {rst}]
 set_property IOSTANDARD LVCMOS33 [get_ports {rst}]
+
+# Constraints for BUTTON
+set_property PACKAGE_PIN T17 [get_ports {button}]
+set_property IOSTANDARD LVCMOS33 [get_ports {button}]
 
 # Constraints for VS and HS
 set_property PACKAGE_PIN R19 [get_ports {vs}]

@@ -44,19 +44,38 @@ proc create_new_project {project target top_module} {
 		rtl/delay.v
 		rtl/clk_wiz_0.v
 		rtl/clk_wiz_0_clk_wiz.v
+		rtl/Mouse_delay.v
+		rtl/top_ctl.v
+		rtl/control.v
+		rtl/game_ctl.v
+		rtl/menu_ctl.v
+		rtl/if_menu.v
+		rtl/draw_ball.v
+		rtl/draw_ball_ctl.v
+        rtl/image_rom.v
+		rtl/char_rom_16x1_blueplayer.v
+		rtl/char_rom_16x1_redplayer.v
+		rtl/char_rom_16x2_BB.v
+		rtl/char_rom_16x2_MJ.v
+        rtl/char_rom_16x1_start.v
+        rtl/char_rom_16x1_credits.v
+        rtl/char_rom_16x1_colors.v
+        rtl/char_rom_16x2_diff.v
+		rtl/font_rom.v
+		rtl/draw_rect_char.v
     }
     
     # Specify vhdl design files location      -- EDIT
-    # read_vhdl {
-        # rtl/MouseCtl.vhd    
-		# rtl/Ps2Interface.vhd
-        # rtl/MouseDisplay.vhd
-    # }
+     read_vhdl {
+         rtl/MouseCtl.vhd    
+		 rtl/Ps2Interface.vhd
+         rtl/MouseDisplay.vhd
+     }
     
     # Specify files for memory initialization -- EDIT
-    # read_mem {
-        # rtl/image_rom.data
-    # }
+     read_mem {
+         rtl/image_rom.data
+     }
 
     # Specify simulation files location       -- EDIT
     add_files -fileset sim_1 {
