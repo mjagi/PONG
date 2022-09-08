@@ -51,6 +51,7 @@ proc create_new_project {project target top_module} {
 		rtl/cred_ctl.v
 		rtl/menu_ctl.v
 		rtl/if_menu.v
+		rtl/score_res.v
 		rtl/draw_ball.v
 		rtl/draw_ball_ctl.v
 		rtl/draw_cred_ctl.v

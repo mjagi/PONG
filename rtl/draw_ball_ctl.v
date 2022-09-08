@@ -19,7 +19,9 @@ module draw_ball_ctl (
   input wire difficulty,
 
   output reg [11:0] xpos,
-  output reg [11:0] ypos
+  output reg [11:0] ypos,
+  output reg [1:0] score_p1,
+  output reg [1:0] score_p2
   );
   
   localparam IDLE = 2'b00;
@@ -58,6 +60,7 @@ module draw_ball_ctl (
   reg [19:0] interval_change, interval_change_nxt;
   reg [19:0] xtilt, xtilt_nxt;
   reg [19:0] ytilt, ytilt_nxt;
+  reg [1:0] score_p1_nxt = 0, score_p2_nxt = 0;
   
   
   always@(posedge pclk)
@@ -71,6 +74,8 @@ module draw_ball_ctl (
       interval_count <= 0;
       interval_change <= 0;
       state <= IDLE;
+	  score_p1 <= 0;
+	  score_p2 <= 0;
     end
     
     else
@@ -84,6 +89,8 @@ module draw_ball_ctl (
       interval_change <= interval_change_nxt;
       state <= state_nxt;
       direction <= direction_nxt;
+	  score_p1 <= score_p1_nxt;
+		score_p2 <= score_p2_nxt;
     end
   end
   
@@ -152,7 +159,7 @@ module draw_ball_ctl (
                 endcase
           
           
-                if((ypos >= (DOWN_WALL - BALL_DIAMETER)) || (ypos <= UP_WALL) || (xpos >= RIGHT_WALL - BALL_DIAMETER) || (xpos <= LEFT_WALL)) 
+                if((ypos >= (DOWN_WALL - BALL_DIAMETER)) || (ypos <= UP_WALL) || (xpos >= RIGHT_WALL - BALL_DIAMETER)) 
                 begin 
   	                case (direction)
                         UPRIGHT: begin                       
@@ -170,17 +177,17 @@ module draw_ball_ctl (
                         end
 
                         DOWNLEFT: begin
-                            if (ypos > (DOWN_WALL - BALL_DIAMETER - 1))
+                            //if (ypos > (DOWN_WALL - BALL_DIAMETER - 1))
                                 direction_nxt = UPLEFT;
-                            else if (xpos < (LEFT_WALL + 1))
-                                direction_nxt = DOWNRIGHT;
+                            //else if (xpos < (LEFT_WALL + 1))
+                            //    direction_nxt = DOWNRIGHT;
                         end
 
                         UPLEFT: begin
-                            if (ypos < (UP_WALL + 1))
+                            //if (ypos < (UP_WALL + 1))
                                 direction_nxt = DOWNLEFT;
-                            else if (xpos < (LEFT_WALL + 1))
-                                direction_nxt = UPRIGHT;
+                            //else if (xpos < (LEFT_WALL + 1))
+                            //    direction_nxt = UPRIGHT;
                         end
 
                         default: begin 
@@ -208,8 +215,23 @@ module draw_ball_ctl (
                     end
                     else
                         pxl_interval_nxt = pxl_interval;
-                    end
-          
+                end
+					
+				else if (xpos <= LEFT_WALL)	begin
+					state_nxt = IDLE;
+					xpos_nxt = xpos;
+					ypos_nxt = ypos;
+					interval_count_nxt = interval_count;
+					interval_change_nxt = interval_change;
+					pxl_interval_nxt = pxl_interval;
+					speed_count_nxt = speed_count;
+					speed_change_count_nxt = speed_change_count;
+					direction_nxt = direction;
+					if (score_p2 == 3)score_p2_nxt = score_p2;
+					
+					else score_p2_nxt = score_p2 + 1;
+				
+				end
                 else if((ypos >= (mouse_ypos - BALL_DIAMETER)) && (ypos <= (mouse_ypos + RACKET_LENGTH)) && (xpos == RACKET_XPOS)) begin
                     pxl_interval_nxt = pxl_interval;
           		    case (direction)
@@ -260,6 +282,7 @@ module draw_ball_ctl (
   		    speed_change_count_nxt = 0;
   		    interval_count_nxt = 0;
   		    pxl_interval_nxt = INTERVAL_START;
+			score_p2_nxt = score_p2;
   		  
             if(difficulty == 0) interval_change_nxt = INTERVAL_CHANGE_EASY;
   		    else interval_change_nxt = INTERVAL_CHANGE_HARD;

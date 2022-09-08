@@ -24,22 +24,20 @@ module vga_draw_ball (
   input wire [11:0] ypos,
   input wire [11:0] rgb_pixel,
 
-//  output reg [10:0] hcount_out,
+  output reg [10:0] hcount_out,
   output reg hsync_out,
-//  output reg hblnk_out,  
-//  output reg [10:0] vcount_out,
+  output reg hblnk_out,  
+  output reg [10:0] vcount_out,
   output reg vsync_out,
-//  output reg vblnk_out,
+  output reg vblnk_out,
   output reg [11:0] rgb_out,
   output wire [7:0] pixel_addr
   );
 
 reg [11:0] rgb_nxt, rgb_temp;
 wire [3:0] pixel_addr_y, pixel_addr_x;
-reg [10:0] hcount_out, vcount_out; 
 wire [10:0] hcount_del, vcount_del; 
 wire hsync_del, hblnk_del, vsync_del, vblnk_del;
-reg hblnk_out, vblnk_out;
 
 
 parameter RECT_LENGTH = 16;
