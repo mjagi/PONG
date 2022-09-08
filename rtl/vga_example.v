@@ -11,8 +11,8 @@
 // using Verilog-2001 syntax.
 
 module vga_example (
-  inout wire ps2_clk,
-  inout wire ps2_data,
+//  inout wire ps2_clk,
+//  inout wire ps2_data,
   input wire clk,
   input wire rst,
   output wire vs,
@@ -23,63 +23,25 @@ module vga_example (
   output wire pclk_mirror
   );
 
-  // Converts 100 MHz clk into 40 MHz pclk.
+  // Converts 100 MHz clk into 65 MHz pclk.
   // This uses a vendor specific primitive
   // called MMCME2, for frequency synthesis.
 
   //wire clk_in;
   wire locked;
-  //wire clk_fb;
-  //wire clk_ss;
-  //wire clk_out;
   wire pclk, mclk;
-  //(* KEEP = "TRUE" *) 
-  //(* ASYNC_REG = "TRUE" *)
-  //reg [7:0] safe_start = 0;
   
   clk_wiz_0 my_clk_wiz(
     .clk(clk),
     .reset(rst),
     .locked(locked),
-    .clk_40(pclk),
-    .clk_100(mclk)
-  );
-/*
-  IBUF clk_ibuf (.I(clk),.O(clk_in));
-
-  MMCME2_BASE #(
-    .CLKIN1_PERIOD(10.000),
-    .CLKFBOUT_MULT_F(10.000),
-    .CLKOUT0_DIVIDE_F(25.000))
-  clk_in_mmcme2 (
-    .CLKIN1(clk_in),
-    .CLKOUT0(clk_out),
-    .CLKOUT0B(),
-    .CLKOUT1(),
-    .CLKOUT1B(),
-    .CLKOUT2(),
-    .CLKOUT2B(),
-    .CLKOUT3(),
-    .CLKOUT3B(),
-    .CLKOUT4(),
-    .CLKOUT5(),
-    .CLKOUT6(),
-    .CLKFBOUT(clkfb),
-    .CLKFBOUTB(),
-    .CLKFBIN(clkfb),
-    .LOCKED(locked),
-    .PWRDWN(1'b0),
-    .RST(1'b0)
+    .clk65Mhz(pclk),
+    .clk100MHz(mclk)
   );
 
-  BUFH clk_out_bufh (.I(clk_out),.O(clk_ss));
-  always @(posedge clk_ss) safe_start<= {safe_start[6:0],locked};
-
-  BUFGCE clk_out_bufgce (.I(clk_out),.CE(safe_start[7]),.O(pclk));
-*/
   // Mirrors pclk on a pin for use by the testbench;
   // not functionally required for this design to work.
-
+/*
   ODDR pclk_oddr (
     .Q(pclk_mirror),
     .C(pclk),
@@ -89,7 +51,8 @@ module vga_example (
     .R(1'b0),
     .S(1'b0)
   );
-
+*/
+assign pclk_mirror = pclk;
   // Instantiate the vga_timing module, which is
   // the module you are designing for this lab.
 
@@ -130,14 +93,14 @@ module vga_example (
 	.rst(rst_out),
 	
 	.vcount_out(vcount_out_bg),
-    .vsync_out(vsync_out_bg),
+    .vsync_out(vs),
     .vblnk_out(vblnk_out_bg),
     .hcount_out(hcount_out_bg),
-    .hsync_out(hsync_out_bg),
+    .hsync_out(hs),
     .hblnk_out(hblnk_out_bg),
-	.rgb_out(rgb_out_bg)
+	.rgb_out({r,g,b})
   );
-  
+ /* 
   draw_rect my_rect(
     .vcount_in(vcount_out_ch),
     .vsync_in(vsync_out_ch),
@@ -260,5 +223,5 @@ char_rom_16x16 mychar_rom(
 	.g(g),
 	.b(b)
  );
-
+*/
 endmodule

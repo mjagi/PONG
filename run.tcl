@@ -40,37 +40,28 @@ proc create_new_project {project target top_module} {
 		rtl/vga_timing.v
 		rtl/draw_background.v
 		rtl/draw_rect.v
-		rtl/clk_wiz_0_clk_wiz.v
-		rtl/clk_wiz_0.v
 		rtl/rst_d.v
-		rtl/control.v
-		rtl/image_rom.v
-		rtl/Mouse_delay.v
-		rtl/draw_rect_ctl.v
-		rtl/draw_rect_char.v
 		rtl/delay.v
-		rtl/font_rom.v
-		rtl/char_rom_16x16.v
+		rtl/clk_wiz_0.v
+		rtl/clk_wiz_0_clk_wiz.v
     }
     
     # Specify vhdl design files location      -- EDIT
-    read_vhdl {
-        rtl/MouseCtl.vhd    
-		rtl/Ps2Interface.vhd
-        rtl/MouseDisplay.vhd
-    #}
+    # read_vhdl {
+        # rtl/MouseCtl.vhd    
+		# rtl/Ps2Interface.vhd
+        # rtl/MouseDisplay.vhd
+    # }
     
     # Specify files for memory initialization -- EDIT
-    read_mem {
-        rtl/image_rom.data
-    #}
+    # read_mem {
+        # rtl/image_rom.data
+    # }
 
     # Specify simulation files location       -- EDIT
     add_files -fileset sim_1 {
         sim/testbench.v
 		sim/tiff_writer.v
-		sim/draw_rect_ctl_tb.v
-		sim/draw_rect_ctl_test.v
     }
 
     set_property top ${top_module} [current_fileset]
