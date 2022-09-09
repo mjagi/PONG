@@ -16,6 +16,8 @@ module top_ctl(
   
 	output reg vsync_out,
 	output reg hsync_out,
+	output wire [6:0] sseg_ca,
+    output wire [3:0] sseg_an, 
 	output reg [11:0] rgb_out
 	);
 wire [11:0] rgb_menu, rgb_game, rgb_cred;
@@ -168,6 +170,8 @@ end
         
         .vsync_out(vsync_game),
         .hsync_out(hsync_game),
+		.sseg_ca(sseg_ca),
+		.sseg_an(sseg_an),
         .rgb_out(rgb_game)
     );
 	
