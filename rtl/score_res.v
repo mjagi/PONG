@@ -36,11 +36,11 @@ always @* begin
 			
 			else if ((vcount_in >= 567 && vcount_in <= 667) && (hcount_in >= 100 && hcount_in <= 240)) rgb_nxt = color2;
 			//O
-			else if ((vcount_in >= 150 && vcount_in <= 617) && (hcount_in >= 250 && hcount_in <= 350)) rgb_nxt = color2;
+			else if ((vcount_in >= 150 && vcount_in <= 617) && (hcount_in >= 250 && hcount_in <= 340)) rgb_nxt = color2;
 			
-			else if (((vcount_in >= 100 && vcount_in <= 150)||(vcount_in >= 617 && vcount_in <= 667)) && (hcount_in >= 350 && hcount_in <= 400)) rgb_nxt = color2;
+			else if (((vcount_in >= 100 && vcount_in <= 150)||(vcount_in >= 617 && vcount_in <= 667)) && (hcount_in >= 340 && hcount_in <= 410)) rgb_nxt = color2;
 			
-			else if ((vcount_in >= 150 && vcount_in <= 617) && (hcount_in >= 400 && hcount_in <= 500)) rgb_nxt = color2;
+			else if ((vcount_in >= 150 && vcount_in <= 617) && (hcount_in >= 410 && hcount_in <= 500)) rgb_nxt = color2;
 			//S
 			else if ((vcount_in >= 100 && vcount_in <= 380) && (hcount_in >= 510 && hcount_in <= 610)) rgb_nxt = color2;
 			
@@ -48,7 +48,7 @@ always @* begin
 			
 			else if ((vcount_in >= 380 && vcount_in <= 667) && (hcount_in >= 660 && hcount_in <= 760)) rgb_nxt = color2;
 			//E
-			if((vcount_in >= 100 && vcount_in <= 667) && (hcount_in >= 770 && hcount_in <= 870)) rgb_nxt = color2;
+			else if((vcount_in >= 100 && vcount_in <= 667) && (hcount_in >= 770 && hcount_in <= 870)) rgb_nxt = color2;
 			
 			else if (((vcount_in >= 100 && vcount_in <= 213)||(vcount_in >= 326 && vcount_in <= 439)||(vcount_in >= 552 && vcount_in <= 667)) && (hcount_in >= 770 && hcount_in <= 980)) rgb_nxt = color2;
 			//background
