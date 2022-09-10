@@ -1,9 +1,14 @@
-// File: game_ctl.v
-
+//////////////////////////////////////////////////////////////////////////////
+/*
+ Module name:   game_ctl
+ Author:        Bartosz Białkowski
+ Version:       1.0
+ Last modified: 2022-09-10
+ Coding style: safe, with FPGA sync reset
+ Description:  
+ */
+//////////////////////////////////////////////////////////////////////////////
 `timescale 1 ns / 1 ps
-
-// Declare the module and its ports. This is
-// using Verilog-2001 syntax.
 
 module game_ctl (
   input wire clk,
@@ -14,12 +19,12 @@ module game_ctl (
   input wire vblnk_in,
   input wire hsync_in,
   input wire hblnk_in,
-//  input wire [11:0] xpos,
   input wire [11:0] ypos,
   input wire mouse_left,
   input wire difficulty,
   input wire [11:0] color1,
   input wire [11:0] color2,
+  input wire button,
   
   output wire vsync_out,
   output wire hsync_out,
@@ -28,6 +33,9 @@ module game_ctl (
   output wire [11:0] rgb_out
   );
 
+//------------------------------------------------------------------------------
+// wires
+//------------------------------------------------------------------------------
   wire [10:0] hcount_out_bg, vcount_out_bg, hcount_out_rt, vcount_out_rt, hcount_out_ball, vcount_out_ball;
   wire vsync_out_bg, hsync_out_bg, hsync_out_rt, vsync_out_rt, hsync_out_ball, vsync_out_ball;
   wire hblnk_out_bg, vblnk_out_bg, hblnk_out_rt, vblnk_out_rt, hblnk_out_ball, vblnk_out_ball;
@@ -37,7 +45,9 @@ module game_ctl (
   wire [6:0] char_code;
   wire [1:0] score_p1, score_p2;
 
-  
+//------------------------------------------------------------------------------
+// modules
+//------------------------------------------------------------------------------	  
   draw_background my_background (
     .vcount_in(vcount_in),
     .vsync_in(vsync_in),
@@ -87,6 +97,7 @@ module game_ctl (
     .mouse_left(mouse_left),
     .mouse_ypos(ypos),
     .difficulty(difficulty),
+	.button(button),
     
     .xpos(xpos_ctl),
     .ypos(ypos_ctl),

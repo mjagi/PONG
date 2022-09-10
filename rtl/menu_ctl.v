@@ -1,9 +1,14 @@
-// File: menu_ctl.v
-
+//////////////////////////////////////////////////////////////////////////////
+/*
+ Module name:   menu_ctl
+ Author:        Bartosz Białkowski, Mateusz Jagielski
+ Version:       1.0
+ Last modified: 2022-09-10
+ Coding style: safe with FPGA sync reset
+ Description:
+ */
+//////////////////////////////////////////////////////////////////////////////
 `timescale 1 ns / 1 ps
-
-// Declare the module and its ports. This is
-// using Verilog-2001 syntax.
 
 module menu_ctl (
   input wire clk,
@@ -25,6 +30,9 @@ module menu_ctl (
   output wire [11:0] rgb_out
   );
 
+//------------------------------------------------------------------------------
+// wires
+//------------------------------------------------------------------------------
   wire [10:0] hcount_out_if, vcount_out_if, hcount_out_start, vcount_out_start, hcount_out_credits, vcount_out_credits;
   wire [10:0] hcount_out_diff, vcount_out_diff, hcount_out_mode, vcount_out_mode;// hcount_out_credits, vcount_out_credits;
   wire vsync_out_if, hsync_out_if, hsync_out_start, vsync_out_start, vsync_out_credits, hsync_out_credits;
@@ -38,7 +46,9 @@ module menu_ctl (
   wire [3:0] char_line_start, char_line_diff, char_line_mode, char_line_credits;
   wire [6:0] char_code_start, char_code_diff, char_code_mode, char_code_credits;
 
-  
+//------------------------------------------------------------------------------
+// modules
+//------------------------------------------------------------------------------ 
   if_menu my_if_menu (
     .vcount_in(vcount_in),
     .vsync_in(vsync_in),
@@ -240,18 +250,5 @@ module menu_ctl (
 	.vs_out(vsync_out),
 	.rgb_out(rgb_out)
  );
-/* 
-  always @(posedge clk) begin
-    if (rst) begin
-        hsync_out <= 0;
-        vsync_out <= 0;    
-        rgb_out <= 0;
-    end
-    else begin    
-        hsync_out <= hsync_ctl;
-        vsync_out <= vsync_ctl;    
-        rgb_out <= rgb_ctl;
-    end
-end
-*/
+
 endmodule

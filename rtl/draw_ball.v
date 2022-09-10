@@ -1,14 +1,14 @@
-// File: vga_draw_ball.v
-// This is the vga draw rectangle design for EE178 Lab #4.
-
-// The `timescale directive specifies what the
-// simulation time units are (1 ns here) and what
-// the simulator time step should be (1 ps here).
-
+//////////////////////////////////////////////////////////////////////////////
+/*
+ Module name:   draw_ball
+ Author:        Mateusz Jagielski
+ Version:       1.0
+ Last modified: 2022-09-05
+ Coding style: safe, with FPGA sync reset
+ Description: 
+ */
+//////////////////////////////////////////////////////////////////////////////
 `timescale 1 ns / 1 ps
-
-// Declare the module and its ports. This is
-// using Verilog-2001 syntax.
 
 module vga_draw_ball (
   input wire [10:0] hcount_in,
@@ -34,23 +34,31 @@ module vga_draw_ball (
   output wire [7:0] pixel_addr
   );
 
+  assign pixel_addr_y = vcount_in - ypos;
+  assign pixel_addr_x = hcount_in - xpos;
+  assign pixel_addr = {pixel_addr_y[3:0], pixel_addr_x[3:0]};  
+  
+//------------------------------------------------------------------------------
+// local parameters
+//------------------------------------------------------------------------------  
+parameter RECT_LENGTH = 16;
+parameter RECT_WIDTH = 16;
+
+//------------------------------------------------------------------------------
+// local variables
+//------------------------------------------------------------------------------
 reg [11:0] rgb_nxt, rgb_temp;
+
+//------------------------------------------------------------------------------
+// wires
+//------------------------------------------------------------------------------
 wire [3:0] pixel_addr_y, pixel_addr_x;
 wire [10:0] hcount_del, vcount_del; 
 wire hsync_del, hblnk_del, vsync_del, vblnk_del;
-
-
-parameter RECT_LENGTH = 16;
-parameter RECT_WIDTH = 16;
-//parameter RECT_X = 317;
-//parameter RECT_Y = 40;
-//parameter RECT_COLOR = 12'hf_f_f;
-
-  assign pixel_addr_y = vcount_in - ypos;
-  assign pixel_addr_x = hcount_in - xpos;
-  assign pixel_addr = {pixel_addr_y[3:0], pixel_addr_x[3:0]};
   
-
+//------------------------------------------------------------------------------
+// output register with sync reset
+//------------------------------------------------------------------------------
   always @(posedge pclk)
   begin
     if(rst)
@@ -77,7 +85,10 @@ parameter RECT_WIDTH = 16;
     rgb_out <= rgb_nxt;
 	end
   end
-  
+
+//------------------------------------------------------------------------------
+// modules
+//------------------------------------------------------------------------------	  
       delay #(
     .WIDTH (26),
     .CLK_DEL(1)
@@ -88,7 +99,9 @@ parameter RECT_WIDTH = 16;
     .dout ({hcount_del, hsync_del, vcount_del, vsync_del, hblnk_del, vblnk_del})
   );
 
-  
+//------------------------------------------------------------------------------
+// logic
+//------------------------------------------------------------------------------  
   always @*
  	begin
  	  if (vblnk_out || hblnk_out) rgb_nxt = 12'h0_0_0;
