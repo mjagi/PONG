@@ -21,12 +21,10 @@ module vga_example (
 	output wire [3:0] r,
 	output wire [3:0] g,
 	output wire [3:0] b,
-	output wire pclk_mirror,
-	output wire [6:0] sseg_ca,
-    output wire [3:0] sseg_an 
+	output wire pclk_mirror
 );
 
-  // Converts 100 MHz clk into 65 MHz pclk.
+  // Converts 100 MHz clk into 97,5 MHz pclk.
   //clk wire ;
 	wire locked;
 	wire pclk, mclk;
@@ -35,8 +33,8 @@ module vga_example (
 		.clk(clk),
 		.reset(rst),
 		.locked(locked),
-		.clk65Mhz(pclk),
-		.clk100MHz(mclk)
+		.clk65MHz(pclk),
+		.clk97_5MHz(mclk)
 	);
 
   // Mirrors pclk on a pin for use by the testbench;
@@ -93,8 +91,6 @@ module vga_example (
 			
 		.vsync_out(vs),
 		.hsync_out(hs),
-		.sseg_ca(sseg_ca),
-		.sseg_an(sseg_an),
 		.rgb_out({r,g,b})
 	);	
 

@@ -67,10 +67,6 @@ proc create_new_project {project target top_module} {
         rtl/char_rom_16x2_diff.v
 		rtl/font_rom.v
 		rtl/draw_rect_char.v
-		rtl/ring_counter.v
-		rtl/sseg_conv.v
-		rtl/sseg_mux.v
-		rtl/point_display.v
     }
     
     # Specify vhdl design files location      -- EDIT

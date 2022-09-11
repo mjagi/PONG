@@ -23,8 +23,6 @@ module game_ctl (
   
   output wire vsync_out,
   output wire hsync_out,
-  output wire [6:0] sseg_ca,
-  output wire [3:0] sseg_an,
   output wire [11:0] rgb_out
   );
 
@@ -145,14 +143,18 @@ module game_ctl (
 		.hsync_out(hsync_out),
 		.rgb_out(rgb_out)	
 	);
-	
-	point_display my_point_display(
-		.clk(clk),
-		.rst(rst),
-		.score_p1(score_p1),
-	
-		.sseg_ca(sseg_ca),   // segments (active LOW)
-		.sseg_an(sseg_an)    // anode enable (active LOW)
-	);	
 
+/*
+font_rom myfont_rom(
+	.clk(pclk),
+	.addr({char_code [6:0], char_line [3:0]}),
+	.char_line_pixels(char_line_pixel)
+);
+
+char_rom_16x16 mychar_rom(
+	.char_xy(xy_char),
+	.char_code(char_code)	
+);
+
+*/
 endmodule
