@@ -33,10 +33,6 @@ module vga_draw_ball (
   output reg [11:0] rgb_out,
   output wire [7:0] pixel_addr
   );
-
-  assign pixel_addr_y = vcount_in - ypos;
-  assign pixel_addr_x = hcount_in - xpos;
-  assign pixel_addr = {pixel_addr_y[3:0], pixel_addr_x[3:0]};  
   
 //------------------------------------------------------------------------------
 // local parameters
@@ -102,6 +98,11 @@ wire hsync_del, hblnk_del, vsync_del, vblnk_del;
 //------------------------------------------------------------------------------
 // logic
 //------------------------------------------------------------------------------  
+
+  assign pixel_addr_y = vcount_in - ypos;
+  assign pixel_addr_x = hcount_in - xpos;
+  assign pixel_addr = {pixel_addr_y[3:0], pixel_addr_x[3:0]};  
+
   always @*
  	begin
  	  if (vblnk_out || hblnk_out) rgb_nxt = 12'h0_0_0;

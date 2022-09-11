@@ -47,13 +47,13 @@ assign pclk_mirror = pclk;
 // modules
 //------------------------------------------------------------------------------	
 
-	// Converts 100 MHz clk into 65 MHz pclk.
+	// Converts 100 MHz clk into 65 MHz pclk and 97,5 MHz mclk.
 	clk_wiz_0 my_clk_wiz(
 		.clk(clk),
 		.reset(rst),
 		.locked(locked),
-		.clk65Mhz(pclk),
-		.clk100MHz(mclk)
+		.clk65MHz(pclk),
+		.clk97_5MHz(mclk)
 	);
 
 
