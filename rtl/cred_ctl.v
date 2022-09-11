@@ -1,9 +1,14 @@
-// File: cred_ctl.v
-
+//////////////////////////////////////////////////////////////////////////////
+/*
+ Module name:   cred_ctl
+ Author:        Bartosz Białkowski, Mateusz Jagielski
+ Version:       1.0
+ Last modified: 2022-09-08
+ Coding style: safe, with FPGA sync reset
+ Description:  
+ */
+//////////////////////////////////////////////////////////////////////////////
 `timescale 1 ns / 1 ps
-
-// Declare the module and its ports. This is
-// using Verilog-2001 syntax.
 
 module cred_ctl (
   input wire clk,
@@ -23,6 +28,9 @@ module cred_ctl (
   output wire [11:0] rgb_out
   );
 
+//------------------------------------------------------------------------------
+// wires
+//------------------------------------------------------------------------------
   wire [10:0] hcount_out_bg, vcount_out_bg, hcount_out_cred, vcount_out_cred; //hcount_out_ball, vcount_out_ball;
   wire vsync_out_bg, hsync_out_bg, hsync_out_cred, vsync_out_cred; //hsync_out_ball, vsync_out_ball;
   wire hblnk_out_bg, vblnk_out_bg, hblnk_out_cred, vblnk_out_cred; //hblnk_out_ball, vblnk_out_ball;
@@ -31,7 +39,9 @@ module cred_ctl (
   wire [3:0] char_line_cred;
   wire [6:0] char_code_cred;
 
-  
+//------------------------------------------------------------------------------
+// modules
+//------------------------------------------------------------------------------ 
   draw_background my_background (
     .vcount_in(vcount_in),
     .vsync_in(vsync_in),
@@ -100,17 +110,4 @@ module cred_ctl (
 	.char_line_pixels(char_line_pixel_cred)
   );
 
-/*
-font_rom myfont_rom(
-	.clk(pclk),
-	.addr({char_code [6:0], char_line [3:0]}),
-	.char_line_pixels(char_line_pixel)
-);
-
-char_rom_16x16 mychar_rom(
-	.char_xy(xy_char),
-	.char_code(char_code)	
-);
-
-*/
 endmodule

@@ -1,14 +1,14 @@
-// File: vga_example.v
-// This is the top level design for EE178 Lab #4.
-
-// The `timescale directive specifies what the
-// simulation time units are (1 ns here) and what
-// the simulator time step should be (1 ps here).
-
+//////////////////////////////////////////////////////////////////////////////
+/*
+ Module name:   control
+ Author:        Bartosz Białkowski
+ Version:       1.0
+ Last modified: 2022-09-06
+ Coding style: safe, with FPGA sync reset
+ Description:  
+ */
+//////////////////////////////////////////////////////////////////////////////
 `timescale 1 ns / 1 ps
-
-// Declare the module and its ports. This is
-// using Verilog-2001 syntax.
 
 module control (
   input wire pclk,
@@ -26,10 +26,15 @@ module control (
   output reg vs_out,
   output reg [11:0] rgb_out
   );
-
+//------------------------------------------------------------------------------
+// local variables and wires
+//------------------------------------------------------------------------------
 reg vs_temp, hs_temp;
 wire [3:0] r_nxt, g_nxt, b_nxt;
 
+//------------------------------------------------------------------------------
+// modules
+//------------------------------------------------------------------------------	  
 MouseDisplay My_MouseDisplay(
 	.pixel_clk(pclk),
 	.xpos(xpos),
@@ -47,6 +52,9 @@ MouseDisplay My_MouseDisplay(
 	.blue_out(b_nxt)
  );
 
+//------------------------------------------------------------------------------
+// output register with sync reset
+//------------------------------------------------------------------------------
 always @(posedge pclk) begin 
 	hs_temp <= hsync_in;
 	vs_temp <= vsync_in;

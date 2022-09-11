@@ -1,14 +1,14 @@
-// File: vga_draw_ball_ctl.v
-// This is the vga draw rectangle control design for EE178 Lab #4.
-
-// The `timescale directive specifies what the
-// simulation time units are (1 ns here) and what
-// the simulator time step should be (1 ps here).
-
+//////////////////////////////////////////////////////////////////////////////
+/*
+ Module name:   draw_cred_ctl
+ Author:        Mateusz Jagielski, Bartosz Białkowski
+ Version:       1.0
+ Last modified: 2022-09-08
+ Coding style: safe with FPGA sync reset
+ Description:
+ */
+//////////////////////////////////////////////////////////////////////////////
 `timescale 1 ns / 1 ps
-
-// Declare the module and its ports. This is
-// using Verilog-2001 syntax.
 
 module draw_cred_ctl (
   input wire pclk,
@@ -18,7 +18,10 @@ module draw_cred_ctl (
   output reg [11:0] xpos,
   output reg [11:0] ypos
   );
-  
+
+//------------------------------------------------------------------------------
+// local parameters
+//------------------------------------------------------------------------------    
   localparam IDLE = 2'b00;
   localparam MOVING = 2'b01;
   localparam WALL = 2'b10;
@@ -39,7 +42,10 @@ module draw_cred_ctl (
   localparam DOWN_WALL = 766;
   
   localparam CENTRAL_LINE = 511;
-  
+
+//------------------------------------------------------------------------------
+// local variables
+//------------------------------------------------------------------------------    
   reg [1:0] state, state_nxt, direction, direction_nxt;
   reg [11:0] speed_count, speed_count_nxt, speed_change_count, speed_change_count_nxt;
   reg [11:0] xpos_nxt, ypos_nxt;
@@ -49,7 +55,9 @@ module draw_cred_ctl (
   reg [19:0] xtilt, xtilt_nxt;
   reg [19:0] ytilt, ytilt_nxt;
   
-  
+//------------------------------------------------------------------------------
+// output register
+//------------------------------------------------------------------------------   
   always@(posedge pclk)
   begin
     if (rst)
@@ -77,7 +85,9 @@ module draw_cred_ctl (
     end
   end
   
-  
+//------------------------------------------------------------------------------
+// next state logic
+//------------------------------------------------------------------------------    
   always @*
   begin
     case (state)
@@ -87,7 +97,9 @@ module draw_cred_ctl (
       state_nxt = IDLE;
     endcase
 
-    
+//------------------------------------------------------------------------------
+// output logic
+//------------------------------------------------------------------------------     
     case (state_nxt)
       IDLE: begin
             speed_count_nxt = 0;

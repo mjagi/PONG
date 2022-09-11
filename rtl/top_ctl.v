@@ -1,3 +1,13 @@
+//////////////////////////////////////////////////////////////////////////////
+/*
+ Module name:   top_ctl
+ Author:        Bartosz Białkowski, Mateusz Jagielski
+ Version:       1.0
+ Last modified: 2022-09-10
+ Coding style: safe with FPGA sync reset
+ Description:
+ */
+//////////////////////////////////////////////////////////////////////////////
 `timescale 1 ns / 1 ps
 
 module top_ctl(
@@ -18,19 +28,32 @@ module top_ctl(
 	output reg hsync_out,
 	output reg [11:0] rgb_out
 	);
+
+//------------------------------------------------------------------------------
+// local parameters
+//------------------------------------------------------------------------------
+localparam IDLE = 2'b00;
+localparam GAME = 2'b01;
+localparam CREDITS = 2'b10;
+
+//------------------------------------------------------------------------------
+// wires
+//------------------------------------------------------------------------------
 wire [11:0] rgb_menu, rgb_game, rgb_cred;
-reg [11:0] rgb_nxt, color1, color2;
 wire vsync_menu, hsync_menu, vsync_game, hsync_game, vsync_cred, hsync_cred;
+
+//------------------------------------------------------------------------------
+// local variables
+//------------------------------------------------------------------------------
+reg [11:0] rgb_nxt, color1, color2;
 reg vsync_nxt, hsync_nxt;
 reg [1:0] state, state_nxt;
 reg [2:0] color_state, color_state_nxt;
 reg difficulty, difficulty_nxt = 0; 
 
-localparam IDLE = 2'b00;
-localparam GAME = 2'b01;
-localparam CREDITS = 2'b10;
-
-
+//------------------------------------------------------------------------------
+// next state logic
+//------------------------------------------------------------------------------
 always@* begin
     case(state)
     IDLE:     state_nxt = (mouse_left && (ypos >= 46 && ypos <= 146) && (xpos >= 362 && xpos <= 674)) ? GAME : (mouse_left && (ypos >= 622 && ypos <= 722) && (xpos >= 362 && xpos <= 674)) ? CREDITS : IDLE;
@@ -40,6 +63,9 @@ always@* begin
     endcase
 end
 
+//------------------------------------------------------------------------------
+// output logic
+//------------------------------------------------------------------------------
 always@* begin
     case(state_nxt)
     IDLE: begin		
@@ -130,6 +156,9 @@ always@* begin
     endcase
 end
 
+//------------------------------------------------------------------------------
+// modules
+//------------------------------------------------------------------------------
     menu_ctl My_menu_ctl(
 		.clk(clk),
 		.rst(rst),
@@ -160,11 +189,11 @@ end
         .hsync_in(hsync_in),
         .hblnk_in(hblnk_in),
         .ypos(ypos),
-//		.xpos(xpos),
         .mouse_left(mouse_left),
         .difficulty(difficulty),
         .color1(color1),
         .color2(color2),
+		.button(button),
         
         .vsync_out(vsync_game),
         .hsync_out(hsync_game),
@@ -189,7 +218,9 @@ end
 		.rgb_out(rgb_cred)
   );
 
-
+//------------------------------------------------------------------------------
+// output register
+//------------------------------------------------------------------------------
  always @(posedge clk) begin
 	if (rst) begin
 	    state <= 0;
