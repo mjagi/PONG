@@ -21,12 +21,12 @@ module vga_example (
 	output wire [3:0] r,
 	output wire [3:0] g,
 	output wire [3:0] b,
-	output wire pclk_mirror,
+	//output wire pclk_mirror,
 	output wire [6:0] sseg_ca,
     output wire [3:0] sseg_an 
 );
 // Mirrors pclk on a pin for use by the testbench;
-assign pclk_mirror = pclk;
+//assign pclk_mirror = pclk;
 
 //------------------------------------------------------------------------------
 // wires
