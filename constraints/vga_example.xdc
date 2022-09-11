@@ -15,6 +15,46 @@ set_property PULLUP true [get_ports ps2_data]
 set_property PACKAGE_PIN U18 [get_ports {rst}]
 set_property IOSTANDARD LVCMOS33 [get_ports {rst}]
 
+#7 segment display
+#Bank = 34, Pin name = ,						Sch name = CA
+set_property PACKAGE_PIN W7 [get_ports {sseg_ca[0]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {sseg_ca[0]}]
+#Bank = 34, Pin name = ,					Sch name = CB
+set_property PACKAGE_PIN W6 [get_ports {sseg_ca[1]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {sseg_ca[1]}]
+#Bank = 34, Pin name = ,					Sch name = CC
+set_property PACKAGE_PIN U8 [get_ports {sseg_ca[2]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {sseg_ca[2]}]
+#Bank = 34, Pin name = ,						Sch name = CD
+set_property PACKAGE_PIN V8 [get_ports {sseg_ca[3]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {sseg_ca[3]}]
+#Bank = 34, Pin name = ,						Sch name = CE
+set_property PACKAGE_PIN U5 [get_ports {sseg_ca[4]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {sseg_ca[4]}]
+#Bank = 34, Pin name = ,						Sch name = CF
+set_property PACKAGE_PIN V5 [get_ports {sseg_ca[5]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {sseg_ca[5]}]
+#Bank = 34, Pin name = ,						Sch name = CG
+set_property PACKAGE_PIN U7 [get_ports {sseg_ca[6]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {sseg_ca[6]}]
+
+#Bank = 34, Pin name = ,						Sch name = DP
+# set_property PACKAGE_PIN V7 [get_ports {sseg_ca[7]}]
+# set_property IOSTANDARD LVCMOS33 [get_ports {sseg_ca[7]}]
+
+#Bank = 34, Pin name = ,						Sch name = AN0
+set_property PACKAGE_PIN U2 [get_ports {sseg_an[0]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {sseg_an[0]}]
+#Bank = 34, Pin name = ,						Sch name = AN1
+set_property PACKAGE_PIN U4 [get_ports {sseg_an[1]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {sseg_an[1]}]
+#Bank = 34, Pin name = ,						Sch name = AN2
+set_property PACKAGE_PIN V4 [get_ports {sseg_an[2]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {sseg_an[2]}]
+#Bank = 34, Pin name = ,					Sch name = AN3
+set_property PACKAGE_PIN W4 [get_ports {sseg_an[3]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {sseg_an[3]}]
+
 # Constraints for BUTTON
 set_property PACKAGE_PIN T17 [get_ports {button}]
 set_property IOSTANDARD LVCMOS33 [get_ports {button}]
