@@ -14,6 +14,20 @@ module point_display (
     output wire [3:0] sseg_an    // anode enable (active LOW)
 );
 
+// clock divider to produce stopwatch 300 Hz clock from 100 MHz external clock
+	wire clk300Hz;
+  
+    clk_divider 
+    #(
+    .OUT_FREQUENCY(300)
+    )
+    divider_sseg
+    (
+        .clk100MHz(clk), //input clock 100 MHz
+        .rst (rst),            //async reset active high
+        .clk_div (clk300Hz)
+    );
+
 // ring oscillator for multiplexing the displayed digits
 
     ring_counter
@@ -23,7 +37,7 @@ module point_display (
     )
     my_ring_counter
     (
-        .clk(clk),
+        .clk(clk300Hz),
         .rst(rst),
         .ring(sseg_an)
     );
@@ -36,7 +50,7 @@ module point_display (
     (
         .sel(sseg_an),
         .b0({1'b0,score_p1}),//X
-        .b1(3'b000),//0
+        .b1(3'b101),//-
         .b2(3'b001),//1
         .b3(3'b100),//P
         .point_selected(point_selected)

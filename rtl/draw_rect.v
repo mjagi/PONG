@@ -1,14 +1,14 @@
-// File: vga_example.v
-// This is the top level design for EE178 Lab #4.
-
-// The `timescale directive specifies what the
-// simulation time units are (1 ns here) and what
-// the simulator time step should be (1 ps here).
-
+//////////////////////////////////////////////////////////////////////////////
+/*
+ Module name:   draw_rect
+ Author:        Bartosz Białkowski, Mateusz Jagielski
+ Version:       1.0
+ Last modified: 2022-09-08
+ Coding style: safe with FPGA sync reset
+ Description:
+ */
+//////////////////////////////////////////////////////////////////////////////
 `timescale 1 ns / 1 ps
-
-// Declare the module and its ports. This is
-// using Verilog-2001 syntax.
 
 module draw_rect (
   input wire [10:0] vcount_in,
@@ -32,52 +32,31 @@ module draw_rect (
   output reg [11:0] rgb_out
   );
 
+//------------------------------------------------------------------------------
+// local parameters
+//------------------------------------------------------------------------------
 localparam WIDTH = 10;
 localparam LENGTH = 80;
 localparam XPOS = 60;
-//localparam COLOR = 12'hf_f_f;
 
+//------------------------------------------------------------------------------
+// local variables
+//------------------------------------------------------------------------------
 reg [11:0] rgb_nxt, rgb_temp;
-//reg [10:0] vcount_temp, hcount_temp;
-//reg vsync_temp, hsync_temp, vblnk_temp, hblnk_temp;
 
-  // This is a simple rectangle pattern generator.
-  
+//------------------------------------------------------------------------------
+// logic
+//------------------------------------------------------------------------------  
   always @*
-  begin
-    //if(vcount_in == y_pos && hcount_in == x_pos) rgb_nxt <= 12'h000;    
+  begin 
     if ((vcount_in >= y_pos) && (vcount_in < (y_pos + LENGTH)) && (hcount_in >= (XPOS - WIDTH)) && 
         (hcount_in < XPOS)) rgb_nxt = color2;
 	else rgb_nxt = rgb_in;
   end
- /* 
-    always @(posedge pclk) begin
-	if (rst) begin
-		hcount_temp <= 0;
-		vcount_temp <= 0;
-		
-		hblnk_temp <= 0;
-		vblnk_temp <= 0;
-		
-		hsync_temp <= 0;
-		vsync_temp <= 0;	
-		rgb_temp <= 0;
-	end
-	else begin
-		hcount_temp <= hcount_in;
-		vcount_temp <= vcount_in;
-	
-		hblnk_temp <= hblnk_in;
-		vblnk_temp <= vblnk_in;
-	
-		hsync_temp <= hsync_in;
-		vsync_temp <= vsync_in;
-		
-		rgb_temp <= rgb_in;
-	end
-end
-  */
-  
+
+//------------------------------------------------------------------------------
+// output register with sync reset
+//------------------------------------------------------------------------------  
   always @(posedge pclk) begin
 	if (rst) begin
 		hcount_out <= 0;
