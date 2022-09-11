@@ -57,10 +57,7 @@ proc create_new_project {project target top_module} {
 		rtl/draw_cred_ctl.v
 		rtl/draw_cred_char.v
         rtl/image_rom.v
-		rtl/char_rom_16x1_blueplayer.v
-		rtl/char_rom_16x1_redplayer.v
 		rtl/char_rom_16x6_cred.v
-		rtl/char_rom_16x2_MJ.v
         rtl/char_rom_16x1_start.v
         rtl/char_rom_16x1_credits.v
         rtl/char_rom_16x1_colors.v
@@ -71,6 +68,7 @@ proc create_new_project {project target top_module} {
 		rtl/sseg_conv.v
 		rtl/sseg_mux.v
 		rtl/point_display.v
+		rtl/clk_divider.v
     }
     
     # Specify vhdl design files location      -- EDIT
