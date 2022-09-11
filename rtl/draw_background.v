@@ -1,14 +1,14 @@
-//////////////////////////////////////////////////////////////////////////////
-/*
- Module name:   draw_background
- Author:        Bartosz Białkowski
- Version:       1.0
- Last modified: 2022-08-22
- Coding style: safe, with FPGA sync reset
- Description:  Template for simple module with registered outputs
- */
-//////////////////////////////////////////////////////////////////////////////
+// File: vga_example.v
+// This is the top level design for EE178 Lab #4.
+
+// The `timescale directive specifies what the
+// simulation time units are (1 ns here) and what
+// the simulator time step should be (1 ps here).
+
 `timescale 1 ns / 1 ps
+
+// Declare the module and its ports. This is
+// using Verilog-2001 syntax.
 
 module draw_background (
   input wire [10:0] vcount_in,
@@ -31,14 +31,11 @@ module draw_background (
   output reg [11:0] rgb_out
   );
 
-//------------------------------------------------------------------------------
-// local variables
-//------------------------------------------------------------------------------
+
 	reg [11:0] rgb_nxt;
 
-//------------------------------------------------------------------------------
-// logic
-//------------------------------------------------------------------------------  
+  // This is a simple test pattern generator.
+  
   always @*
   begin
     // During blanking, make it it gray.
@@ -58,9 +55,7 @@ module draw_background (
     end
   end
   
-//------------------------------------------------------------------------------
-// output register with sync reset
-//------------------------------------------------------------------------------  
+  
   always @(posedge pclk) begin
 	if (rst) begin
 		hcount_out <= 0;

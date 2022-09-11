@@ -1,14 +1,14 @@
-//////////////////////////////////////////////////////////////////////////////
-/*
- Module name:   draw_cred_char
- Author:        Mateusz Jagielski, Bartosz Białkowski
- Version:       1.0
- Last modified: 2022-09-09
- Coding style: safe, with FPGA sync reset
- Description: 
- */
-//////////////////////////////////////////////////////////////////////////////
+// File: vga_draw_rect_char.v
+// This is the vga draw rectangle filled with characters design for EE178 Lab #4.
+
+// The `timescale directive specifies what the
+// simulation time units are (1 ns here) and what
+// the simulator time step should be (1 ps here).
+
 `timescale 1 ns / 1 ps
+
+// Declare the module and its ports. This is
+// using Verilog-2001 syntax.
 
 module draw_cred_char (
   input wire [10:0] hcount_in,
@@ -37,28 +37,16 @@ module draw_cred_char (
   output reg [3:0] char_line
   );
 
-//------------------------------------------------------------------------------
-// local parameters
-//------------------------------------------------------------------------------ 
-localparam RECT_LENGTH = 96;
-localparam RECT_WIDTH = 128;
-
-//------------------------------------------------------------------------------
-// local variables
-//------------------------------------------------------------------------------
 reg [11:0] rgb_nxt, rgb_temp;
 reg [7:0] addr_y;
 reg [6:0] addr_x;
 
-//------------------------------------------------------------------------------
-// wires
-//------------------------------------------------------------------------------
 wire [10:0] hcount_del, vcount_del; 
 wire hsync_del, hblnk_del, vsync_del, vblnk_del;
 
-//------------------------------------------------------------------------------
-// output register with sync reset
-//------------------------------------------------------------------------------
+localparam RECT_LENGTH = 96;
+localparam RECT_WIDTH = 128;
+
   always @(posedge pclk)
   begin
     if(rst)
@@ -85,10 +73,7 @@ wire hsync_del, hblnk_del, vsync_del, vblnk_del;
       rgb_out <= rgb_nxt;
 	end
   end
-
-//------------------------------------------------------------------------------
-// modules
-//------------------------------------------------------------------------------  
+  
     delay #(
 		.WIDTH (26),
 		.CLK_DEL(1)
@@ -99,9 +84,6 @@ wire hsync_del, hblnk_del, vsync_del, vblnk_del;
 		.dout ({hcount_del, hsync_del, vcount_del, vsync_del, hblnk_del, vblnk_del})
 	);
 
-//------------------------------------------------------------------------------
-// logic
-//------------------------------------------------------------------------------ 
   always @*
   	begin
   	  if (vblnk_out || hblnk_out) rgb_nxt = 12'h0_0_0;

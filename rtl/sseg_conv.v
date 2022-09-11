@@ -17,19 +17,18 @@ module sseg_conv (
     );
 
     // bits for segments  gfedcba
-    localparam SSEG_0 		= 7'b1000000;
-    localparam SSEG_1 		= 7'b1111001;
-    localparam SSEG_2 		= 7'b0100100;
-    localparam SSEG_3 		= 7'b0110000;
-    localparam SSEG_4 		= 7'b0011001;
-    localparam SSEG_5 		= 7'b0010010;
-    localparam SSEG_6 		= 7'b0000010;
-    localparam SSEG_7 		= 7'b1111000;
-    localparam SSEG_8 		= 7'b0000000;
-    localparam SSEG_9 		= 7'b0010000;
-	localparam SSEG_P 		= 7'b0001100;
-	localparam SSEG_MINUS 	= 7'b0111111;
-    localparam SSEG_X 		= SSEG_2 | SSEG_5;
+    localparam SSEG_0 = 7'b1000000;
+    localparam SSEG_1 = 7'b1111001;
+    localparam SSEG_2 = 7'b0100100;
+    localparam SSEG_3 = 7'b0110000;
+    localparam SSEG_4 = 7'b0011001;
+    localparam SSEG_5 = 7'b0010010;
+    localparam SSEG_6 = 7'b0000010;
+    localparam SSEG_7 = 7'b1111000;
+    localparam SSEG_8 = 7'b0000000;
+    localparam SSEG_9 = 7'b0010000;
+	localparam SSEG_P = 7'b0001100;
+    localparam SSEG_X = SSEG_2 | SSEG_5;
 
     always @*
         case(point)
@@ -38,7 +37,6 @@ module sseg_conv (
             3'b010 : sseg    = SSEG_2;
             3'b011 : sseg    = SSEG_3;
             3'b100 : sseg    = SSEG_P;
-			3'b101 : sseg    = SSEG_MINUS;
             default : sseg = SSEG_X;
         endcase
 

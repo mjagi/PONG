@@ -1,14 +1,4 @@
-//////////////////////////////////////////////////////////////////////////////
-/*
- Module name:   delay
- Author:        (C) Copyright 2016 AGH UST All Rights Reserved
- Version:       1.0
- Last modified: -
- Coding style: safe with FPGA async reset
- Description:  Module provided by lecturer. The module delays the input data 'din' by the number of clock cycles
- */
-//////////////////////////////////////////////////////////////////////////////
-
+// The module delays the input data 'din' by the number of clock cycles
 // set by CLK_DEL input parameter
 module delay
     #( parameter
