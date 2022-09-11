@@ -20,6 +20,7 @@ module draw_rect (
   input wire pclk,
   input wire rst,
   input wire [11:0] y_pos,
+  input wire [11:0] y_pos_sec,
   input wire [11:0] rgb_in,
   input wire [11:0] color2,
   
@@ -38,6 +39,7 @@ module draw_rect (
 localparam WIDTH = 10;
 localparam LENGTH = 80;
 localparam XPOS = 60;
+localparam XPOS_SEC = 707;
 
 //------------------------------------------------------------------------------
 // local variables
@@ -51,6 +53,8 @@ reg [11:0] rgb_nxt, rgb_temp;
   begin 
     if ((vcount_in >= y_pos) && (vcount_in < (y_pos + LENGTH)) && (hcount_in >= (XPOS - WIDTH)) && 
         (hcount_in < XPOS)) rgb_nxt = color2;
+    else if ((vcount_in >= y_pos_sec) && (vcount_in < (y_pos_sec + LENGTH)) && (hcount_in >= (XPOS_SEC)) && 
+        (hcount_in < XPOS_SEC + WIDTH)) rgb_nxt = color2;
 	else rgb_nxt = rgb_in;
   end
 

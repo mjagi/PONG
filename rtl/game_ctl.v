@@ -20,6 +20,7 @@ module game_ctl (
   input wire hsync_in,
   input wire hblnk_in,
   input wire [11:0] ypos,
+  input wire [11:0] ypos_sec,
   input wire mouse_left,
   input wire difficulty,
   input wire [11:0] color1,
@@ -80,6 +81,7 @@ module game_ctl (
 	.rst(rst),
 	.rgb_in(rgb_out_bg),
 	.y_pos(ypos),
+	.y_pos_sec(ypos_sec),
 	.color2(color2),
 	
 	.vcount_out(vcount_out_rt),
@@ -98,6 +100,7 @@ module game_ctl (
     .mouse_ypos(ypos),
     .difficulty(difficulty),
 	.button(button),
+	.mouse_ypos_sec(ypos_sec),
     
     .xpos(xpos_ctl),
     .ypos(ypos_ctl),

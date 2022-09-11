@@ -14,6 +14,7 @@ module draw_ball_ctl (
   input wire pclk,
   input wire rst,
   input wire [11:0] mouse_ypos,
+  input wire [11:0] mouse_ypos_sec,
   input wire mouse_left,
   input wire difficulty,
   input wire button,
@@ -41,7 +42,6 @@ module draw_ball_ctl (
   localparam INTERVAL_CHANGE_HARD = 20'b0000_1000_0000_0000_0000;
   localparam INTERVAL_CHANGE_EASY = 20'b0000_0000_0000_1000_0000;
   localparam BALL_DIAMETER = 16;
-  localparam BALL_RADIUS = 8;
 
   localparam LEFT_WALL = 1;
   localparam RIGHT_WALL = 1022;
@@ -53,6 +53,7 @@ module draw_ball_ctl (
   localparam RACKET_WIDTH = 10;
   localparam RACKET_LENGTH = 80;
   localparam RACKET_XPOS = 60;
+  localparam RACKET_XPOS_SEC = 707;
 
 //------------------------------------------------------------------------------
 // local variables
@@ -244,18 +245,12 @@ module draw_ball_ctl (
 					else score_p2_nxt = score_p2 + 1;
 				
 				end
+				
+				// LEFT RACKET
                 else if((ypos >= (mouse_ypos - BALL_DIAMETER)) && (ypos <= (mouse_ypos + RACKET_LENGTH)) && (xpos == RACKET_XPOS)) begin
                     pxl_interval_nxt = pxl_interval;
                     score_p2_nxt = score_p2;
-          		    case (direction)
-                        //UPRIGHT: begin 
-                          //  direction_nxt = UPLEFT;
-                      //  end
-                      
-                       // DOWNRIGHT: begin
-                         //   direction_nxt = DOWNLEFT;
-                      //  end
-          
+          		    case (direction)          
                         DOWNLEFT: begin
                             direction_nxt = DOWNRIGHT;
                         end
@@ -264,6 +259,25 @@ module draw_ball_ctl (
                             direction_nxt = UPRIGHT;
                         end
           
+                        default: begin 
+                            direction_nxt = direction;
+                        end
+                    endcase
+                end
+                
+                // RIGHT RACKET
+                else if((ypos >= (mouse_ypos_sec - BALL_DIAMETER)) && (ypos <= (mouse_ypos_sec + RACKET_LENGTH)) && (xpos == RACKET_XPOS_SEC)) begin
+                    pxl_interval_nxt = pxl_interval;
+                    score_p2_nxt = score_p2;
+          		    case (direction)
+                        UPRIGHT: begin 
+                            direction_nxt = UPLEFT;
+                        end
+                      
+                        DOWNRIGHT: begin
+                            direction_nxt = DOWNLEFT;
+                        end
+
                         default: begin 
                             direction_nxt = direction;
                         end

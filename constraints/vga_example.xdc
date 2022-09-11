@@ -138,9 +138,9 @@ set_property PACKAGE_PIN L17 [get_ports {hs2}]
 set_property PACKAGE_PIN M19 [get_ports {vs2}]					
 	set_property IOSTANDARD LVCMOS33 [get_ports {vs2}]
 ##Sch name = JC9
-#set_property PACKAGE_PIN P17 [get_ports {JC[6]}]					
-#	set_property IOSTANDARD LVCMOS33 [get_ports {JC[6]}]
+set_property PACKAGE_PIN P17 [get_ports {ps2_clk_sec}]
+	set_property IOSTANDARD LVCMOS33 [get_ports {ps2_clk_sec}]
 ##Sch name = JC10
-#set_property PACKAGE_PIN R18 [get_ports {JC[7]}]					
-	#set_property IOSTANDARD LVCMOS33 [get_ports {JC[7]}]
+set_property PACKAGE_PIN R18 [get_ports {ps2_data_sec}]
+	set_property IOSTANDARD LVCMOS33 [get_ports {ps2_data_sec}]
 

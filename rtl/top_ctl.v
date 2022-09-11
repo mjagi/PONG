@@ -23,11 +23,12 @@ module top_ctl(
 	input wire [11:0] xpos,
 	input wire mouse_left,
 	input wire button,
+	input wire [11:0] ypos_sec,
   
 	output reg vsync_out,
 	output reg hsync_out,
 	output wire [6:0] sseg_ca,
-    output wire [3:0] sseg_an, 
+    output wire [3:0] sseg_an,
 	output reg [11:0] rgb_out
 	);
 
@@ -191,6 +192,7 @@ end
         .hsync_in(hsync_in),
         .hblnk_in(hblnk_in),
         .ypos(ypos),
+        .ypos_sec(ypos_sec),
         .mouse_left(mouse_left),
         .difficulty(difficulty),
         .color1(color1),
