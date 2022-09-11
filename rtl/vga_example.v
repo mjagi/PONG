@@ -22,14 +22,11 @@ module vga_example (
 	output wire [3:0] r,
 	output wire [3:0] g,
 	output wire [3:0] b,
-<<<<<<< Updated upstream
-=======
 	output wire vs2,
 	output wire hs2,
 	output wire [3:0] red,
 	output wire [3:0] green,
 	output wire [3:0] blue,	
->>>>>>> Stashed changes
 	//output wire pclk_mirror,
 	output wire [6:0] sseg_ca,
     output wire [3:0] sseg_an 
