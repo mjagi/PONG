@@ -16,11 +16,20 @@ module vga_example (
 	input wire button,
 	input wire clk,
 	input wire rst,
+	
 	output wire vs,
 	output wire hs,
 	output wire [3:0] r,
 	output wire [3:0] g,
 	output wire [3:0] b,
+<<<<<<< Updated upstream
+=======
+	output wire vs2,
+	output wire hs2,
+	output wire [3:0] red,
+	output wire [3:0] green,
+	output wire [3:0] blue,	
+>>>>>>> Stashed changes
 	//output wire pclk_mirror,
 	output wire [6:0] sseg_ca,
     output wire [3:0] sseg_an 
@@ -43,6 +52,11 @@ module vga_example (
 	wire [11:0] xpos_wire, ypos_wire, ypos_wire_d, xpos_wire_d;
 	wire rst_out, mouse_left, mouse_left_d;
 
+	assign vs2 = vs;
+	assign hs2 = hs;
+	assign red = r;
+	assign green = g;
+	assign blue = b;	
 //------------------------------------------------------------------------------
 // modules
 //------------------------------------------------------------------------------	

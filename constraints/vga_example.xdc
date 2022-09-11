@@ -91,6 +91,7 @@ set_property IOSTANDARD LVCMOS33 [get_ports {b[3]}]
 set_property CFGBVS VCCO [current_design]
 set_property CONFIG_VOLTAGE 3.3 [current_design]
 
+<<<<<<< Updated upstream
 ##Pmod Header JA
 ##Sch name = JA1
 set_property PACKAGE_PIN J1 [get_ports {r[0]}]					
@@ -142,3 +143,57 @@ set_property PACKAGE_PIN M3 [get_ports {hs}]
 ##Sch name = XA4_N
 #set_property PACKAGE_PIN N1 [get_ports {JXADC[7]}]				
 	#set_property IOSTANDARD LVCMOS33 [get_ports {JXADC[7]}]
+=======
+##Pmod Header JB
+##Sch name = JB1
+set_property PACKAGE_PIN A14 [get_ports {red[0]}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {red[0]}]
+##Sch name = JB2
+set_property PACKAGE_PIN A16 [get_ports {red[1]}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {red[1]}]
+##Sch name = JB3
+set_property PACKAGE_PIN B15 [get_ports {red[2]}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {red[2]}]
+##Sch name = JB4
+set_property PACKAGE_PIN B16 [get_ports {red[3]}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {red[3]}]
+##Sch name = JB7
+set_property PACKAGE_PIN A15 [get_ports {green[0]}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {green[0]}]
+##Sch name = JB8
+set_property PACKAGE_PIN A17 [get_ports {green[1]}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {green[1]}]
+##Sch name = JB9
+set_property PACKAGE_PIN C15 [get_ports {green[2]}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {green[2]}]
+##Sch name = JB10 
+set_property PACKAGE_PIN C16 [get_ports {green[3]}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {green[3]}]
+
+##Pmod Header JC
+##Sch name = JC1
+set_property PACKAGE_PIN K17 [get_ports {blue[0]}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {blue[0]}]
+##Sch name = JC2
+set_property PACKAGE_PIN M18 [get_ports {blue[1]}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {blue[1]}]
+##Sch name = JC3
+set_property PACKAGE_PIN N17 [get_ports {blue[2]}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {blue[2]}]
+##Sch name = JC4
+set_property PACKAGE_PIN P18 [get_ports {blue[3]}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {blue[3]}]
+##Sch name = JC7
+set_property PACKAGE_PIN L17 [get_ports {hs2}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {hs2}]
+##Sch name = JC8
+set_property PACKAGE_PIN M19 [get_ports {vs2}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {vs2}]
+##Sch name = JC9
+#set_property PACKAGE_PIN P17 [get_ports {JC[6]}]					
+#	set_property IOSTANDARD LVCMOS33 [get_ports {JC[6]}]
+##Sch name = JC10
+#set_property PACKAGE_PIN R18 [get_ports {JC[7]}]					
+	#set_property IOSTANDARD LVCMOS33 [get_ports {JC[7]}]
+
+>>>>>>> Stashed changes
