@@ -117,7 +117,7 @@ always@* begin
     
     case(color_state_nxt)
     0: begin
-    	color1 = 12'h0_0_0;
+    	color1 = 12'h3_3_3;
     	color2 = 12'hf_f_f;
     end
     
@@ -137,22 +137,22 @@ always@* begin
     end
     
 	4: begin
-    	color1 = 12'h0_0_9;
+    	color1 = 12'h3_3_9;
     	color2 = 12'hf_f_6;
     end
     
 	5: begin
-    	color1 = 12'h9_0_0;
+    	color1 = 12'h9_3_3;
     	color2 = 12'h6_f_f;
     end
 
 	6: begin
-    	color1 = 12'h0_9_0;
+    	color1 = 12'h3_9_3;
     	color2 = 12'hf_6_f;
     end
 
 	default: begin
-    	color1 = 12'h0_0_0;
+    	color1 = 12'h3_3_3;
     	color2 = 12'hf_f_f;
     end    
     endcase

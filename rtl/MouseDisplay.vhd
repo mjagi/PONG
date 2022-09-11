@@ -234,14 +234,14 @@ enable_mouse_display_out <= enable_mouse_display;
             if(enable_mouse_display = '1') then
                -- white pixel of cursor
                if(mousepixel = "01") then
-                  red_out <= (others => '1');
-                  green_out <= (others => '1');
-                  blue_out <= (others => '1');
+                  red_out <= "1001";--(others => '1');
+                  green_out <= "1001";--(others => '1');
+                  blue_out <= "1001";--(others => '1');
                -- black pixel of cursor
                elsif(mousepixel = "00") then
-                  red_out <= (others => '0');
-                  green_out <= (others => '0');
-                  blue_out <= (others => '0');
+                  red_out <= "0011";--(others => '0');
+                  green_out <= "0011";--(others => '0');
+                  blue_out <= "0011";--(others => '0');
                -- transparent pixel of cursor
                -- let input pass to output
                else
