@@ -127,7 +127,7 @@ set_property PACKAGE_PIN M18 [get_ports {ypos_sec[9]}]
 	set_property IOSTANDARD LVCMOS33 [get_ports {ypos_sec[9]}]
 ##Sch name = JC3
 set_property PACKAGE_PIN N17 [get_ports {ypos_sec[10]}]					
-	set_property IOSTANDARD LVCMOS33 [get_ports {blue[10]}]
+	set_property IOSTANDARD LVCMOS33 [get_ports {ypos_sec[10]}]
 ##Sch name = JC4
 set_property PACKAGE_PIN P18 [get_ports {ypos_sec[11]}]					
 	set_property IOSTANDARD LVCMOS33 [get_ports {ypos_sec[11]}]
