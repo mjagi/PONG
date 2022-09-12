@@ -2,14 +2,17 @@
 /******************************************************************************
  * (C) Copyright 2016 AGH UST All Rights Reserved
  *
- * MODULE:    bcd2sseg
+ * MODULE:    sseg_conv
  * DEVICE:    general
  * PROJECT:   stopwatch
- * ABSTRACT:  This module converts 8421 BCD code into 7-segment display code
+ * ABSTRACT:  This module converts binary code into 7-segment display code
  *            (active LOW)
+ *
+ * Module Provided by lecturer. Modified
  *
  * HISTORY:
  * 1 Jan 2016, RS - initial version
+ * 10 Sep 2022, BB - modification for project purpose
  *******************************************************************************/
 module sseg_conv (
         input  wire [2:0] point,

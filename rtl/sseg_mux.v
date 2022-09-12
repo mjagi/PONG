@@ -6,10 +6,13 @@
  * DEVICE:    general
  * PROJECT:   stopwatch
  *
- * ABSTRACT:  Multiplexer of four 4-bit input numbers into one 4-bit bus
+ * ABSTRACT:  Multiplexer of four 3-bit input numbers into one 3-bit bus
+ *
+ * Module provided by lecturer. Modified
  *
  * HISTORY:
  * 4 Jan 2016, RS - initial version
+ * 10 Sep 2022, BB - modification for project purpose
  *
  *******************************************************************************/
 module sseg_mux (

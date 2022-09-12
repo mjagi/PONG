@@ -1,5 +1,14 @@
+//////////////////////////////////////////////////////////////////////////////
+/*
+ Module name:   score_res
+ Author:        Bartosz Białkowski
+ Version:       1.0
+ Last modified: 2022-09-10
+ Coding style: safe with FPGA sync reset
+ Description:	game end screen generator
+ */
+//////////////////////////////////////////////////////////////////////////////
 `timescale 1 ns / 1 ps
-
 
 module score_res (
   input wire [10:0] vcount_in,
@@ -21,11 +30,14 @@ module score_res (
   output reg [11:0] rgb_out
   );
 
-
+//------------------------------------------------------------------------------
+// local variables
+//------------------------------------------------------------------------------
 	reg [11:0] rgb_nxt;
-
-  // This is a simple menu pattern generator.
   
+//------------------------------------------------------------------------------
+// logic
+//------------------------------------------------------------------------------  
 always @* begin
 	if(score_p2 == 3)begin 
 		// During blanking, make it it gray.
@@ -81,7 +93,10 @@ always @* begin
 	end	
 	else	rgb_nxt = rgb_in;    
 end  
-  
+
+//------------------------------------------------------------------------------
+// output register with sync reset
+//------------------------------------------------------------------------------  
   always @(posedge pclk) begin
 	if (rst) begin		
 		hsync_out <= 0;
@@ -94,6 +109,5 @@ end
 		rgb_out <= rgb_nxt;
 	end
 end
-
 
 endmodule

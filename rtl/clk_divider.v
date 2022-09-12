@@ -5,7 +5,9 @@
  * MODULE:    clk_divider
  * DEVICE:    general
  *
- * ABSTRACT:  The clock divider module. Assuming 100MHz input clock. Module provided by lecturer
+ * ABSTRACT:  The clock divider module. Assuming 100MHz input clock.
+ *
+ * Module provided by lecturer
  *
  * HISTORY:
  * 1 Jan 2016, RS - initial version

@@ -5,7 +5,7 @@
  Version:       1.0
  Last modified: 2022-09-10
  Coding style: safe with FPGA sync reset
- Description:
+ Description: 
  */
 //////////////////////////////////////////////////////////////////////////////
 `timescale 1 ns / 1 ps
@@ -52,7 +52,7 @@ reg [11:0] rgb_nxt, color1, color2;
 reg vsync_nxt, hsync_nxt;
 reg [1:0] state, state_nxt;
 reg [2:0] color_state, color_state_nxt;
-reg difficulty, difficulty_nxt = 0; 
+reg difficulty, difficulty_nxt; 
 
 //------------------------------------------------------------------------------
 // next state logic

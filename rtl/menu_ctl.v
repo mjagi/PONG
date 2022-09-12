@@ -5,7 +5,7 @@
  Version:       1.0
  Last modified: 2022-09-10
  Coding style: safe with FPGA sync reset
- Description:
+ Description: structural module for menu modules
  */
 //////////////////////////////////////////////////////////////////////////////
 `timescale 1 ns / 1 ps
@@ -34,11 +34,11 @@ module menu_ctl (
 // wires
 //------------------------------------------------------------------------------
   wire [10:0] hcount_out_if, vcount_out_if, hcount_out_start, vcount_out_start, hcount_out_credits, vcount_out_credits;
-  wire [10:0] hcount_out_diff, vcount_out_diff, hcount_out_mode, vcount_out_mode;// hcount_out_credits, vcount_out_credits;
+  wire [10:0] hcount_out_diff, vcount_out_diff, hcount_out_mode, vcount_out_mode;
   wire vsync_out_if, hsync_out_if, hsync_out_start, vsync_out_start, vsync_out_credits, hsync_out_credits;
-  wire vsync_out_diff, hsync_out_diff, hsync_out_mode, vsync_out_mode;// vsync_out_credits, hsync_out_credits;
+  wire vsync_out_diff, hsync_out_diff, hsync_out_mode, vsync_out_mode;
   wire hblnk_out_if, vblnk_out_if, hblnk_out_start, vblnk_out_start, hblnk_out_credits, vblnk_out_credits;
-  wire hblnk_out_diff, vblnk_out_diff, hblnk_out_mode, vblnk_out_mode;// hblnk_out_credits, vblnk_out_credits;
+  wire hblnk_out_diff, vblnk_out_diff, hblnk_out_mode, vblnk_out_mode;
   wire [11:0] rgb_out_if, rgb_out_start, rgb_out_diff, rgb_out_mode, rgb_out_credits;
   wire rst_out, rgb_im, addr_im;
   wire [7:0] char_line_pixel_start, xy_char_start, char_line_pixel_credits, xy_char_credits;

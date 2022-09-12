@@ -1,7 +1,7 @@
 #Project name                                 -- EDIT
 set project screen_example
 # Top module name                             -- EDIT
-set top_module vga_example
+set top_module top_pong
 # FPGA device
 set target xc7a35tcpg236-1
 # Bitstream location
@@ -36,7 +36,7 @@ proc create_new_project {project target top_module} {
 
     # Specify verilog design files location   -- EDIT
     read_verilog {
-        rtl/vga_example.v
+        rtl/top_pong.v
 		rtl/vga_timing.v
 		rtl/draw_background.v
 		rtl/draw_rect.v

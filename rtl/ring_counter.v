@@ -9,6 +9,8 @@
  *            value. The content of the ring counter is shifted left on each
  *            clock cycle
  *
+ * Module provided by lecturer
+ *
  * HISTORY:
  * 1 Jan 2016, RS - initial version
  *

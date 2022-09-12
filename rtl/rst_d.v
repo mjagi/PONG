@@ -1,13 +1,29 @@
+//////////////////////////////////////////////////////////////////////////////
+/*
+ Module name:   rst_d
+ Author:        Bartosz Białkowski
+ Version:       1.0
+ Last modified: 2022-08-01
+ Coding style: safe with FPGA sync reset
+ Description:	module for delaying reset for all modules except clock
+ */
+//////////////////////////////////////////////////////////////////////////////
+
 module rst_d (
   output reg rst_out,
   input wire locked,
   input wire clk
   );
 
-
+//------------------------------------------------------------------------------
+// local parameters
+//------------------------------------------------------------------------------
 reg [2:0] cycles, cycles_nxt;
 reg rst_d_nxt, rst_d;
 
+//------------------------------------------------------------------------------
+// logic
+//------------------------------------------------------------------------------
 always@*
 begin
 	if(locked == 0) begin
@@ -23,7 +39,10 @@ begin
 		rst_d_nxt = 1;
 	end 
 end
-	
+
+//------------------------------------------------------------------------------
+// output register with sync reset
+//------------------------------------------------------------------------------	
 always@(posedge clk or negedge locked) begin
 	if(!locked) begin
 		rst_d <= 0;
