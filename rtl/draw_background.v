@@ -50,6 +50,10 @@ module draw_background (
       // Active display, bottom edge, make a white line.
       else if (vcount_in == 767) rgb_nxt = color2;
       // Active display, left edge, make a white line.
+      else if ((hcount_in == 511)&&((vcount_in >= 8 && vcount_in <= 58)||(vcount_in >= 108 && vcount_in <= 158)||(vcount_in >= 208 && vcount_in <= 258)||
+      (vcount_in >= 308 && vcount_in <= 358)||(vcount_in >= 408 && vcount_in <= 458)||(vcount_in >= 508 && vcount_in <= 558)||(vcount_in >= 608 && vcount_in <= 658)||
+      (vcount_in >= 708 && vcount_in <= 758))) rgb_nxt = color2;
+      // Active display, middle edge, make a white line.
       else if (hcount_in == 1) rgb_nxt = color2;
       // Active display, right edge, make a white line.
       else if (hcount_in == 1023) rgb_nxt = color2;

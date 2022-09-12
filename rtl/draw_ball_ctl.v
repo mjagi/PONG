@@ -48,12 +48,12 @@ module draw_ball_ctl (
   localparam UP_WALL = 1;
   localparam DOWN_WALL = 766;
   
-  localparam CENTRAL_LINE = 511;
+  localparam CENTRAL_LINE = 512;
 
   localparam RACKET_WIDTH = 10;
   localparam RACKET_LENGTH = 80;
   localparam RACKET_XPOS = 60;
-  localparam RACKET_XPOS_SEC = 707;
+  localparam RACKET_XPOS_SEC = 963;
 
 //------------------------------------------------------------------------------
 // local variables
@@ -66,7 +66,7 @@ module draw_ball_ctl (
   reg [19:0] interval_change, interval_change_nxt;
   reg [19:0] xtilt, xtilt_nxt;
   reg [19:0] ytilt, ytilt_nxt;
-  reg [1:0] score_p1_nxt = 0, score_p2_nxt = 0;
+  reg [1:0] score_p1_nxt, score_p2_nxt;
   
 //------------------------------------------------------------------------------
 // output register
@@ -98,7 +98,7 @@ module draw_ball_ctl (
       state <= state_nxt;
       direction <= direction_nxt;
 	  score_p1 <= score_p1_nxt;
-		score_p2 <= score_p2_nxt;
+	   score_p2 <= score_p2_nxt;
     end
   end
   
@@ -109,7 +109,7 @@ module draw_ball_ctl (
   begin
     case (state)
       IDLE:			state_nxt = mouse_left ? MOVING : IDLE;
-      MOVING:		state_nxt = mouse_left ? IDLE : MOVING;
+      MOVING:		state_nxt = button ? IDLE : MOVING;
     default:
       state_nxt = IDLE;
     endcase
@@ -125,11 +125,11 @@ module draw_ball_ctl (
             pxl_interval_nxt = INTERVAL_START;
             
             if (button) begin 
-                   // score_p1_nxt = 0;
+                    score_p1_nxt = 0;
                     score_p2_nxt = 0;
             end
             else begin
-                   // score_p1_nxt = score_p1;
+                    score_p1_nxt = score_p1;
                     score_p2_nxt = score_p2;
             end
         
@@ -178,43 +178,44 @@ module draw_ball_ctl (
                 endcase
           
           
-                if((ypos >= (DOWN_WALL - BALL_DIAMETER)) || (ypos <= UP_WALL) || (xpos >= RIGHT_WALL - BALL_DIAMETER)) 
+                if((ypos >= (DOWN_WALL - BALL_DIAMETER)) || (ypos <= UP_WALL)) 
                 begin 
                     score_p2_nxt = score_p2;
+					score_p1_nxt = score_p1;
   	                case (direction)
                         UPRIGHT: begin                       
                             if (ypos < (UP_WALL + 1))
                                 direction_nxt = DOWNRIGHT;
-                            else if (xpos > (RIGHT_WALL - BALL_DIAMETER - 1))
-                                direction_nxt = UPLEFT;
+                            //else if (xpos > (RIGHT_WALL - BALL_DIAMETER - 1))
+                            //    direction_nxt = UPLEFT;
                         end
             
                         DOWNRIGHT: begin
                             if (ypos > (DOWN_WALL - BALL_DIAMETER - 1))
                                 direction_nxt = UPRIGHT;
-                            else if (xpos > (RIGHT_WALL - BALL_DIAMETER - 1))
-                                direction_nxt = DOWNLEFT;
+                            //else if (xpos > (RIGHT_WALL - BALL_DIAMETER - 1))
+                            //    direction_nxt = DOWNLEFT;
                         end
 
                         DOWNLEFT: begin
                             if (ypos > (DOWN_WALL - BALL_DIAMETER - 1))
                                 direction_nxt = UPLEFT;
-                            else if (xpos < (LEFT_WALL + 1))
-                                direction_nxt = DOWNRIGHT;
+                           // else if (xpos < (LEFT_WALL + 1))
+                           //     direction_nxt = DOWNRIGHT;
                         end
 
                         UPLEFT: begin
                             if (ypos < (UP_WALL + 1))
                                 direction_nxt = DOWNLEFT;
-                            else if (xpos < (LEFT_WALL + 1))
-                                direction_nxt = UPRIGHT;
+                            //else if (xpos < (LEFT_WALL + 1))
+                            //    direction_nxt = UPRIGHT;
                         end
 
                         default: begin 
                             if (ypos < (UP_WALL + 1))
                                 direction_nxt = DOWNRIGHT;
-                            else if (xpos > (RIGHT_WALL - BALL_DIAMETER - 1))
-                                direction_nxt = UPLEFT;
+                            //else if (xpos > (RIGHT_WALL - BALL_DIAMETER - 1))
+                            //    direction_nxt = UPLEFT;
                         end
                     endcase
             
@@ -240,9 +241,20 @@ module draw_ball_ctl (
 				else if (xpos <= LEFT_WALL)	begin
 					state_nxt = IDLE;
                     pxl_interval_nxt = INTERVAL_START;
+                    score_p1_nxt = score_p1;
 					if (score_p2 == 3)score_p2_nxt = score_p2;
 					
 					else score_p2_nxt = score_p2 + 1;
+				
+				end
+				
+				else if (xpos >= RIGHT_WALL - BALL_DIAMETER)	begin
+					state_nxt = IDLE;
+                    pxl_interval_nxt = INTERVAL_START;
+                    score_p2_nxt = score_p2;
+					if (score_p1 == 3)score_p1_nxt = score_p1;
+					
+					else score_p1_nxt = score_p1 + 1;
 				
 				end
 				
@@ -250,6 +262,7 @@ module draw_ball_ctl (
                 else if((ypos >= (mouse_ypos - BALL_DIAMETER)) && (ypos <= (mouse_ypos + RACKET_LENGTH)) && (xpos == RACKET_XPOS)) begin
                     pxl_interval_nxt = pxl_interval;
                     score_p2_nxt = score_p2;
+					score_p1_nxt = score_p1;
           		    case (direction)          
                         DOWNLEFT: begin
                             direction_nxt = DOWNRIGHT;
@@ -266,9 +279,10 @@ module draw_ball_ctl (
                 end
                 
                 // RIGHT RACKET
-                else if((ypos >= (mouse_ypos_sec - BALL_DIAMETER)) && (ypos <= (mouse_ypos_sec + RACKET_LENGTH)) && (xpos == RACKET_XPOS_SEC)) begin
+                else if((ypos >= (mouse_ypos_sec - BALL_DIAMETER)) && (ypos <= (mouse_ypos_sec + RACKET_LENGTH)) && (xpos == RACKET_XPOS_SEC - BALL_DIAMETER - 1)) begin
                     pxl_interval_nxt = pxl_interval;
                     score_p2_nxt = score_p2;
+					score_p1_nxt = score_p1;
           		    case (direction)
                         UPRIGHT: begin 
                             direction_nxt = UPLEFT;
@@ -285,10 +299,10 @@ module draw_ball_ctl (
                 end
           
                 else begin
-//                  pxl_interval_nxt = pxl_interval - interval_change;
                     pxl_interval_nxt = pxl_interval;
                     direction_nxt = direction;
                     score_p2_nxt = score_p2;
+					score_p1_nxt = score_p1;
                 end
             end
         
@@ -303,6 +317,7 @@ module draw_ball_ctl (
 			     speed_change_count_nxt = speed_change_count;
 			     direction_nxt = direction;
 			     score_p2_nxt = score_p2;
+				 score_p1_nxt = score_p1;
   		    end
   		end
   		
@@ -312,6 +327,7 @@ module draw_ball_ctl (
   		    interval_count_nxt = 0;
   		    pxl_interval_nxt = INTERVAL_START;
 			score_p2_nxt = score_p2;
+			score_p1_nxt = score_p1;
   		  
             if(difficulty == 0) interval_change_nxt = INTERVAL_CHANGE_EASY;
   		    else interval_change_nxt = INTERVAL_CHANGE_HARD;
