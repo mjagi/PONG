@@ -39,7 +39,7 @@ module draw_rect (
 localparam WIDTH = 10;
 localparam LENGTH = 80;
 localparam XPOS = 60;
-localparam XPOS_SEC = 707;
+localparam XPOS_SEC = 960;
 
 //------------------------------------------------------------------------------
 // local variables

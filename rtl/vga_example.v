@@ -16,8 +16,7 @@ module vga_example (
 	input wire button,
 	input wire clk,
 	input wire rst,
-	inout wire ps2_clk_sec,
-	inout wire ps2_data_sec,
+	input wire ypos_sec,
 	
 	output wire vs,
 	output wire hs,
@@ -29,12 +28,9 @@ module vga_example (
 	output wire [3:0] red,
 	output wire [3:0] green,
 	output wire [3:0] blue,	
-	//output wire pclk_mirror,
 	output wire [6:0] sseg_ca,
     output wire [3:0] sseg_an 
 );
-// Mirrors pclk on a pin for use by the testbench;
-//assign pclk_mirror = pclk;
 
 //------------------------------------------------------------------------------
 // wires
@@ -48,8 +44,8 @@ module vga_example (
 	wire [10:0] vcount, hcount;
 	wire vsync, hsync;
 	wire vblnk, hblnk;
-	wire [11:0] xpos_wire, ypos_wire, ypos_wire_d, xpos_wire_d;
-	wire [11:0] ypos_wire_sec, ypos_wire_sec_d;
+	wire [11:0] xpos_wire, ypos_wire, ypos_wire_d, xpos_wire_d, ypos_sec_d;
+//	wire [11:0] ypos_wire_sec, ypos_sec_d;
 	wire rst_out, mouse_left, mouse_left_d;
 
 	assign vs2 = vs;
@@ -101,7 +97,7 @@ module vga_example (
 		.xpos(xpos_wire_d),
 		.mouse_left(mouse_left_d),
 		.button(button),
-		.ypos_sec(ypos_wire_sec_d),
+		.ypos_sec(ypos_sec_d),
 			
 		.vsync_out(vs),
 		.hsync_out(hs),
@@ -128,36 +124,17 @@ module vga_example (
 		.right(),
 		.new_event()
 	);
-	
-	MouseCtl My_MouseCtl_sec(
-		.clk(mclk),
-		.rst(rst_out),
-		.value(12'b0),
-		.setx(1'b0),
-		.sety(1'b0),
-		.setmax_x(1'b0),
-		.setmax_y(1'b0),
-		.ps2_clk(ps2_clk_sec),
-		.ps2_data(ps2_data_sec),
-		.xpos(),
-		.ypos(ypos_wire_sec),
-		.zpos(),
-		.left(),
-		.middle(),
-		.right(),
-		.new_event()
-	);
 
 	Mouse_delay My_mouse_delay(
 		.clk(pclk),
 		.rst(rst_out),
 		.xpos_in(xpos_wire),
 		.ypos_in(ypos_wire),
-		.ypos_in_sec(ypos_wire_sec),
+		.ypos_in_sec(ypos_sec),
 		.mouse_left_in(mouse_left),
 		.xpos_out(xpos_wire_d),
 		.ypos_out(ypos_wire_d),
-		.ypos_out_sec(ypos_wire_sec_d),
+		.ypos_out_sec(ypos_sec_d),
 		.mouse_left_out(mouse_left_d)
   );
 
