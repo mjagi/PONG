@@ -39,7 +39,7 @@ module score_res (
 // logic
 //------------------------------------------------------------------------------  
 always @* begin
-	if(score_p2 == 3)begin 
+	if(score_p1 == 3)begin 
 		// During blanking, make it it gray.
 		if (vblnk_in || hblnk_in) rgb_nxt = 12'h3_3_3; 
 		else begin
@@ -67,7 +67,7 @@ always @* begin
 			else rgb_nxt = color1;
 		end	
 	end
-	else if(score_p1 == 3)begin 
+	else if(score_p2 == 3)begin 
 		// During blanking, make it it gray.
 		if (vblnk_in || hblnk_in) rgb_nxt = 12'h3_3_3; 
 		else begin

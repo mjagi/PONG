@@ -19,8 +19,8 @@ module menu_ctl (
   input wire vblnk_in,
   input wire hsync_in,
   input wire hblnk_in,
-  input wire [11:0] ypos,
-  input wire [11:0] xpos,
+  //input wire [9:0] ypos,
+ // input wire [11:0] xpos,
   input wire difficulty,
   input wire [11:0] color1,
   input wire [11:0] color2,
@@ -33,13 +33,13 @@ module menu_ctl (
 //------------------------------------------------------------------------------
 // wires
 //------------------------------------------------------------------------------
-  wire [10:0] hcount_out_if, vcount_out_if, hcount_out_start, vcount_out_start, hcount_out_credits, vcount_out_credits;
+  wire [10:0] hcount_out_if, vcount_out_if, hcount_out_start, vcount_out_start;
   wire [10:0] hcount_out_diff, vcount_out_diff, hcount_out_mode, vcount_out_mode;
-  wire vsync_out_if, hsync_out_if, hsync_out_start, vsync_out_start, vsync_out_credits, hsync_out_credits;
+  wire vsync_out_if, hsync_out_if, hsync_out_start, vsync_out_start;
   wire vsync_out_diff, hsync_out_diff, hsync_out_mode, vsync_out_mode;
-  wire hblnk_out_if, vblnk_out_if, hblnk_out_start, vblnk_out_start, hblnk_out_credits, vblnk_out_credits;
+  wire hblnk_out_if, vblnk_out_if, hblnk_out_start, vblnk_out_start;
   wire hblnk_out_diff, vblnk_out_diff, hblnk_out_mode, vblnk_out_mode;
-  wire [11:0] rgb_out_if, rgb_out_start, rgb_out_diff, rgb_out_mode, rgb_out_credits;
+  wire [11:0] rgb_out_if, rgb_out_start, rgb_out_diff, rgb_out_mode;
   wire rst_out, rgb_im, addr_im;
   wire [7:0] char_line_pixel_start, xy_char_start, char_line_pixel_credits, xy_char_credits;
   wire [7:0] char_line_pixel_diff, xy_char_diff, char_line_pixel_mode, xy_char_mode;
@@ -209,17 +209,17 @@ module menu_ctl (
   	.color2(color2),
     .pclk(clk),
   	.rst(rst),
-  	
   	.char_pixels(char_line_pixel_credits),
-  	.vcount_out(vcount_out_credits),
-    .vsync_out(vsync_out_credits),
-    .vblnk_out(vblnk_out_credits),
-    .hcount_out(hcount_out_credits),
-    .hsync_out(hsync_out_credits),
-    .hblnk_out(hblnk_out_credits),
-  	.rgb_out(rgb_out_credits),
-  	.char_xy(xy_char_credits),
-  	.char_line(char_line_credits)
+	
+    .vcount_out(),
+    .vsync_out(vsync_out),
+    .vblnk_out(),
+    .hcount_out(),
+    .hsync_out(hsync_out),
+    .hblnk_out(),
+    .rgb_out(rgb_out),
+    .char_xy(xy_char_credits),
+    .char_line(char_line_credits)
   );
 
   char_rom_16x1_credits char_rom_credits(
@@ -232,23 +232,5 @@ module menu_ctl (
 	.addr({char_code_credits [6:0], char_line_credits [3:0]}),
 	.char_line_pixels(char_line_pixel_credits)
   );
-//--------
-  control My_control (
-	.pclk(clk),
-	.rst(rst),
-	.xpos(xpos),
-	.ypos(ypos),
-	.hcount_in(hcount_out_credits),
-	.vcount_in(vcount_out_credits),
-	.vblnk_in(vblnk_out_credits),
-	.hblnk_in(hblnk_out_credits),
-	.rgb_in(rgb_out_credits),
-	.vsync_in(vsync_out_credits),
-	.hsync_in(hsync_out_credits),
-	
-	.hs_out(hsync_out),
-	.vs_out(vsync_out),
-	.rgb_out(rgb_out)
- );
 
 endmodule

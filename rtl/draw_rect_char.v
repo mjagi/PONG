@@ -59,32 +59,32 @@ wire hsync_del, hblnk_del, vsync_del, vblnk_del;
 //------------------------------------------------------------------------------
 // output register with sync reset
 //------------------------------------------------------------------------------
-  always @(posedge pclk)
+   always @(posedge pclk)
+begin
+  if(rst)
   begin
-    if(rst)
-    begin
-      hcount_out <= 0;
-      hsync_out <= 0;
-      hblnk_out <= 0;
-      vcount_out <= 0;
-      vsync_out <= 0;
-      vblnk_out <= 0;
-      rgb_out <= 0;
-      rgb_temp <= 0;
-    end
-    
-    else 
-    begin
-      hcount_out <= hcount_del;
-      hsync_out <= hsync_del;
-      hblnk_out <= hblnk_del;
-      vcount_out <= vcount_del;
-      vsync_out <= vsync_del;
-      vblnk_out <= vblnk_del;
-	  rgb_temp <= rgb_in;
-      rgb_out <= rgb_nxt;
-	end
+    hcount_out <= 0;
+    hsync_out <= 0;
+    hblnk_out <= 0;
+    vcount_out <= 0;
+    vsync_out <= 0;
+    vblnk_out <= 0;
+    rgb_out <= 0;
+    rgb_temp <= 0;
   end
+  
+  else 
+  begin
+    hcount_out <= hcount_del;
+    hsync_out <= hsync_del;
+    hblnk_out <= hblnk_del;
+    vcount_out <= vcount_del;
+    vsync_out <= vsync_del;
+    vblnk_out <= vblnk_del;
+    rgb_temp <= rgb_in;
+    rgb_out <= rgb_nxt;
+  end
+end
 
 //------------------------------------------------------------------------------
 // modules

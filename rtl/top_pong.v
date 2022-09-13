@@ -16,7 +16,8 @@ module top_pong (
 	input wire button,
 	input wire clk,
 	input wire rst,
-	input wire [9:0]ypos_sec,
+	input wire [9:0]ypos_one,
+	input wire mouse_left_one,
 	
 	output wire vs,
 	output wire hs,
@@ -25,9 +26,13 @@ module top_pong (
 	output wire [3:0] b,	
 	output wire [6:0] sseg_ca,
     output wire [3:0] sseg_an, 
-	output wire [9:0] ypos_one,
-	output wire mouse_left_one
+	output wire [9:0] ypos_sec
 );
+
+//------------------------------------------------------------------------------
+// local parameters
+//------------------------------------------------------------------------------
+localparam XPOS_MIDDLE = 511;
 
 //------------------------------------------------------------------------------
 // wires
@@ -41,12 +46,12 @@ module top_pong (
 	wire [10:0] vcount, hcount;
 	wire vsync, hsync;
 	wire vblnk, hblnk;
-	wire [11:0] xpos_wire, ypos_wire, ypos_wire_d, xpos_wire_d;
-	wire [9:0] ypos_sec_d;
-	wire rst_out, mouse_left, mouse_left_d;
+	wire [11:0] ypos_wire, ypos_wire_d;
+	wire [9:0] ypos_one_d;
+	wire rst_out, mouse_left_one_d;
 
-	assign ypos_one = ypos_wire[9:0];
-	assign mouse_left_one = mouse_left;
+	assign ypos_sec = ypos_wire[9:0];
+
 //------------------------------------------------------------------------------
 // modules
 //------------------------------------------------------------------------------	
@@ -88,10 +93,10 @@ module top_pong (
 		.hsync_in(hsync),
 		.hblnk_in(hblnk),
 		.ypos(ypos_wire_d),
-		.xpos(xpos_wire_d),
-		.mouse_left(mouse_left_d),
+		.xpos(XPOS_MIDDLE),
+		.mouse_left(mouse_left_one_d),
 		.button(button),
-		.ypos_sec(ypos_sec_d),
+		.ypos_one(ypos_one_d),
 			
 		.vsync_out(vs),
 		.hsync_out(hs),
@@ -110,10 +115,10 @@ module top_pong (
 		.setmax_y(1'b0),
 		.ps2_clk(ps2_clk),
 		.ps2_data(ps2_data),
-		.xpos(xpos_wire),
+		.xpos(),
 		.ypos(ypos_wire),
 		.zpos(),
-		.left(mouse_left),
+		.left(),
 		.middle(),
 		.right(),
 		.new_event()
@@ -122,14 +127,12 @@ module top_pong (
 	Mouse_delay My_mouse_delay(
 		.clk(pclk),
 		.rst(rst_out),
-		.xpos_in(xpos_wire),
 		.ypos_in(ypos_wire),
-		.ypos_in_sec(ypos_sec),
-		.mouse_left_in(mouse_left),
-		.xpos_out(xpos_wire_d),
+		.ypos_in_one(ypos_one),
+		.mouse_left_in(mouse_left_one),
 		.ypos_out(ypos_wire_d),
-		.ypos_out_sec(ypos_sec_d),
-		.mouse_left_out(mouse_left_d)
+		.ypos_out_one(ypos_one_d),
+		.mouse_left_out(mouse_left_one_d)
   );
 
 endmodule

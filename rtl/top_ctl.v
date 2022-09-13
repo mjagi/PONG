@@ -23,7 +23,7 @@ module top_ctl(
 	input wire [11:0] xpos,
 	input wire mouse_left,
 	input wire button,
-	input wire [9:0] ypos_sec,
+	input wire [9:0] ypos_one,
   
 	output reg vsync_out,
 	output reg hsync_out,
@@ -59,7 +59,7 @@ reg difficulty, difficulty_nxt, start;
 //------------------------------------------------------------------------------
 always@* begin
     case(state)
-    IDLE:     state_nxt = (mouse_left && (ypos >= 46 && ypos <= 146) && (xpos >= 362 && xpos <= 674)) ? GAME : (mouse_left && (ypos >= 622 && ypos <= 722) && (xpos >= 362 && xpos <= 674)) ? CREDITS : IDLE;
+    IDLE:     state_nxt = (mouse_left && (ypos_one >= 46 && ypos_one <= 146) && (xpos >= 362 && xpos <= 674)) ? GAME : (mouse_left && (ypos_one >= 622 && ypos_one <= 722) && (xpos >= 362 && xpos <= 674)) ? CREDITS : IDLE;
     GAME:     state_nxt = button ? IDLE : GAME;
     CREDITS:  state_nxt = button ? IDLE : CREDITS;
     default: state_nxt = IDLE;
@@ -78,13 +78,13 @@ always@* begin
 		color_state_nxt = 0;
 		start = 0;
 
-		if(mouse_left && (ypos >= 238 && ypos <= 338) && (xpos >= 362 && xpos <= 674)) begin
+		if(mouse_left && (ypos_one >= 238 && ypos_one <= 338) && (xpos >= 362 && xpos <= 674)) begin
 		  if (difficulty == 1) difficulty_nxt = 0;
 		  else difficulty_nxt = 1;
 		end
 		else difficulty_nxt = difficulty;
 		
-		if(mouse_left && (ypos >= 430 && ypos <= 530) && (xpos >= 362 && xpos <= 674)) begin
+		if(mouse_left && (ypos_one >= 430 && ypos_one <= 530) && (xpos >= 362 && xpos <= 674)) begin
 			if(color_state >= 6) color_state_nxt = 0;
 			else color_state_nxt = color_state + 1;
 		end
@@ -175,8 +175,8 @@ end
 		.vblnk_in(vblnk_in),
 		.hsync_in(hsync_in),
 		.hblnk_in(hblnk_in),
-		.ypos(ypos),
-		.xpos(xpos),
+//		.ypos(ypos_one),
+//		.xpos(xpos),
 		.difficulty(difficulty),
 		.color1(color1),
 		.color2(color2),
@@ -196,14 +196,14 @@ end
         .hsync_in(hsync_in),
         .hblnk_in(hblnk_in),
         .ypos(ypos),
-        .ypos_sec(ypos_sec),
+        .ypos_one(ypos_one),
         .mouse_left(mouse_left),
         .difficulty(difficulty),
         .color1(color1),
         .color2(color2),
 		.button(button),
 		.start(start),
-        
+		
         .vsync_out(vsync_game),
         .hsync_out(hsync_game),
 		.sseg_ca(sseg_ca),

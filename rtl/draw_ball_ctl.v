@@ -13,8 +13,8 @@
 module draw_ball_ctl (
   input wire pclk,
   input wire rst,
-  input wire [11:0] mouse_ypos,
-  input wire [9:0] mouse_ypos_sec,
+  input wire [9:0] mouse_ypos,
+  input wire [11:0] mouse_ypos_sec,
   input wire mouse_left,
   input wire difficulty,
   input wire button,

@@ -13,7 +13,7 @@
 module point_display (
 	input wire clk,
 	input wire rst,
-	input wire [1:0]score_p1,
+	input wire [1:0]score_p2,
 	
 	output wire [6:0] sseg_ca,   // segments (active LOW)
     output wire [3:0] sseg_an    // anode enable (active LOW)
@@ -55,9 +55,9 @@ module point_display (
     sseg_mux my_sseg_mux
     (
         .sel(sseg_an),
-        .b0({1'b0,score_p1}),//X - current score
+        .b0({1'b0,score_p2}),//X - current score
         .b1(3'b101),//-
-        .b2(3'b001),//1
+        .b2(3'b010),//2
         .b3(3'b100),//P
         .point_selected(point_selected)
     );

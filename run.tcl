@@ -46,7 +46,6 @@ proc create_new_project {project target top_module} {
 		rtl/clk_wiz_0_clk_wiz.v
 		rtl/Mouse_delay.v
 		rtl/top_ctl.v
-		rtl/control.v
 		rtl/game_ctl.v
 		rtl/cred_ctl.v
 		rtl/menu_ctl.v
@@ -75,7 +74,6 @@ proc create_new_project {project target top_module} {
      read_vhdl {
          rtl/MouseCtl.vhd    
 		 rtl/Ps2Interface.vhd
-         rtl/MouseDisplay.vhd
      }
     
     # Specify files for memory initialization -- EDIT

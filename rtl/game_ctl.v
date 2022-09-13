@@ -20,7 +20,7 @@ module game_ctl (
   input wire hsync_in,
   input wire hblnk_in,
   input wire [11:0] ypos,
-  input wire [9:0] ypos_sec,
+  input wire [9:0] ypos_one,
   input wire mouse_left,
   input wire difficulty,
   input wire [11:0] color1,
@@ -81,8 +81,8 @@ module game_ctl (
     .pclk(clk),
 	.rst(rst),
 	.rgb_in(rgb_out_bg),
-	.y_pos(ypos),
-	.y_pos_sec(ypos_sec),
+	.y_pos(ypos_one),
+	.y_pos_sec(ypos),
 	.color2(color2),
 	
 	.vcount_out(vcount_out_rt),
@@ -98,10 +98,10 @@ module game_ctl (
     .pclk(clk),
     .rst(rst),
     .mouse_left(mouse_left),
-    .mouse_ypos(ypos),
+    .mouse_ypos(ypos_one),
     .difficulty(difficulty),
 	.button(button),
-	.mouse_ypos_sec(ypos_sec),
+	.mouse_ypos_sec(ypos),
 	.start(start),
     
     .xpos(xpos_ctl),
@@ -165,7 +165,7 @@ module game_ctl (
 	point_display my_point_display(
 		.clk(clk),
 		.rst(rst),
-		.score_p1(score_p1),
+		.score_p2(score_p2),
 	
 		.sseg_ca(sseg_ca),   // segments (active LOW)
 		.sseg_an(sseg_an)    // anode enable (active LOW)
