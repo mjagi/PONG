@@ -23,7 +23,7 @@ module top_ctl(
 	input wire [11:0] xpos,
 	input wire mouse_left,
 	input wire button,
-	input wire [11:0] ypos_sec,
+	input wire [9:0] ypos_sec,
   
 	output reg vsync_out,
 	output reg hsync_out,

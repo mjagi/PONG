@@ -20,7 +20,7 @@ module game_ctl (
   input wire hsync_in,
   input wire hblnk_in,
   input wire [11:0] ypos,
-  input wire [11:0] ypos_sec,
+  input wire [9:0] ypos_sec,
   input wire mouse_left,
   input wire difficulty,
   input wire [11:0] color1,

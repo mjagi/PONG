@@ -20,7 +20,7 @@ module draw_rect (
   input wire pclk,
   input wire rst,
   input wire [11:0] y_pos,
-  input wire [11:0] y_pos_sec,
+  input wire [9:0] y_pos_sec,
   input wire [11:0] rgb_in,
   input wire [11:0] color2,
   

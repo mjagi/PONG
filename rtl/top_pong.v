@@ -16,7 +16,7 @@ module top_pong (
 	input wire button,
 	input wire clk,
 	input wire rst,
-	input wire [11:0]ypos_sec,
+	input wire [9:0]ypos_sec,
 	
 	output wire vs,
 	output wire hs,
@@ -24,7 +24,9 @@ module top_pong (
 	output wire [3:0] g,
 	output wire [3:0] b,	
 	output wire [6:0] sseg_ca,
-    output wire [3:0] sseg_an 
+    output wire [3:0] sseg_an, 
+	output wire [9:0] ypos_one,
+	output wire mouse_left_one
 );
 
 //------------------------------------------------------------------------------
@@ -39,14 +41,12 @@ module top_pong (
 	wire [10:0] vcount, hcount;
 	wire vsync, hsync;
 	wire vblnk, hblnk;
-	wire [11:0] xpos_wire, ypos_wire, ypos_wire_d, xpos_wire_d, ypos_sec_d;
+	wire [11:0] xpos_wire, ypos_wire, ypos_wire_d, xpos_wire_d;
+	wire [9:0] ypos_sec_d;
 	wire rst_out, mouse_left, mouse_left_d;
 
-	assign vs2 = vs;
-	assign hs2 = hs;
-	assign red = r;
-	assign green = g;
-	assign blue = b;	
+	assign ypos_one = ypos_wire[9:0];
+	assign mouse_left_one = mouse_left;
 //------------------------------------------------------------------------------
 // modules
 //------------------------------------------------------------------------------	
