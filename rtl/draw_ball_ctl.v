@@ -18,6 +18,7 @@ module draw_ball_ctl (
   input wire mouse_left,
   input wire difficulty,
   input wire button,
+  input wire start,
 
   output reg [11:0] xpos,
   output reg [11:0] ypos,
@@ -108,7 +109,7 @@ module draw_ball_ctl (
   always @*
   begin
     case (state)
-      IDLE:			state_nxt = mouse_left ? MOVING : IDLE;
+      IDLE:			state_nxt = (mouse_left && start) ? MOVING : IDLE;
       MOVING:		state_nxt = button ? IDLE : MOVING;
     default:
       state_nxt = IDLE;
@@ -186,36 +187,26 @@ module draw_ball_ctl (
                         UPRIGHT: begin                       
                             if (ypos < (UP_WALL + 1))
                                 direction_nxt = DOWNRIGHT;
-                            //else if (xpos > (RIGHT_WALL - BALL_DIAMETER - 1))
-                            //    direction_nxt = UPLEFT;
                         end
             
                         DOWNRIGHT: begin
                             if (ypos > (DOWN_WALL - BALL_DIAMETER - 1))
                                 direction_nxt = UPRIGHT;
-                            //else if (xpos > (RIGHT_WALL - BALL_DIAMETER - 1))
-                            //    direction_nxt = DOWNLEFT;
                         end
 
                         DOWNLEFT: begin
                             if (ypos > (DOWN_WALL - BALL_DIAMETER - 1))
                                 direction_nxt = UPLEFT;
-                           // else if (xpos < (LEFT_WALL + 1))
-                           //     direction_nxt = DOWNRIGHT;
                         end
 
                         UPLEFT: begin
                             if (ypos < (UP_WALL + 1))
                                 direction_nxt = DOWNLEFT;
-                            //else if (xpos < (LEFT_WALL + 1))
-                            //    direction_nxt = UPRIGHT;
                         end
 
                         default: begin 
                             if (ypos < (UP_WALL + 1))
                                 direction_nxt = DOWNRIGHT;
-                            //else if (xpos > (RIGHT_WALL - BALL_DIAMETER - 1))
-                            //    direction_nxt = UPLEFT;
                         end
                     endcase
             

@@ -26,6 +26,7 @@ module game_ctl (
   input wire [11:0] color1,
   input wire [11:0] color2,
   input wire button,
+  input wire start,
   
   output wire vsync_out,
   output wire hsync_out,
@@ -101,6 +102,7 @@ module game_ctl (
     .difficulty(difficulty),
 	.button(button),
 	.mouse_ypos_sec(ypos_sec),
+	.start(start),
     
     .xpos(xpos_ctl),
     .ypos(ypos_ctl),
