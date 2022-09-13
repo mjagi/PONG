@@ -5,7 +5,7 @@
  Version:       1.0
  Last modified: 2022-09-08
  Coding style: safe with FPGA sync reset
- Description:
+ Description:   module that controls movement of credits string
  */
 //////////////////////////////////////////////////////////////////////////////
 `timescale 1 ns / 1 ps

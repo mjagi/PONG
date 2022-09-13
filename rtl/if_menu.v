@@ -5,7 +5,7 @@
  Version:       1.0
  Last modified: 2022-09-10
  Coding style: safe with FPGA sync reset
- Description:	game Background pattern generator
+ Description:	game background pattern generator
  */
 //////////////////////////////////////////////////////////////////////////////
 `timescale 1 ns / 1 ps

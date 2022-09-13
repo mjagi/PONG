@@ -5,7 +5,7 @@
  Version:       1.0
  Last modified: 2022-09-01
  Coding style: safe with FPGA sync reset
- Description:	buffor to change recived data speed from 97,5MHz to 65MHz
+ Description:	buffer to change recived data speed from 97,5MHz to 65MHz
  */
 //////////////////////////////////////////////////////////////////////////////
 module Mouse_delay (

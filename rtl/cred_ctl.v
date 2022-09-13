@@ -5,7 +5,7 @@
  Version:       1.0
  Last modified: 2022-09-08
  Coding style: safe, with FPGA sync reset
- Description:  
+ Description:  structural module for credits screen modules
  */
 //////////////////////////////////////////////////////////////////////////////
 `timescale 1 ns / 1 ps
