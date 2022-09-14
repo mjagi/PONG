@@ -1,3 +1,13 @@
+//////////////////////////////////////////////////////////////////////////////
+/*
+ Module name:   font_rom
+ Author:        (C) Copyright 2016 AGH UST All Rights Reserved
+ Version:       1.0
+ Last modified: -
+ Coding style: safe with FPGA async reset
+ Description:  Module provided by lecturer. ROM file of characters
+ */
+//////////////////////////////////////////////////////////////////////////////
 `timescale 1ns / 1ps
 // ROM with synchonous read (inferring Block RAM)
 // character ROM

@@ -5,7 +5,7 @@
  Version:       1.0
  Last modified: 2022-09-08
  Coding style: safe, with FPGA sync reset
- Description:  
+ Description:  structural module for credits screen modules
  */
 //////////////////////////////////////////////////////////////////////////////
 `timescale 1 ns / 1 ps
@@ -31,9 +31,9 @@ module cred_ctl (
 //------------------------------------------------------------------------------
 // wires
 //------------------------------------------------------------------------------
-  wire [10:0] hcount_out_bg, vcount_out_bg, hcount_out_cred, vcount_out_cred; //hcount_out_ball, vcount_out_ball;
-  wire vsync_out_bg, hsync_out_bg, hsync_out_cred, vsync_out_cred; //hsync_out_ball, vsync_out_ball;
-  wire hblnk_out_bg, vblnk_out_bg, hblnk_out_cred, vblnk_out_cred; //hblnk_out_ball, vblnk_out_ball;
+  wire [10:0] hcount_out_bg, vcount_out_bg, hcount_out_cred, vcount_out_cred;
+  wire vsync_out_bg, hsync_out_bg, hsync_out_cred, vsync_out_cred;
+  wire hblnk_out_bg, vblnk_out_bg, hblnk_out_cred, vblnk_out_cred;
   wire [11:0] rgb_out_bg, xpos_ctl, ypos_ctl;
   wire [7:0] char_line_pixel_cred, xy_char_cred;
   wire [3:0] char_line_cred;

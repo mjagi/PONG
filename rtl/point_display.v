@@ -1,9 +1,14 @@
-// File: point_display.v
-
+//////////////////////////////////////////////////////////////////////////////
+/*
+ Module name:   point_display
+ Author:        Bartosz Białkowski
+ Version:       1.0
+ Last modified: 2022-09-08
+ Coding style: safe with FPGA sync reset
+ Description: 	structural module for 7 segment display
+ */
+//////////////////////////////////////////////////////////////////////////////
 `timescale 1 ns / 1 ps
-
-// Declare the module and its ports. This is
-// using Verilog-2001 syntax.
 
 module point_display (
 	input wire clk,
@@ -14,9 +19,16 @@ module point_display (
     output wire [3:0] sseg_an    // anode enable (active LOW)
 );
 
-// clock divider to produce stopwatch 300 Hz clock from 100 MHz external clock
+//------------------------------------------------------------------------------
+// wires
+//------------------------------------------------------------------------------
 	wire clk300Hz;
-  
+	wire [2:0] point_selected; // code selected for display
+
+//------------------------------------------------------------------------------
+// modules
+//------------------------------------------------------------------------------
+	// clock divider to produce stopwatch 300 Hz clock from 100 MHz external clock
     clk_divider 
     #(
     .OUT_FREQUENCY(300)
@@ -27,8 +39,6 @@ module point_display (
         .rst (rst),            //async reset active high
         .clk_div (clk300Hz)
     );
-
-// ring oscillator for multiplexing the displayed digits
 
     ring_counter
     #(
@@ -42,22 +52,15 @@ module point_display (
         .ring(sseg_an)
     );
 	
-// multiplexing score to single output
-
-    wire [2:0] point_selected; // code selected for display
-
     sseg_mux my_sseg_mux
     (
         .sel(sseg_an),
-        .b0({1'b0,score_p1}),//X
+        .b0({1'b0,score_p1}),//X - current score
         .b1(3'b101),//-
         .b2(3'b001),//1
         .b3(3'b100),//P
         .point_selected(point_selected)
     );
-
-//------------------------------------------------------------------------------
-// converting score to 7-segment display
 
     sseg_conv  my_sseg_conv
     (

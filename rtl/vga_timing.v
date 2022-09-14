@@ -1,14 +1,14 @@
-// File: vga_timing.v
-// This is the vga timing design for EE178 Lab #4.
-
-// The `timescale directive specifies what the
-// simulation time units are (1 ns here) and what
-// the simulator time step should be (1 ps here).
-
+//////////////////////////////////////////////////////////////////////////////
+/*
+ Module name:   vga_timing
+ Author:        Bartosz Białkowski
+ Version:       1.0
+ Last modified: 2022-07-06
+ Coding style: safe with FPGA sync reset
+ Description:   Video timing controller set for 1024x768@60fps using a 65 MHz pixel clock
+ */
+//////////////////////////////////////////////////////////////////////////////
 `timescale 1 ns / 1 ps
-
-// Declare the module and its ports. This is
-// using Verilog-2001 syntax.
 
 module vga_timing (
   output reg [10:0] vcount,
@@ -21,7 +21,9 @@ module vga_timing (
   input wire rst
   );
 
-
+//------------------------------------------------------------------------------
+// local parameters
+//------------------------------------------------------------------------------
 localparam HOR_TOTAL_TIME = 1344;
 localparam HOR_BLANK_START = 1024;
 localparam HOR_BLANK_STOP = 1344;
@@ -34,6 +36,9 @@ localparam VER_BLANK_STOP = 806;
 localparam VER_SYNC = 771;
 localparam VER_SYNC_TIME = 6;
 
+//------------------------------------------------------------------------------
+// local variables
+//------------------------------------------------------------------------------
 reg [10:0] vcount_next;
 reg [10:0] hcount_next;
 reg hsync_next;
@@ -41,7 +46,9 @@ reg vsync_next;
 reg hblanc_next;
 reg vblanc_next;
 
-
+//------------------------------------------------------------------------------
+// logic
+//------------------------------------------------------------------------------
 always @* begin
     if(hcount == (HOR_TOTAL_TIME - 1))
         hcount_next = 0;
@@ -88,9 +95,11 @@ always @* begin
 		vsync_next = 1;
     end
 	else vsync_next = 0;
-
 end
 
+//------------------------------------------------------------------------------
+// output register with sync reset
+//------------------------------------------------------------------------------
 always @(posedge pclk) begin
 	if (rst) begin
 		hcount <= 0;
@@ -113,10 +122,5 @@ always @(posedge pclk) begin
 		vsync <= vsync_next;
 	end
 end
-
-
-  // Describe the actual circuit for the assignment.
-  // Video timing controller set for 1024x768@60fps
-  // using a 65 MHz pixel clock per XGA spec.
 
 endmodule

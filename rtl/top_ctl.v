@@ -5,7 +5,7 @@
  Version:       1.0
  Last modified: 2022-09-10
  Coding style: safe with FPGA sync reset
- Description:
+ Description:  top module 
  */
 //////////////////////////////////////////////////////////////////////////////
 `timescale 1 ns / 1 ps
@@ -23,11 +23,12 @@ module top_ctl(
 	input wire [11:0] xpos,
 	input wire mouse_left,
 	input wire button,
+	input wire [9:0] ypos_sec,
   
 	output reg vsync_out,
 	output reg hsync_out,
 	output wire [6:0] sseg_ca,
-    output wire [3:0] sseg_an, 
+    output wire [3:0] sseg_an,
 	output reg [11:0] rgb_out
 	);
 
@@ -51,7 +52,7 @@ reg [11:0] rgb_nxt, color1, color2;
 reg vsync_nxt, hsync_nxt;
 reg [1:0] state, state_nxt;
 reg [2:0] color_state, color_state_nxt;
-reg difficulty, difficulty_nxt = 0; 
+reg difficulty, difficulty_nxt, start; 
 
 //------------------------------------------------------------------------------
 // next state logic
@@ -75,6 +76,7 @@ always@* begin
 		hsync_nxt = hsync_menu;
 		rgb_nxt = rgb_menu;
 		color_state_nxt = 0;
+		start = 0;
 
 		if(mouse_left && (ypos >= 238 && ypos <= 338) && (xpos >= 362 && xpos <= 674)) begin
 		  if (difficulty == 1) difficulty_nxt = 0;
@@ -95,6 +97,7 @@ always@* begin
     	rgb_nxt = rgb_game;
     	difficulty_nxt = difficulty;
     	color_state_nxt = color_state;
+    	start = 1;
     end
 
     CREDITS: begin
@@ -103,6 +106,7 @@ always@* begin
     	rgb_nxt = rgb_cred;
     	difficulty_nxt = difficulty;
      	color_state_nxt = color_state;
+     	start = 0;
     end
 
     default: begin
@@ -111,6 +115,7 @@ always@* begin
     	rgb_nxt = rgb_menu;
     	difficulty_nxt = 0;
     	color_state_nxt = color_state;
+    	start = 0;
     end
     endcase
     
@@ -137,17 +142,17 @@ always@* begin
     end
     
 	4: begin
-    	color1 = 12'h0_0_9;
+    	color1 = 12'h3_3_9;
     	color2 = 12'hf_f_6;
     end
     
 	5: begin
-    	color1 = 12'h9_0_0;
+    	color1 = 12'h9_3_3;
     	color2 = 12'h6_f_f;
     end
 
 	6: begin
-    	color1 = 12'h0_9_0;
+    	color1 = 12'h3_9_3;
     	color2 = 12'hf_6_f;
     end
 
@@ -191,11 +196,13 @@ end
         .hsync_in(hsync_in),
         .hblnk_in(hblnk_in),
         .ypos(ypos),
+        .ypos_sec(ypos_sec),
         .mouse_left(mouse_left),
         .difficulty(difficulty),
         .color1(color1),
         .color2(color2),
 		.button(button),
+		.start(start),
         
         .vsync_out(vsync_game),
         .hsync_out(hsync_game),

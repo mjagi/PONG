@@ -5,28 +5,29 @@
  Version:       1.0
  Last modified: 2022-09-08
  Coding style: safe, with FPGA sync reset
- Description:  
+ Description:  structural module for entire project
  */
 //////////////////////////////////////////////////////////////////////////////
 `timescale 1 ns / 1 ps
 
-module vga_example (
+module top_pong (
 	inout wire ps2_clk,
 	inout wire ps2_data,
 	input wire button,
 	input wire clk,
 	input wire rst,
+	input wire [9:0]ypos_sec,
+	
 	output wire vs,
 	output wire hs,
 	output wire [3:0] r,
 	output wire [3:0] g,
-	output wire [3:0] b,
-	output wire pclk_mirror,
+	output wire [3:0] b,	
 	output wire [6:0] sseg_ca,
-    output wire [3:0] sseg_an 
+    output wire [3:0] sseg_an, 
+	output wire [9:0] ypos_one,
+	output wire mouse_left_one
 );
-// Mirrors pclk on a pin for use by the testbench;
-assign pclk_mirror = pclk;
 
 //------------------------------------------------------------------------------
 // wires
@@ -41,8 +42,11 @@ assign pclk_mirror = pclk;
 	wire vsync, hsync;
 	wire vblnk, hblnk;
 	wire [11:0] xpos_wire, ypos_wire, ypos_wire_d, xpos_wire_d;
+	wire [9:0] ypos_sec_d;
 	wire rst_out, mouse_left, mouse_left_d;
 
+	assign ypos_one = ypos_wire[9:0];
+	assign mouse_left_one = mouse_left;
 //------------------------------------------------------------------------------
 // modules
 //------------------------------------------------------------------------------	
@@ -87,6 +91,7 @@ assign pclk_mirror = pclk;
 		.xpos(xpos_wire_d),
 		.mouse_left(mouse_left_d),
 		.button(button),
+		.ypos_sec(ypos_sec_d),
 			
 		.vsync_out(vs),
 		.hsync_out(hs),
@@ -114,14 +119,16 @@ assign pclk_mirror = pclk;
 		.new_event()
 	);
 
-	Mouse_delay My_mouse_deley(
+	Mouse_delay My_mouse_delay(
 		.clk(pclk),
 		.rst(rst_out),
 		.xpos_in(xpos_wire),
 		.ypos_in(ypos_wire),
+		.ypos_in_sec(ypos_sec),
 		.mouse_left_in(mouse_left),
 		.xpos_out(xpos_wire_d),
 		.ypos_out(ypos_wire_d),
+		.ypos_out_sec(ypos_sec_d),
 		.mouse_left_out(mouse_left_d)
   );
 

@@ -1,5 +1,14 @@
+//////////////////////////////////////////////////////////////////////////////
+/*
+ Module name:   if_menu
+ Author:        Bartosz Białkowski
+ Version:       1.0
+ Last modified: 2022-09-10
+ Coding style: safe with FPGA sync reset
+ Description:	game background pattern generator
+ */
+//////////////////////////////////////////////////////////////////////////////
 `timescale 1 ns / 1 ps
-
 
 module if_menu (
   input wire [10:0] vcount_in,
@@ -22,11 +31,14 @@ module if_menu (
   output reg [11:0] rgb_out
   );
 
-
+//------------------------------------------------------------------------------
+// local variables
+//------------------------------------------------------------------------------
 	reg [11:0] rgb_nxt;
 
-  // This is a simple menu pattern generator.
-  
+//------------------------------------------------------------------------------
+// logic
+//------------------------------------------------------------------------------ 
   always @*
   begin
     // During blanking, make it it gray.
@@ -55,7 +67,9 @@ module if_menu (
     end
   end
   
-  
+//------------------------------------------------------------------------------
+// output register with sync reset
+//------------------------------------------------------------------------------  
   always @(posedge pclk) begin
 	if (rst) begin
 		hcount_out <= 0;

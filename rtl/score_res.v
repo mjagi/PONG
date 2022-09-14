@@ -1,5 +1,14 @@
+//////////////////////////////////////////////////////////////////////////////
+/*
+ Module name:   score_res
+ Author:        Bartosz Białkowski
+ Version:       1.0
+ Last modified: 2022-09-10
+ Coding style: safe with FPGA sync reset
+ Description:	game end screen generator
+ */
+//////////////////////////////////////////////////////////////////////////////
 `timescale 1 ns / 1 ps
-
 
 module score_res (
   input wire [10:0] vcount_in,
@@ -21,11 +30,14 @@ module score_res (
   output reg [11:0] rgb_out
   );
 
-
+//------------------------------------------------------------------------------
+// local variables
+//------------------------------------------------------------------------------
 	reg [11:0] rgb_nxt;
-
-  // This is a simple menu pattern generator.
   
+//------------------------------------------------------------------------------
+// logic
+//------------------------------------------------------------------------------  
 always @* begin
 	if(score_p2 == 3)begin 
 		// During blanking, make it it gray.
@@ -62,7 +74,7 @@ always @* begin
 			//W
 			if((vcount_in >= 100 && vcount_in <= 667) && (hcount_in >= 50 && hcount_in <= 150)) rgb_nxt = color2;
 			
-			else if (((vcount_in >= 550 - hcount_in) && (vcount_in <= 640 - hcount_in)) && (hcount_in >= 150 && hcount_in <= 240)) rgb_nxt = color2;
+			else if (((vcount_in >= 630 - hcount_in) && (vcount_in <= 720 - hcount_in)) && (hcount_in >= 150 && hcount_in <= 240)) rgb_nxt = color2;
 			
 			else if (((vcount_in >= hcount_in + 240) && (vcount_in <= hcount_in + 330)) && (hcount_in >= 240 && hcount_in <= 330)) rgb_nxt = color2;
 			
@@ -72,7 +84,7 @@ always @* begin
 			//N
 			else if ((vcount_in >= 100 && vcount_in <= 667) && (hcount_in >= 570 && hcount_in <= 670)) rgb_nxt = color2;
 			
-			else if (((vcount_in >= hcount_in - 570) && (vcount_in <= hcount_in - 500)) && (hcount_in >= 670 && hcount_in <= 870)) rgb_nxt = color2;
+			else if (((vcount_in >= hcount_in - 420) && (vcount_in <= hcount_in - 350)) && (hcount_in >= 670 && hcount_in <= 870)) rgb_nxt = color2;
 			
 			else if ((vcount_in >= 100 && vcount_in <= 667) && (hcount_in >= 870 && hcount_in <= 970)) rgb_nxt = color2;
 			//background
@@ -81,7 +93,10 @@ always @* begin
 	end	
 	else	rgb_nxt = rgb_in;    
 end  
-  
+
+//------------------------------------------------------------------------------
+// output register with sync reset
+//------------------------------------------------------------------------------  
   always @(posedge pclk) begin
 	if (rst) begin		
 		hsync_out <= 0;
@@ -94,6 +109,5 @@ end
 		rgb_out <= rgb_nxt;
 	end
 end
-
 
 endmodule

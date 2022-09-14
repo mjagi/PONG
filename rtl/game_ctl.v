@@ -5,7 +5,7 @@
  Version:       1.0
  Last modified: 2022-09-10
  Coding style: safe, with FPGA sync reset
- Description:  
+ Description:  structural module for game modules
  */
 //////////////////////////////////////////////////////////////////////////////
 `timescale 1 ns / 1 ps
@@ -20,11 +20,13 @@ module game_ctl (
   input wire hsync_in,
   input wire hblnk_in,
   input wire [11:0] ypos,
+  input wire [9:0] ypos_sec,
   input wire mouse_left,
   input wire difficulty,
   input wire [11:0] color1,
   input wire [11:0] color2,
   input wire button,
+  input wire start,
   
   output wire vsync_out,
   output wire hsync_out,
@@ -80,6 +82,7 @@ module game_ctl (
 	.rst(rst),
 	.rgb_in(rgb_out_bg),
 	.y_pos(ypos),
+	.y_pos_sec(ypos_sec),
 	.color2(color2),
 	
 	.vcount_out(vcount_out_rt),
@@ -98,6 +101,8 @@ module game_ctl (
     .mouse_ypos(ypos),
     .difficulty(difficulty),
 	.button(button),
+	.mouse_ypos_sec(ypos_sec),
+	.start(start),
     
     .xpos(xpos_ctl),
     .ypos(ypos_ctl),
