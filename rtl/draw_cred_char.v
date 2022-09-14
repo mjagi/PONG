@@ -26,12 +26,8 @@ module draw_cred_char (
   input wire [11:0] xpos,
   input wire [11:0] ypos,
 
-  output reg [10:0] hcount_out,
   output reg hsync_out,
-  output reg hblnk_out,  
-  output reg [10:0] vcount_out,
   output reg vsync_out,
-  output reg vblnk_out,
   output reg [11:0] rgb_out,
   output reg [7:0] char_xy,
   output reg [3:0] char_line
@@ -49,11 +45,12 @@ localparam RECT_WIDTH = 128;
 reg [11:0] rgb_nxt, rgb_temp;
 reg [7:0] addr_y;
 reg [6:0] addr_x;
+reg vblnk_out;
+reg hblnk_out;
 
 //------------------------------------------------------------------------------
 // wires
 //------------------------------------------------------------------------------
-wire [10:0] hcount_del, vcount_del; 
 wire hsync_del, hblnk_del, vsync_del, vblnk_del;
 
 //------------------------------------------------------------------------------
@@ -63,10 +60,8 @@ wire hsync_del, hblnk_del, vsync_del, vblnk_del;
   begin
     if(rst)
     begin
-      hcount_out <= 0;
       hsync_out <= 0;
       hblnk_out <= 0;
-      vcount_out <= 0;
       vsync_out <= 0;
       vblnk_out <= 0;
       rgb_out <= 0;
@@ -75,13 +70,11 @@ wire hsync_del, hblnk_del, vsync_del, vblnk_del;
     
     else 
     begin
-      hcount_out <= hcount_del;
       hsync_out <= hsync_del;
       hblnk_out <= hblnk_del;
-      vcount_out <= vcount_del;
       vsync_out <= vsync_del;
       vblnk_out <= vblnk_del;
-	  rgb_temp <= rgb_in;
+      rgb_temp <= rgb_in;
       rgb_out <= rgb_nxt;
 	end
   end
@@ -90,13 +83,13 @@ wire hsync_del, hblnk_del, vsync_del, vblnk_del;
 // modules
 //------------------------------------------------------------------------------  
     delay #(
-		.WIDTH (26),
+		.WIDTH (4),
 		.CLK_DEL(1)
 	) u_delay (
 		.clk (pclk),
 		.rst (rst),
-		.din ({hcount_in, hsync_in, vcount_in, vsync_in, hblnk_in, vblnk_in}),
-		.dout ({hcount_del, hsync_del, vcount_del, vsync_del, hblnk_del, vblnk_del})
+		.din ({hsync_in, vsync_in, hblnk_in, vblnk_in}),
+		.dout ({hsync_del, vsync_del, hblnk_del, vblnk_del})
 	);
 
 //------------------------------------------------------------------------------
